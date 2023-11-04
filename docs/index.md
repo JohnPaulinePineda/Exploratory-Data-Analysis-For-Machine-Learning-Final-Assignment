@@ -122,13 +122,14 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+from operator import add,mul,truediv
 %matplotlib inline
 ```
 
 
 ```python
 ##################################
-# Loading dataset
+# Loading the dataset
 ##################################
 cancer_rate = pd.read_csv('CancerRates.csv')
 ```
@@ -149,11 +150,15 @@ print('Dataset Dimensions: ', cancer_rate.shape)
 ##################################
 # Listing the column names and data types
 ##################################
-print('Column Names and Data Types:\n',cancer_rate.dtypes)
+print('Column Names and Data Types:')
+display(cancer_rate.dtypes)
 ```
 
     Column Names and Data Types:
-     COUNTRY     object
+    
+
+
+    COUNTRY     object
     CANRAT     float64
     GDPPER     float64
     URBPOP     float64
@@ -176,7 +181,7 @@ print('Column Names and Data Types:\n',cancer_rate.dtypes)
     HDICAT      object
     EPISCO     float64
     dtype: object
-    
+
 
 
 ```python
@@ -363,102 +368,1357 @@ cancer_rate.head()
 ##################################
 # Performing a general exploration of the numeric variables
 ##################################
-print('Numeric Variable Summary: \n', cancer_rate.describe(include='number').transpose())
+print('Numeric Variable Summary:')
+display(cancer_rate.describe(include='number').transpose())
 ```
 
-    Numeric Variable Summary: 
-             count           mean           std          min           25%  \
-    CANRAT  177.0     183.829379  7.974340e+01    78.400000    118.100000   
-    GDPPER  165.0   45284.424283  3.941794e+04  1718.804896  13545.254510   
-    URBPOP  174.0      59.788121  2.280640e+01    13.345000     42.432750   
-    PATRES  108.0   20607.388889  1.340683e+05     1.000000     35.250000   
-    RNDGDP   74.0       1.197474  1.189956e+00     0.039770      0.256372   
-    POPGRO  174.0       1.127028  1.197718e+00    -2.079337      0.236900   
-    LIFEXP  174.0      71.746113  7.606209e+00    52.777000     65.907500   
-    TUBINC  174.0     105.005862  1.367229e+02     0.770000     12.000000   
-    DTHCMD  170.0      21.260521  1.927333e+01     1.283611      6.078009   
-    AGRLND  174.0      38.793456  2.171551e+01     0.512821     20.130276   
-    GHGEMI  170.0  259582.709895  1.118550e+06   179.725150  12527.487367   
-    RELOUT  153.0      39.760036  3.191492e+01     0.000296     10.582691   
-    METEMI  170.0   47876.133575  1.346611e+05    11.596147   3662.884908   
-    FORARE  173.0      32.218177  2.312001e+01     0.008078     11.604388   
-    CO2EMI  170.0       3.751097  4.606479e+00     0.032585      0.631924   
-    PM2EXP  167.0      91.940595  2.206003e+01     0.274092     99.627134   
-    POPDEN  174.0     200.886765  6.453834e+02     2.115134     27.454539   
-    ENRTER  116.0      49.994997  2.970619e+01     2.432581     22.107195   
-    GDPCAP  170.0   13992.095610  1.957954e+04   216.827417   1870.503029   
-    EPISCO  165.0      42.946667  1.249086e+01    18.900000     33.000000   
+    Numeric Variable Summary:
     
-                     50%            75%           max  
-    CANRAT    155.300000     240.400000  4.524000e+02  
-    GDPPER  34024.900890   66778.416050  2.346469e+05  
-    URBPOP     61.701500      79.186500  1.000000e+02  
-    PATRES    244.500000    1297.750000  1.344817e+06  
-    RNDGDP      0.873660       1.608842  5.354510e+00  
-    POPGRO      1.179959       2.031154  3.727101e+00  
-    LIFEXP     72.464610      77.523500  8.456000e+01  
-    TUBINC     44.500000     147.750000  5.920000e+02  
-    DTHCMD     12.456279      36.980457  6.520789e+01  
-    AGRLND     40.386649      54.013754  8.084112e+01  
-    GHGEMI  41009.275980  116482.578575  1.294287e+07  
-    RELOUT     32.381668      63.011450  1.000000e+02  
-    METEMI  11118.976025   32368.909040  1.186285e+06  
-    FORARE     31.509048      49.071780  9.741212e+01  
-    CO2EMI      2.298368       4.823496  3.172684e+01  
-    PM2EXP    100.000000     100.000000  1.000000e+02  
-    POPDEN     77.983133     153.993650  7.918951e+03  
-    ENRTER     53.392460      71.057467  1.433107e+02  
-    GDPCAP   5348.192875   17421.116227  1.173705e+05  
-    EPISCO     40.900000      50.500000  7.790000e+01  
-    
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>CANRAT</th>
+      <td>177.0</td>
+      <td>183.829379</td>
+      <td>7.974340e+01</td>
+      <td>78.400000</td>
+      <td>118.100000</td>
+      <td>155.300000</td>
+      <td>240.400000</td>
+      <td>4.524000e+02</td>
+    </tr>
+    <tr>
+      <th>GDPPER</th>
+      <td>165.0</td>
+      <td>45284.424283</td>
+      <td>3.941794e+04</td>
+      <td>1718.804896</td>
+      <td>13545.254510</td>
+      <td>34024.900890</td>
+      <td>66778.416050</td>
+      <td>2.346469e+05</td>
+    </tr>
+    <tr>
+      <th>URBPOP</th>
+      <td>174.0</td>
+      <td>59.788121</td>
+      <td>2.280640e+01</td>
+      <td>13.345000</td>
+      <td>42.432750</td>
+      <td>61.701500</td>
+      <td>79.186500</td>
+      <td>1.000000e+02</td>
+    </tr>
+    <tr>
+      <th>PATRES</th>
+      <td>108.0</td>
+      <td>20607.388889</td>
+      <td>1.340683e+05</td>
+      <td>1.000000</td>
+      <td>35.250000</td>
+      <td>244.500000</td>
+      <td>1297.750000</td>
+      <td>1.344817e+06</td>
+    </tr>
+    <tr>
+      <th>RNDGDP</th>
+      <td>74.0</td>
+      <td>1.197474</td>
+      <td>1.189956e+00</td>
+      <td>0.039770</td>
+      <td>0.256372</td>
+      <td>0.873660</td>
+      <td>1.608842</td>
+      <td>5.354510e+00</td>
+    </tr>
+    <tr>
+      <th>POPGRO</th>
+      <td>174.0</td>
+      <td>1.127028</td>
+      <td>1.197718e+00</td>
+      <td>-2.079337</td>
+      <td>0.236900</td>
+      <td>1.179959</td>
+      <td>2.031154</td>
+      <td>3.727101e+00</td>
+    </tr>
+    <tr>
+      <th>LIFEXP</th>
+      <td>174.0</td>
+      <td>71.746113</td>
+      <td>7.606209e+00</td>
+      <td>52.777000</td>
+      <td>65.907500</td>
+      <td>72.464610</td>
+      <td>77.523500</td>
+      <td>8.456000e+01</td>
+    </tr>
+    <tr>
+      <th>TUBINC</th>
+      <td>174.0</td>
+      <td>105.005862</td>
+      <td>1.367229e+02</td>
+      <td>0.770000</td>
+      <td>12.000000</td>
+      <td>44.500000</td>
+      <td>147.750000</td>
+      <td>5.920000e+02</td>
+    </tr>
+    <tr>
+      <th>DTHCMD</th>
+      <td>170.0</td>
+      <td>21.260521</td>
+      <td>1.927333e+01</td>
+      <td>1.283611</td>
+      <td>6.078009</td>
+      <td>12.456279</td>
+      <td>36.980457</td>
+      <td>6.520789e+01</td>
+    </tr>
+    <tr>
+      <th>AGRLND</th>
+      <td>174.0</td>
+      <td>38.793456</td>
+      <td>2.171551e+01</td>
+      <td>0.512821</td>
+      <td>20.130276</td>
+      <td>40.386649</td>
+      <td>54.013754</td>
+      <td>8.084112e+01</td>
+    </tr>
+    <tr>
+      <th>GHGEMI</th>
+      <td>170.0</td>
+      <td>259582.709895</td>
+      <td>1.118550e+06</td>
+      <td>179.725150</td>
+      <td>12527.487367</td>
+      <td>41009.275980</td>
+      <td>116482.578575</td>
+      <td>1.294287e+07</td>
+    </tr>
+    <tr>
+      <th>RELOUT</th>
+      <td>153.0</td>
+      <td>39.760036</td>
+      <td>3.191492e+01</td>
+      <td>0.000296</td>
+      <td>10.582691</td>
+      <td>32.381668</td>
+      <td>63.011450</td>
+      <td>1.000000e+02</td>
+    </tr>
+    <tr>
+      <th>METEMI</th>
+      <td>170.0</td>
+      <td>47876.133575</td>
+      <td>1.346611e+05</td>
+      <td>11.596147</td>
+      <td>3662.884908</td>
+      <td>11118.976025</td>
+      <td>32368.909040</td>
+      <td>1.186285e+06</td>
+    </tr>
+    <tr>
+      <th>FORARE</th>
+      <td>173.0</td>
+      <td>32.218177</td>
+      <td>2.312001e+01</td>
+      <td>0.008078</td>
+      <td>11.604388</td>
+      <td>31.509048</td>
+      <td>49.071780</td>
+      <td>9.741212e+01</td>
+    </tr>
+    <tr>
+      <th>CO2EMI</th>
+      <td>170.0</td>
+      <td>3.751097</td>
+      <td>4.606479e+00</td>
+      <td>0.032585</td>
+      <td>0.631924</td>
+      <td>2.298368</td>
+      <td>4.823496</td>
+      <td>3.172684e+01</td>
+    </tr>
+    <tr>
+      <th>PM2EXP</th>
+      <td>167.0</td>
+      <td>91.940595</td>
+      <td>2.206003e+01</td>
+      <td>0.274092</td>
+      <td>99.627134</td>
+      <td>100.000000</td>
+      <td>100.000000</td>
+      <td>1.000000e+02</td>
+    </tr>
+    <tr>
+      <th>POPDEN</th>
+      <td>174.0</td>
+      <td>200.886765</td>
+      <td>6.453834e+02</td>
+      <td>2.115134</td>
+      <td>27.454539</td>
+      <td>77.983133</td>
+      <td>153.993650</td>
+      <td>7.918951e+03</td>
+    </tr>
+    <tr>
+      <th>ENRTER</th>
+      <td>116.0</td>
+      <td>49.994997</td>
+      <td>2.970619e+01</td>
+      <td>2.432581</td>
+      <td>22.107195</td>
+      <td>53.392460</td>
+      <td>71.057467</td>
+      <td>1.433107e+02</td>
+    </tr>
+    <tr>
+      <th>GDPCAP</th>
+      <td>170.0</td>
+      <td>13992.095610</td>
+      <td>1.957954e+04</td>
+      <td>216.827417</td>
+      <td>1870.503029</td>
+      <td>5348.192875</td>
+      <td>17421.116227</td>
+      <td>1.173705e+05</td>
+    </tr>
+    <tr>
+      <th>EPISCO</th>
+      <td>165.0</td>
+      <td>42.946667</td>
+      <td>1.249086e+01</td>
+      <td>18.900000</td>
+      <td>33.000000</td>
+      <td>40.900000</td>
+      <td>50.500000</td>
+      <td>7.790000e+01</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 
 
 ```python
 ##################################
 # Performing a general exploration of the categorical variable
 ##################################
-print('Categorical Variable Summary: \n', cancer_rate.describe(include='object').transpose())
+print('Categorical Variable Summary:')
+display(cancer_rate.describe(include='object').transpose())
 ```
 
-    Categorical Variable Summary: 
-             count unique        top freq
-    COUNTRY   177    177  Australia    1
-    HDICAT    167      4         VH   59
+    Categorical Variable Summary:
     
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>unique</th>
+      <th>top</th>
+      <th>freq</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>COUNTRY</th>
+      <td>177</td>
+      <td>177</td>
+      <td>Australia</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>HDICAT</th>
+      <td>167</td>
+      <td>4</td>
+      <td>VH</td>
+      <td>59</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 
 ## 1.3. Data Quality Assessment <a class="anchor" id="1.3"></a>
 Details
 
 
 ```python
-
+##################################
+# Gathering the data types for each column
+##################################
+data_type_list = list(cancer_rate.dtypes)
 ```
 
 
 ```python
-
+##################################
+# Gathering the variable names for each column
+##################################
+variable_name_list = list(cancer_rate.columns)
 ```
 
 
 ```python
-
-
+##################################
+# Gathering the number of observations for each column
+##################################
+row_count_list = list([len(cancer_rate)] * len(cancer_rate.columns))
 ```
 
 
 ```python
-
+##################################
+# Gathering the number of missing data for each column
+##################################
+null_count_list = list(cancer_rate.isna().sum())
 ```
 
 
 ```python
-
+##################################
+# Gathering the number of missing data for each column
+##################################
+non_null_count_list = list(cancer_rate.count())
 ```
 
 
 ```python
-
+##################################
+# Gathering the missing data percentage for each column
+##################################
+fill_rate_list = map(truediv, non_null_count_list, row_count_list)
 ```
+
+
+```python
+##################################
+# Formulating the summary
+# for all columns
+##################################
+all_data_quality_summary = pd.DataFrame(zip(variable_name_list,
+                                            data_type_list,
+                                            row_count_list,
+                                            non_null_count_list,
+                                            null_count_list,                                            
+                                            fill_rate_list), 
+                                        columns=['Column.Name',
+                                                 'Column.Type',
+                                                 'Row.Count',
+                                                 'Non.Null.Count',
+                                                 'Null.Count',                                                 
+                                                 'Fill.Rate'])
+display(all_data_quality_summary)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Column.Name</th>
+      <th>Column.Type</th>
+      <th>Row.Count</th>
+      <th>Non.Null.Count</th>
+      <th>Null.Count</th>
+      <th>Fill.Rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>COUNTRY</td>
+      <td>object</td>
+      <td>177</td>
+      <td>177</td>
+      <td>0</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>CANRAT</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>177</td>
+      <td>0</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>GDPPER</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>165</td>
+      <td>12</td>
+      <td>0.932203</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>URBPOP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>PATRES</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>108</td>
+      <td>69</td>
+      <td>0.610169</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>RNDGDP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>74</td>
+      <td>103</td>
+      <td>0.418079</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>POPGRO</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>LIFEXP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>TUBINC</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>DTHCMD</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>AGRLND</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>GHGEMI</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>RELOUT</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>153</td>
+      <td>24</td>
+      <td>0.864407</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>METEMI</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>FORARE</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>173</td>
+      <td>4</td>
+      <td>0.977401</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>CO2EMI</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>PM2EXP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>167</td>
+      <td>10</td>
+      <td>0.943503</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>POPDEN</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>ENRTER</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>116</td>
+      <td>61</td>
+      <td>0.655367</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>GDPCAP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>HDICAT</td>
+      <td>object</td>
+      <td>177</td>
+      <td>167</td>
+      <td>10</td>
+      <td>0.943503</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>EPISCO</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>165</td>
+      <td>12</td>
+      <td>0.932203</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+##################################
+# Formulating the dataset
+# with numeric columns only
+##################################
+cancer_rate_numeric = cancer_rate.select_dtypes(include='number')
+```
+
+
+```python
+##################################
+# Gathering the variable names for each numeric column
+##################################
+numeric_variable_name_list = cancer_rate_numeric.columns
+```
+
+
+```python
+##################################
+# Gathering the minimum value for each numeric column
+##################################
+numeric_minimum_list = cancer_rate_numeric.min()
+```
+
+
+```python
+##################################
+# Gathering the mean value for each numeric column
+##################################
+numeric_mean_list = cancer_rate_numeric.mean()
+```
+
+
+```python
+##################################
+# Gathering the median value for each numeric column
+##################################
+numeric_median_list = cancer_rate_numeric.median()
+```
+
+
+```python
+##################################
+# Gathering the maximum value for each numeric column
+##################################
+numeric_maximum_list = cancer_rate_numeric.max()
+```
+
+
+```python
+##################################
+# Gathering the first mode values for each numeric column
+##################################
+numeric_first_mode_list = [cancer_rate[x].value_counts(dropna=True).index.tolist()[0] for x in cancer_rate_numeric]
+```
+
+
+```python
+##################################
+# Gathering the second mode values for each numeric column
+##################################
+numeric_second_mode_list = [cancer_rate[x].value_counts(dropna=True).index.tolist()[1] for x in cancer_rate_numeric]
+```
+
+
+```python
+##################################
+# Gathering the count of first mode values for each numeric column
+##################################
+numeric_first_mode_count_list = [cancer_rate_numeric[x].isin([cancer_rate[x].value_counts(dropna=True).index.tolist()[0]]).sum() for x in cancer_rate_numeric]
+```
+
+
+```python
+##################################
+# Gathering the count of second mode values for each numeric column
+##################################
+numeric_second_mode_count_list = [cancer_rate_numeric[x].isin([cancer_rate[x].value_counts(dropna=True).index.tolist()[1]]).sum() for x in cancer_rate_numeric]
+```
+
+
+```python
+##################################
+# Gathering the first mode to second mode ratio for each numeric column
+##################################
+numeric_first_second_mode_ratio_list = map(truediv, numeric_first_mode_count_list, numeric_second_mode_count_list)
+```
+
+
+```python
+##################################
+# Gathering the count of unique values for each numeric column
+##################################
+numeric_unique_count_list = cancer_rate_numeric.nunique(dropna=True)
+```
+
+
+```python
+##################################
+# Gathering the number of observations for each numeric column
+##################################
+numeric_row_count_list = list([len(cancer_rate_numeric)] * len(cancer_rate_numeric.columns))
+```
+
+
+```python
+##################################
+# Gathering the unique to count ratio for each numeric column
+##################################
+numeric_unique_count_ratio_list = map(truediv, numeric_unique_count_list, numeric_row_count_list)
+```
+
+
+```python
+##################################
+# Gathering the skewness value for each numeric column
+##################################
+numeric_skewness_list = cancer_rate_numeric.skew()
+```
+
+
+```python
+##################################
+# Gathering the kurtosis value for each numeric column
+##################################
+numeric_kurtosis_list = cancer_rate_numeric.kurtosis()
+```
+
+
+```python
+numeric_data_quality_summary = pd.DataFrame(zip(numeric_variable_name_list,
+                                                numeric_minimum_list,
+                                                numeric_mean_list,
+                                                numeric_median_list,
+                                                numeric_maximum_list,
+                                                numeric_first_mode_list,
+                                                numeric_second_mode_list,
+                                                numeric_first_mode_count_list,
+                                                numeric_second_mode_count_list,
+                                                numeric_first_second_mode_ratio_list,
+                                                numeric_unique_count_list,
+                                                numeric_row_count_list,
+                                                numeric_unique_count_ratio_list,
+                                                numeric_skewness_list,
+                                                numeric_kurtosis_list), 
+                                        columns=['Numeric.Column.Name',
+                                                 'Minimum',
+                                                 'Mean',
+                                                 'Median',
+                                                 'Maximum',
+                                                 'First.Mode',
+                                                 'Second.Mode',
+                                                 'First.Mode.Count',
+                                                 'Second.Mode.Count',
+                                                 'First.Second.Mode.Ratio',
+                                                 'Unique.Count',
+                                                 'Row.Count',
+                                                 'Unique.Count.Ratio',
+                                                 'Skewness',
+                                                 'Kurtosis'])
+display(numeric_data_quality_summary)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Numeric.Column.Name</th>
+      <th>Minimum</th>
+      <th>Mean</th>
+      <th>Median</th>
+      <th>Maximum</th>
+      <th>First.Mode</th>
+      <th>Second.Mode</th>
+      <th>First.Mode.Count</th>
+      <th>Second.Mode.Count</th>
+      <th>First.Second.Mode.Ratio</th>
+      <th>Unique.Count</th>
+      <th>Row.Count</th>
+      <th>Unique.Count.Ratio</th>
+      <th>Skewness</th>
+      <th>Kurtosis</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>CANRAT</td>
+      <td>78.400000</td>
+      <td>183.829379</td>
+      <td>155.300000</td>
+      <td>4.524000e+02</td>
+      <td>135.300000</td>
+      <td>106.700000</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1.500000</td>
+      <td>167</td>
+      <td>177</td>
+      <td>0.943503</td>
+      <td>0.881825</td>
+      <td>0.063467</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>GDPPER</td>
+      <td>1718.804896</td>
+      <td>45284.424283</td>
+      <td>34024.900890</td>
+      <td>2.346469e+05</td>
+      <td>98380.636010</td>
+      <td>42154.178100</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>165</td>
+      <td>177</td>
+      <td>0.932203</td>
+      <td>1.517574</td>
+      <td>3.471992</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>URBPOP</td>
+      <td>13.345000</td>
+      <td>59.788121</td>
+      <td>61.701500</td>
+      <td>1.000000e+02</td>
+      <td>100.000000</td>
+      <td>52.516000</td>
+      <td>2</td>
+      <td>1</td>
+      <td>2.000000</td>
+      <td>173</td>
+      <td>177</td>
+      <td>0.977401</td>
+      <td>-0.210702</td>
+      <td>-0.962847</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>PATRES</td>
+      <td>1.000000</td>
+      <td>20607.388889</td>
+      <td>244.500000</td>
+      <td>1.344817e+06</td>
+      <td>6.000000</td>
+      <td>2.000000</td>
+      <td>4</td>
+      <td>3</td>
+      <td>1.333333</td>
+      <td>97</td>
+      <td>177</td>
+      <td>0.548023</td>
+      <td>9.284436</td>
+      <td>91.187178</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>RNDGDP</td>
+      <td>0.039770</td>
+      <td>1.197474</td>
+      <td>0.873660</td>
+      <td>5.354510e+00</td>
+      <td>1.232440</td>
+      <td>0.962180</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>74</td>
+      <td>177</td>
+      <td>0.418079</td>
+      <td>1.396742</td>
+      <td>1.695957</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>POPGRO</td>
+      <td>-2.079337</td>
+      <td>1.127028</td>
+      <td>1.179959</td>
+      <td>3.727101e+00</td>
+      <td>1.235701</td>
+      <td>1.483129</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>174</td>
+      <td>177</td>
+      <td>0.983051</td>
+      <td>-0.195161</td>
+      <td>-0.423580</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>LIFEXP</td>
+      <td>52.777000</td>
+      <td>71.746113</td>
+      <td>72.464610</td>
+      <td>8.456000e+01</td>
+      <td>83.200000</td>
+      <td>68.687000</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>174</td>
+      <td>177</td>
+      <td>0.983051</td>
+      <td>-0.357965</td>
+      <td>-0.649601</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>TUBINC</td>
+      <td>0.770000</td>
+      <td>105.005862</td>
+      <td>44.500000</td>
+      <td>5.920000e+02</td>
+      <td>12.000000</td>
+      <td>7.200000</td>
+      <td>4</td>
+      <td>3</td>
+      <td>1.333333</td>
+      <td>131</td>
+      <td>177</td>
+      <td>0.740113</td>
+      <td>1.746333</td>
+      <td>2.429368</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>DTHCMD</td>
+      <td>1.283611</td>
+      <td>21.260521</td>
+      <td>12.456279</td>
+      <td>6.520789e+01</td>
+      <td>4.941054</td>
+      <td>42.079403</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>170</td>
+      <td>177</td>
+      <td>0.960452</td>
+      <td>0.900509</td>
+      <td>-0.691541</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>AGRLND</td>
+      <td>0.512821</td>
+      <td>38.793456</td>
+      <td>40.386649</td>
+      <td>8.084112e+01</td>
+      <td>46.252480</td>
+      <td>72.006469</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>174</td>
+      <td>177</td>
+      <td>0.983051</td>
+      <td>0.074000</td>
+      <td>-0.926249</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>GHGEMI</td>
+      <td>179.725150</td>
+      <td>259582.709895</td>
+      <td>41009.275980</td>
+      <td>1.294287e+07</td>
+      <td>571903.119900</td>
+      <td>3000.932259</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>170</td>
+      <td>177</td>
+      <td>0.960452</td>
+      <td>9.496120</td>
+      <td>101.637308</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>RELOUT</td>
+      <td>0.000296</td>
+      <td>39.760036</td>
+      <td>32.381668</td>
+      <td>1.000000e+02</td>
+      <td>100.000000</td>
+      <td>13.637841</td>
+      <td>3</td>
+      <td>1</td>
+      <td>3.000000</td>
+      <td>151</td>
+      <td>177</td>
+      <td>0.853107</td>
+      <td>0.501088</td>
+      <td>-0.981774</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>METEMI</td>
+      <td>11.596147</td>
+      <td>47876.133575</td>
+      <td>11118.976025</td>
+      <td>1.186285e+06</td>
+      <td>131484.763200</td>
+      <td>1326.034028</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>170</td>
+      <td>177</td>
+      <td>0.960452</td>
+      <td>5.801014</td>
+      <td>38.661386</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>FORARE</td>
+      <td>0.008078</td>
+      <td>32.218177</td>
+      <td>31.509048</td>
+      <td>9.741212e+01</td>
+      <td>17.421315</td>
+      <td>8.782159</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>173</td>
+      <td>177</td>
+      <td>0.977401</td>
+      <td>0.519277</td>
+      <td>-0.322589</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>CO2EMI</td>
+      <td>0.032585</td>
+      <td>3.751097</td>
+      <td>2.298368</td>
+      <td>3.172684e+01</td>
+      <td>14.772658</td>
+      <td>0.972088</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>170</td>
+      <td>177</td>
+      <td>0.960452</td>
+      <td>2.721552</td>
+      <td>10.311574</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>PM2EXP</td>
+      <td>0.274092</td>
+      <td>91.940595</td>
+      <td>100.000000</td>
+      <td>1.000000e+02</td>
+      <td>100.000000</td>
+      <td>100.000000</td>
+      <td>106</td>
+      <td>2</td>
+      <td>53.000000</td>
+      <td>61</td>
+      <td>177</td>
+      <td>0.344633</td>
+      <td>-3.141557</td>
+      <td>9.032386</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>POPDEN</td>
+      <td>2.115134</td>
+      <td>200.886765</td>
+      <td>77.983133</td>
+      <td>7.918951e+03</td>
+      <td>3.335312</td>
+      <td>13.300785</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>174</td>
+      <td>177</td>
+      <td>0.983051</td>
+      <td>10.267750</td>
+      <td>119.995256</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>ENRTER</td>
+      <td>2.432581</td>
+      <td>49.994997</td>
+      <td>53.392460</td>
+      <td>1.433107e+02</td>
+      <td>110.139221</td>
+      <td>45.220661</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>116</td>
+      <td>177</td>
+      <td>0.655367</td>
+      <td>0.275863</td>
+      <td>-0.392895</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>GDPCAP</td>
+      <td>216.827417</td>
+      <td>13992.095610</td>
+      <td>5348.192875</td>
+      <td>1.173705e+05</td>
+      <td>51722.069000</td>
+      <td>3961.726633</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>170</td>
+      <td>177</td>
+      <td>0.960452</td>
+      <td>2.258568</td>
+      <td>5.938690</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>EPISCO</td>
+      <td>18.900000</td>
+      <td>42.946667</td>
+      <td>40.900000</td>
+      <td>7.790000e+01</td>
+      <td>29.600000</td>
+      <td>43.600000</td>
+      <td>3</td>
+      <td>3</td>
+      <td>1.000000</td>
+      <td>137</td>
+      <td>177</td>
+      <td>0.774011</td>
+      <td>0.641799</td>
+      <td>0.035208</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+##################################
+# Formulating the dataset
+# with categorical columns only
+##################################
+cancer_rate_categorical = cancer_rate.select_dtypes(include='object')
+```
+
+
+```python
+##################################
+# Gathering the variable names for each categorical column
+##################################
+categorical_variable_name_list = cancer_rate_categorical.columns
+```
+
+
+```python
+##################################
+# Gathering the first mode values for each categorical column
+##################################
+categorical_first_mode_list = [cancer_rate[x].value_counts().index.tolist()[0] for x in cancer_rate_categorical]
+```
+
+
+```python
+##################################
+# Gathering the second mode values for each categorical column
+##################################
+categorical_second_mode_list = [cancer_rate[x].value_counts().index.tolist()[1] for x in cancer_rate_categorical]
+```
+
+
+```python
+##################################
+# Gathering the count of first mode values for each categorical column
+##################################
+categorical_first_mode_count_list = [cancer_rate_categorical[x].isin([cancer_rate[x].value_counts(dropna=True).index.tolist()[0]]).sum() for x in cancer_rate_categorical]
+```
+
+
+```python
+##################################
+# Gathering the count of second mode values for each categorical column
+##################################
+categorical_second_mode_count_list = [cancer_rate_categorical[x].isin([cancer_rate[x].value_counts(dropna=True).index.tolist()[1]]).sum() for x in cancer_rate_categorical]
+```
+
+
+```python
+##################################
+# Gathering the first mode to second mode ratio for each categorical column
+##################################
+categorical_first_second_mode_ratio_list = map(truediv, categorical_first_mode_count_list, categorical_second_mode_count_list)
+```
+
+
+```python
+##################################
+# Gathering the count of unique values for each categorical column
+##################################
+categorical_unique_count_list = cancer_rate_categorical.nunique(dropna=True)
+```
+
+
+```python
+##################################
+# Gathering the number of observations for each categorical column
+##################################
+categorical_row_count_list = list([len(cancer_rate_categorical)] * len(cancer_rate_categorical.columns))
+```
+
+
+```python
+##################################
+# Gathering the unique to count ratio for each categorical column
+##################################
+categorical_unique_count_ratio_list = map(truediv, categorical_unique_count_list, categorical_row_count_list)
+```
+
+
+```python
+categorical_data_quality_summary = pd.DataFrame(zip(categorical_variable_name_list,
+                                                    categorical_first_mode_list,
+                                                    categorical_second_mode_list,
+                                                    categorical_first_mode_count_list,
+                                                    categorical_second_mode_count_list,
+                                                    categorical_first_second_mode_ratio_list,
+                                                    categorical_unique_count_list,
+                                                    categorical_row_count_list,
+                                                    categorical_unique_count_ratio_list), 
+                                        columns=['Categorical.Column.Name',
+                                                 'First.Mode',
+                                                 'Second.Mode',
+                                                 'First.Mode.Count',
+                                                 'Second.Mode.Count',
+                                                 'First.Second.Mode.Ratio',
+                                                 'Unique.Count',
+                                                 'Row.Count',
+                                                 'Unique.Count.Ratio'])
+display(categorical_data_quality_summary)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Categorical.Column.Name</th>
+      <th>First.Mode</th>
+      <th>Second.Mode</th>
+      <th>First.Mode.Count</th>
+      <th>Second.Mode.Count</th>
+      <th>First.Second.Mode.Ratio</th>
+      <th>Unique.Count</th>
+      <th>Row.Count</th>
+      <th>Unique.Count.Ratio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>COUNTRY</td>
+      <td>Australia</td>
+      <td>Mauritius</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>177</td>
+      <td>177</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>HDICAT</td>
+      <td>VH</td>
+      <td>H</td>
+      <td>59</td>
+      <td>39</td>
+      <td>1.512821</td>
+      <td>4</td>
+      <td>177</td>
+      <td>0.022599</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 
 ## 1.4. Data Preprocessing <a class="anchor" id="1.4"></a>
 Details
