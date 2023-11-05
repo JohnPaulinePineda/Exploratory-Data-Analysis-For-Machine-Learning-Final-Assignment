@@ -2,7 +2,7 @@
 # Data Preprocessing : Data Quality Assessment, Preprocessing and Exploration for a Regression Modelling Problem
 
 ***
-### John Pauline Pineda <br> <br> *November 7, 2023*
+### John Pauline Pineda <br> <br> *November 10, 2023*
 ***
 
 * [**1. Table of Contents**](#TOC)
@@ -10,16 +10,15 @@
     * [1.2 Data Description](#1.2)
     * [1.3 Data Quality Assessment](#1.3)
     * [1.4 Data Preprocessing](#1.4)
-        * [1.4.1 Missing Data Imputation](#1.4.1)
-        * [1.4.2 Outlier Treatment](#1.4.2)
-        * [1.4.3 Zero and Near-Zero Variance](#1.4.3)
+        * [1.4.1 Data Cleaning](#1.4.1)
+        * [1.4.2 Missing Data Imputation](#1.4.2)
+        * [1.4.3 Outlier Treatment](#1.4.3)
         * [1.4.4 Collinearity](#1.4.4)
-        * [1.4.5 Linear Dependencies](#1.4.5)
-        * [1.4.6 Centering and Scaling](#1.4.6)
-        * [1.4.7 Shape Transformation](#1.4.7)
-        * [1.4.8. Dummy Variables](#1.4.8)
-        * [1.4.9. Preprocessed Data Description](#1.4.9)
-     * [1.5 Data Exploration](#1.5)
+        * [1.4.5 Centering and Scaling](#1.4.5)
+        * [1.4.6 Shape Transformation](#1.4.6)
+        * [1.4.7 Dummy Variables](#1.4.7)
+        * [1.4.8 Preprocessed Data Description](#1.4.8)
+    * [1.5 Data Exploration](#1.5)
 * [**2. Summary**](#Summary)   
 * [**3. References**](#References)
 
@@ -83,7 +82,7 @@ The predictor variables for the study are:
 
 ## 1.2. Data Description <a class="anchor" id="1.2"></a>
 
-The dataset is comprised of:
+1. The dataset is comprised of:
 * **177 rows** (observations)
 * **22 columns** (variables)
     * **1/22 metadata** (categorical)
@@ -110,7 +109,7 @@ The dataset is comprised of:
          * <span style="color: #FF0000">GDPCAP</span>
          * <span style="color: #FF0000">ENRTER</span>
          * <span style="color: #FF0000">EPISCO</span>
-     * **1/22 predictor** (categorical)
+    * **1/22 predictor** (categorical)
          * <span style="color: #FF0000">HDICAT</span>
 
 
@@ -122,8 +121,13 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from operator import add,mul,truediv
+import matplotlib.colors
 %matplotlib inline
+
+from operator import add,mul,truediv
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
+from sklearn.linear_model import LinearRegression
 ```
 
 
@@ -695,36 +699,67 @@ display(cancer_rate.describe(include='object').transpose())
 ## 1.3. Data Quality Assessment <a class="anchor" id="1.3"></a>
 
 Data quality findings based on assessment are as follows:
-* Missing observations noted for 20 variables with Null.Count>0 and Fill.Rate<1.0.
-    * <span style="color: #FF0000">RNDGDP</span>: Null_Count = 103, Fill_Rate = 0.418
-    * <span style="color: #FF0000">PATRES</span>: Null_Count = 69, Fill_Rate = 0.610
-    * <span style="color: #FF0000">ENRTER</span>: Null_Count = 61, Fill_Rate = 0.655
-    * <span style="color: #FF0000">RELOUT</span>: Null_Count = 24, Fill_Rate = 0.864
-    * <span style="color: #FF0000">GDPPER</span>: Null_Count = 12, Fill_Rate = 0.932
-    * <span style="color: #FF0000">EPISCO</span>: Null_Count = 12, Fill_Rate = 0.932
-    * <span style="color: #FF0000">HDICAT</span>: Null_Count = 10, Fill_Rate = 0.943
-    * <span style="color: #FF0000">PM2EXP</span>: Null_Count = 10, Fill_Rate = 0.943
-    * <span style="color: #FF0000">DTHCMD</span>: Null_Count = 7, Fill_Rate = 0.960
-    * <span style="color: #FF0000">METEMI</span>: Null_Count = 7, Fill_Rate = 0.960
-    * <span style="color: #FF0000">CO2EMI</span>: Null_Count = 7, Fill_Rate = 0.960
-    * <span style="color: #FF0000">GDPCAP</span>: Null_Count = 7, Fill_Rate = 0.960
-    * <span style="color: #FF0000">GHGEMI</span>: Null_Count = 7, Fill_Rate = 0.960
-    * <span style="color: #FF0000">FORARE</span>: Null_Count = 4, Fill_Rate = 0.977
-    * <span style="color: #FF0000">TUBINC</span>: Null_Count = 3, Fill_Rate = 0.983
-    * <span style="color: #FF0000">AGRLND</span>: Null_Count = 3, Fill_Rate = 0.983
-    * <span style="color: #FF0000">POPGRO</span>: Null_Count = 3, Fill_Rate = 0.983
-    * <span style="color: #FF0000">POPDEN</span>: Null_Count = 3, Fill_Rate = 0.983
-    * <span style="color: #FF0000">URBPOP</span>: Null_Count = 3, Fill_Rate = 0.983
-    * <span style="color: #FF0000">LIFEXP</span>: Null_Count = 3, Fill_Rate = 0.983
-* Low variance observed for 1 variable with First.Second.Mode.Ratio>5.
+1. No duplicated rows observed.
+2. Missing data noted for 20 variables with Null.Count>0 and Fill.Rate<1.0.
+    * <span style="color: #FF0000">RNDGDP</span>: Null.Count = 103, Fill.Rate = 0.418
+    * <span style="color: #FF0000">PATRES</span>: Null.Count = 69, Fill.Rate = 0.610
+    * <span style="color: #FF0000">ENRTER</span>: Null.Count = 61, Fill.Rate = 0.655
+    * <span style="color: #FF0000">RELOUT</span>: Null.Count = 24, Fill.Rate = 0.864
+    * <span style="color: #FF0000">GDPPER</span>: Null.Count = 12, Fill.Rate = 0.932
+    * <span style="color: #FF0000">EPISCO</span>: Null.Count = 12, Fill.Rate = 0.932
+    * <span style="color: #FF0000">HDICAT</span>: Null.Count = 10, Fill.Rate = 0.943
+    * <span style="color: #FF0000">PM2EXP</span>: Null.Count = 10, Fill.Rate = 0.943
+    * <span style="color: #FF0000">DTHCMD</span>: Null.Count = 7, Fill.Rate = 0.960
+    * <span style="color: #FF0000">METEMI</span>: Null.Count = 7, Fill.Rate = 0.960
+    * <span style="color: #FF0000">CO2EMI</span>: Null.Count = 7, Fill.Rate = 0.960
+    * <span style="color: #FF0000">GDPCAP</span>: Null.Count = 7, Fill.Rate = 0.960
+    * <span style="color: #FF0000">GHGEMI</span>: Null.Count = 7, Fill.Rate = 0.960
+    * <span style="color: #FF0000">FORARE</span>: Null.Count = 4, Fill.Rate = 0.977
+    * <span style="color: #FF0000">TUBINC</span>: Null.Count = 3, Fill.Rate = 0.983
+    * <span style="color: #FF0000">AGRLND</span>: Null.Count = 3, Fill.Rate = 0.983
+    * <span style="color: #FF0000">POPGRO</span>: Null.Count = 3, Fill.Rate = 0.983
+    * <span style="color: #FF0000">POPDEN</span>: Null.Count = 3, Fill.Rate = 0.983
+    * <span style="color: #FF0000">URBPOP</span>: Null.Count = 3, Fill.Rate = 0.983
+    * <span style="color: #FF0000">LIFEXP</span>: Null.Count = 3, Fill.Rate = 0.983
+3. 120 observations noted with at least 1 missing data. From this number, 14 observations reported high Missing.Rate>0.2.
+    * <span style="color: #FF0000">COUNTRY=Guadeloupe</span>: Missing.Rate= 0.909
+    * <span style="color: #FF0000">COUNTRY=Martinique</span>: Missing.Rate= 0.909
+    * <span style="color: #FF0000">COUNTRY=French Guiana</span>: Missing.Rate= 0.909
+    * <span style="color: #FF0000">COUNTRY=New Caledonia</span>: Missing.Rate= 0.500
+    * <span style="color: #FF0000">COUNTRY=French Polynesia</span>: Missing.Rate= 0.500
+    * <span style="color: #FF0000">COUNTRY=Guam</span>: Missing.Rate= 0.500
+    * <span style="color: #FF0000">COUNTRY=Puerto Rico</span>: Missing.Rate= 0.409
+    * <span style="color: #FF0000">COUNTRY=North Korea</span>: Missing.Rate= 0.227
+    * <span style="color: #FF0000">COUNTRY=Somalia</span>: Missing.Rate= 0.227
+    * <span style="color: #FF0000">COUNTRY=South Sudan</span>: Missing.Rate= 0.227
+    * <span style="color: #FF0000">COUNTRY=Venezuela</span>: Missing.Rate= 0.227
+    * <span style="color: #FF0000">COUNTRY=Libya</span>: Missing.Rate= 0.227
+    * <span style="color: #FF0000">COUNTRY=Eritrea</span>: Missing.Rate= 0.227
+    * <span style="color: #FF0000">COUNTRY=Yemen</span>: Missing.Rate= 0.227
+4. Low variance observed for 1 variable with First.Second.Mode.Ratio>5.
     * <span style="color: #FF0000">PM2EXP</span>: First.Second.Mode.Ratio = 53.000
-* No low variance observed for any variable with Unique.Count.Ratio>10.
-* High skewness observed for 5 variables with Skewness>3 or Skewness<(-3).
+5. No low variance observed for any variable with Unique.Count.Ratio>10.
+6. High skewness observed for 5 variables with Skewness>3 or Skewness<(-3).
     * <span style="color: #FF0000">POPDEN</span>: Skewness = +10.267
     * <span style="color: #FF0000">GHGEMI</span>: Skewness = +9.496
     * <span style="color: #FF0000">PATRES</span>: Skewness = +9.284
     * <span style="color: #FF0000">METEMI</span>: Skewness = +5.801
     * <span style="color: #FF0000">PM2EXP</span>: Skewness = -3.141
+
+
+```python
+##################################
+# Counting the number of duplicated rows
+##################################
+cancer_rate.duplicated().sum()
+```
+
+
+
+
+    0
+
+
 
 
 ```python
@@ -761,7 +796,7 @@ null_count_list = list(cancer_rate.isna().sum(axis=0))
 
 ```python
 ##################################
-# Gathering the number of missing data for each column
+# Gathering the number of non-missing data for each column
 ##################################
 non_null_count_list = list(cancer_rate.count())
 ```
@@ -781,11 +816,11 @@ fill_rate_list = map(truediv, non_null_count_list, row_count_list)
 # for all columns
 ##################################
 all_column_quality_summary = pd.DataFrame(zip(variable_name_list,
-                                            data_type_list,
-                                            row_count_list,
-                                            non_null_count_list,
-                                            null_count_list,                                            
-                                            fill_rate_list), 
+                                              data_type_list,
+                                              row_count_list,
+                                              non_null_count_list,
+                                              null_count_list,
+                                              fill_rate_list), 
                                         columns=['Column.Name',
                                                  'Column.Type',
                                                  'Row.Count',
@@ -1258,6 +1293,352 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>174</td>
       <td>3</td>
       <td>0.983051</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+##################################
+# Identifying the rows
+# with Fill.Rate < 0.90
+##################################
+column_low_fill_rate = all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<0.90)]
+```
+
+
+```python
+##################################
+# Gathering the metadata labels for each observation
+##################################
+row_metadata_list = cancer_rate["COUNTRY"].values.tolist()
+```
+
+
+```python
+##################################
+# Gathering the number of columns for each observation
+##################################
+column_count_list = list([len(cancer_rate.columns)] * len(cancer_rate))
+```
+
+
+```python
+##################################
+# Gathering the number of missing data for each row
+##################################
+null_row_list = list(cancer_rate.isna().sum(axis=1))
+```
+
+
+```python
+##################################
+# Gathering the missing data percentage for each column
+##################################
+missing_rate_list = map(truediv, null_row_list, column_count_list)
+```
+
+
+```python
+##################################
+# Identifying the rows
+# with missing data
+##################################
+all_row_quality_summary = pd.DataFrame(zip(row_metadata_list,
+                                           column_count_list,
+                                           null_row_list,
+                                           missing_rate_list), 
+                                        columns=['Row.Name',
+                                                 'Column.Count',
+                                                 'Null.Count',                                                 
+                                                 'Missing.Rate'])
+display(all_row_quality_summary)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Row.Name</th>
+      <th>Column.Count</th>
+      <th>Null.Count</th>
+      <th>Missing.Rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Australia</td>
+      <td>22</td>
+      <td>1</td>
+      <td>0.045455</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>New Zealand</td>
+      <td>22</td>
+      <td>2</td>
+      <td>0.090909</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Ireland</td>
+      <td>22</td>
+      <td>0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>United States</td>
+      <td>22</td>
+      <td>0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Denmark</td>
+      <td>22</td>
+      <td>0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>172</th>
+      <td>Congo Republic</td>
+      <td>22</td>
+      <td>3</td>
+      <td>0.136364</td>
+    </tr>
+    <tr>
+      <th>173</th>
+      <td>Bhutan</td>
+      <td>22</td>
+      <td>2</td>
+      <td>0.090909</td>
+    </tr>
+    <tr>
+      <th>174</th>
+      <td>Nepal</td>
+      <td>22</td>
+      <td>2</td>
+      <td>0.090909</td>
+    </tr>
+    <tr>
+      <th>175</th>
+      <td>Gambia</td>
+      <td>22</td>
+      <td>4</td>
+      <td>0.181818</td>
+    </tr>
+    <tr>
+      <th>176</th>
+      <td>Niger</td>
+      <td>22</td>
+      <td>2</td>
+      <td>0.090909</td>
+    </tr>
+  </tbody>
+</table>
+<p>177 rows × 4 columns</p>
+</div>
+
+
+
+```python
+##################################
+# Counting the number of rows
+# with Missing.Rate > 0.00
+##################################
+len(all_row_quality_summary[(all_row_quality_summary['Missing.Rate']>0.00)])
+```
+
+
+
+
+    120
+
+
+
+
+```python
+##################################
+# Counting the number of rows
+# with Missing.Rate > 0.20
+##################################
+len(all_row_quality_summary[(all_row_quality_summary['Missing.Rate']>0.20)])
+```
+
+
+
+
+    14
+
+
+
+
+```python
+##################################
+# Identifying the rows
+# with Missing.Rate > 0.20
+##################################
+row_high_missing_rate = all_row_quality_summary[(all_row_quality_summary['Missing.Rate']>0.20)]
+```
+
+
+```python
+##################################
+# Identifying the rows
+# with Missing.Rate > 0.20
+##################################
+display(all_row_quality_summary[(all_row_quality_summary['Missing.Rate']>0.20)].sort_values(by=['Missing.Rate'], ascending=False))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Row.Name</th>
+      <th>Column.Count</th>
+      <th>Null.Count</th>
+      <th>Missing.Rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>35</th>
+      <td>Guadeloupe</td>
+      <td>22</td>
+      <td>20</td>
+      <td>0.909091</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>Martinique</td>
+      <td>22</td>
+      <td>20</td>
+      <td>0.909091</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>French Guiana</td>
+      <td>22</td>
+      <td>20</td>
+      <td>0.909091</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>New Caledonia</td>
+      <td>22</td>
+      <td>11</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>French Polynesia</td>
+      <td>22</td>
+      <td>11</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>Guam</td>
+      <td>22</td>
+      <td>11</td>
+      <td>0.500000</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>Puerto Rico</td>
+      <td>22</td>
+      <td>9</td>
+      <td>0.409091</td>
+    </tr>
+    <tr>
+      <th>85</th>
+      <td>North Korea</td>
+      <td>22</td>
+      <td>6</td>
+      <td>0.272727</td>
+    </tr>
+    <tr>
+      <th>132</th>
+      <td>Somalia</td>
+      <td>22</td>
+      <td>6</td>
+      <td>0.272727</td>
+    </tr>
+    <tr>
+      <th>168</th>
+      <td>South Sudan</td>
+      <td>22</td>
+      <td>6</td>
+      <td>0.272727</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>Venezuela</td>
+      <td>22</td>
+      <td>5</td>
+      <td>0.227273</td>
+    </tr>
+    <tr>
+      <th>117</th>
+      <td>Libya</td>
+      <td>22</td>
+      <td>5</td>
+      <td>0.227273</td>
+    </tr>
+    <tr>
+      <th>161</th>
+      <td>Eritrea</td>
+      <td>22</td>
+      <td>5</td>
+      <td>0.227273</td>
+    </tr>
+    <tr>
+      <th>164</th>
+      <td>Yemen</td>
+      <td>22</td>
+      <td>5</td>
+      <td>0.227273</td>
     </tr>
   </tbody>
 </table>
@@ -2285,33 +2666,1245 @@ len(categorical_column_quality_summary[(categorical_column_quality_summary['Uniq
 
 
 ## 1.4. Data Preprocessing <a class="anchor" id="1.4"></a>
-Details
 
-### 1.4.1 Missing Data Imputation <a class="anchor" id="1.4.1"></a>
-Details
 
-### 1.4.2 Outlier Treatment <a class="anchor" id="1.4.2"></a>
-Details
+### 1.4.1 Data Cleaning <a class="anchor" id="1.4.1"></a>
 
-### 1.4.3 Zero and Near-Zero Variance <a class="anchor" id="1.4.3"></a>
-This is sub section 1.3.3
+1. Subsets of rows and columns with high rates of missing data were removed from the dataset:
+    * 4 variables with Fill.Rate<0.9 were excluded for subsequent analysis.
+        * <span style="color: #FF0000">RNDGDP</span>: Null.Count = 103, Fill.Rate = 0.418
+        * <span style="color: #FF0000">PATRES</span>: Null.Count = 69, Fill.Rate = 0.610
+        * <span style="color: #FF0000">ENRTER</span>: Null.Count = 61, Fill.Rate = 0.655
+        * <span style="color: #FF0000">RELOUT</span>: Null.Count = 24, Fill.Rate = 0.864
+    * 14 rows with Missing.Rate>0.2 were exluded for subsequent analysis.
+        * <span style="color: #FF0000">COUNTRY=Guadeloupe</span>: Missing.Rate= 0.909
+        * <span style="color: #FF0000">COUNTRY=Martinique</span>: Missing.Rate= 0.909
+        * <span style="color: #FF0000">COUNTRY=French Guiana</span>: Missing.Rate= 0.909
+        * <span style="color: #FF0000">COUNTRY=New Caledonia</span>: Missing.Rate= 0.500
+        * <span style="color: #FF0000">COUNTRY=French Polynesia</span>: Missing.Rate= 0.500
+        * <span style="color: #FF0000">COUNTRY=Guam</span>: Missing.Rate= 0.500
+        * <span style="color: #FF0000">COUNTRY=Puerto Rico</span>: Missing.Rate= 0.409
+        * <span style="color: #FF0000">COUNTRY=North Korea</span>: Missing.Rate= 0.227
+        * <span style="color: #FF0000">COUNTRY=Somalia</span>: Missing.Rate= 0.227
+        * <span style="color: #FF0000">COUNTRY=South Sudan</span>: Missing.Rate= 0.227
+        * <span style="color: #FF0000">COUNTRY=Venezuela</span>: Missing.Rate= 0.227
+        * <span style="color: #FF0000">COUNTRY=Libya</span>: Missing.Rate= 0.227
+        * <span style="color: #FF0000">COUNTRY=Eritrea</span>: Missing.Rate= 0.227
+        * <span style="color: #FF0000">COUNTRY=Yemen</span>: Missing.Rate= 0.227  
+2. No variables were removed due to zero or near-zero variance.
+3. The cleaned dataset is comprised of:
+    * **163 rows** (observations)
+    * **18 columns** (variables)
+        * **1/18 metadata** (categorical)
+            * <span style="color: #FF0000">COUNTRY</span>
+        * **1/18 target** (numeric)
+             * <span style="color: #FF0000">CANRAT</span>
+        * **15/18 predictor** (numeric)
+             * <span style="color: #FF0000">GDPPER</span>
+             * <span style="color: #FF0000">URBPOP</span>
+             * <span style="color: #FF0000">POPGRO</span>
+             * <span style="color: #FF0000">LIFEXP</span>
+             * <span style="color: #FF0000">TUBINC</span>
+             * <span style="color: #FF0000">DTHCMD</span>
+             * <span style="color: #FF0000">AGRLND</span>
+             * <span style="color: #FF0000">GHGEMI</span>
+             * <span style="color: #FF0000">METEMI</span>
+             * <span style="color: #FF0000">FORARE</span>
+             * <span style="color: #FF0000">CO2EMI</span>
+             * <span style="color: #FF0000">PM2EXP</span>
+             * <span style="color: #FF0000">POPDEN</span>
+             * <span style="color: #FF0000">GDPCAP</span>
+             * <span style="color: #FF0000">EPISCO</span>
+        * **1/18 predictor** (categorical)
+             * <span style="color: #FF0000">HDICAT</span>
+
+
+```python
+##################################
+# Performing a general exploration of the original dataset
+##################################
+print('Dataset Dimensions: ')
+display(cancer_rate.shape)
+```
+
+    Dataset Dimensions: 
+    
+
+
+    (177, 22)
+
+
+
+```python
+##################################
+# Filtering out the rows with
+# with Missing.Rate > 0.20
+##################################
+cancer_rate_filtered_row = cancer_rate.drop(cancer_rate[cancer_rate.COUNTRY.isin(row_high_missing_rate['Row.Name'].values.tolist())].index)
+```
+
+
+```python
+##################################
+# Performing a general exploration of the filtered dataset
+##################################
+print('Dataset Dimensions: ')
+display(cancer_rate_filtered_row.shape)
+```
+
+    Dataset Dimensions: 
+    
+
+
+    (163, 22)
+
+
+
+```python
+##################################
+# Filtering out the columns with
+# with Fill.Rate < 0.90
+##################################
+cancer_rate_filtered_row_column = cancer_rate_filtered_row.drop(column_low_fill_rate['Column.Name'].values.tolist(), axis=1)
+```
+
+
+```python
+##################################
+# Formulating a new dataset object
+# for the cleaned data
+##################################
+cancer_rate_cleaned = cancer_rate_filtered_row_column
+```
+
+
+```python
+##################################
+# Performing a general exploration of the filtered dataset
+##################################
+print('Dataset Dimensions: ')
+display(cancer_rate_cleaned.shape)
+```
+
+    Dataset Dimensions: 
+    
+
+
+    (163, 18)
+
+
+### 1.4.2 Missing Data Imputation <a class="anchor" id="1.4.2"></a>
+
+1. Missing data for numeric variables were imputed using the iterative imputer algorithm with a  linear regression estimator.
+    * <span style="color: #FF0000">GDPPER</span>: Null.Count = 1
+    * <span style="color: #FF0000">FORARE</span>: Null.Count = 1
+    * <span style="color: #FF0000">PM2EXP</span>: Null.Count = 5
+2. Missing data for categorical variables were imputed using the most frequent value.
+    * <span style="color: #FF0000">HDICAP</span>: Null.Count = 1
+
+
+```python
+##################################
+# Formulating the summary
+# for all cleaned columns
+##################################
+cleaned_column_quality_summary = pd.DataFrame(zip(list(cancer_rate_cleaned.columns),
+                                                  list(cancer_rate_cleaned.dtypes),
+                                                  list([len(cancer_rate_cleaned)] * len(cancer_rate_cleaned.columns)),
+                                                  list(cancer_rate_cleaned.count()),
+                                                  list(cancer_rate_cleaned.isna().sum(axis=0))), 
+                                        columns=['Column.Name',
+                                                 'Column.Type',
+                                                 'Row.Count',
+                                                 'Non.Null.Count',
+                                                 'Null.Count'])
+display(cleaned_column_quality_summary)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Column.Name</th>
+      <th>Column.Type</th>
+      <th>Row.Count</th>
+      <th>Non.Null.Count</th>
+      <th>Null.Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>COUNTRY</td>
+      <td>object</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>CANRAT</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>GDPPER</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>162</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>URBPOP</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>POPGRO</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>LIFEXP</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>TUBINC</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>DTHCMD</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>AGRLND</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>GHGEMI</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>METEMI</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>FORARE</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>162</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>CO2EMI</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>PM2EXP</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>158</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>POPDEN</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>GDPCAP</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>HDICAT</td>
+      <td>object</td>
+      <td>163</td>
+      <td>162</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>EPISCO</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+##################################
+# Formulating the cleaned dataset
+# with numeric columns only
+##################################
+cancer_rate_cleaned_numeric = cancer_rate_cleaned.select_dtypes(include='number')
+```
+
+
+```python
+##################################
+# Taking a snapshot of the cleaned dataset
+##################################
+cancer_rate_cleaned_numeric.head()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CANRAT</th>
+      <th>GDPPER</th>
+      <th>URBPOP</th>
+      <th>POPGRO</th>
+      <th>LIFEXP</th>
+      <th>TUBINC</th>
+      <th>DTHCMD</th>
+      <th>AGRLND</th>
+      <th>GHGEMI</th>
+      <th>METEMI</th>
+      <th>FORARE</th>
+      <th>CO2EMI</th>
+      <th>PM2EXP</th>
+      <th>POPDEN</th>
+      <th>GDPCAP</th>
+      <th>EPISCO</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>452.4</td>
+      <td>98380.63601</td>
+      <td>86.241</td>
+      <td>1.235701</td>
+      <td>83.200000</td>
+      <td>7.2</td>
+      <td>4.941054</td>
+      <td>46.252480</td>
+      <td>5.719031e+05</td>
+      <td>131484.763200</td>
+      <td>17.421315</td>
+      <td>14.772658</td>
+      <td>24.893584</td>
+      <td>3.335312</td>
+      <td>51722.06900</td>
+      <td>60.1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>422.9</td>
+      <td>77541.76438</td>
+      <td>86.699</td>
+      <td>2.204789</td>
+      <td>82.256098</td>
+      <td>7.2</td>
+      <td>4.354730</td>
+      <td>38.562911</td>
+      <td>8.015803e+04</td>
+      <td>32241.937000</td>
+      <td>37.570126</td>
+      <td>6.160799</td>
+      <td>NaN</td>
+      <td>19.331586</td>
+      <td>41760.59478</td>
+      <td>56.7</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>372.8</td>
+      <td>198405.87500</td>
+      <td>63.653</td>
+      <td>1.029111</td>
+      <td>82.556098</td>
+      <td>5.3</td>
+      <td>5.684596</td>
+      <td>65.495718</td>
+      <td>5.949773e+04</td>
+      <td>15252.824630</td>
+      <td>11.351720</td>
+      <td>6.768228</td>
+      <td>0.274092</td>
+      <td>72.367281</td>
+      <td>85420.19086</td>
+      <td>57.4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>362.2</td>
+      <td>130941.63690</td>
+      <td>82.664</td>
+      <td>0.964348</td>
+      <td>76.980488</td>
+      <td>2.3</td>
+      <td>5.302060</td>
+      <td>44.363367</td>
+      <td>5.505181e+06</td>
+      <td>748241.402900</td>
+      <td>33.866926</td>
+      <td>13.032828</td>
+      <td>3.343170</td>
+      <td>36.240985</td>
+      <td>63528.63430</td>
+      <td>51.1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>351.1</td>
+      <td>113300.60110</td>
+      <td>88.116</td>
+      <td>0.291641</td>
+      <td>81.602439</td>
+      <td>4.1</td>
+      <td>6.826140</td>
+      <td>65.499675</td>
+      <td>4.113555e+04</td>
+      <td>7778.773921</td>
+      <td>15.711000</td>
+      <td>4.691237</td>
+      <td>56.914456</td>
+      <td>145.785100</td>
+      <td>60915.42440</td>
+      <td>77.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+##################################
+# Defining the estimator to be used
+# at each step of the round-robin imputation
+##################################
+lr = LinearRegression()
+```
+
+
+```python
+##################################
+# Defining the parameter of the
+# iterative imputer which will estimate 
+# the columns with missing values
+# as a function of the other columns
+# in a round-robin fashion
+##################################
+iterative_imputer = IterativeImputer(
+    estimator = lr,
+    max_iter = 10,
+    tol = 1e-10,
+    imputation_order = 'ascending',
+    random_state=88888888
+)
+```
+
+
+```python
+##################################
+# Implementing the iterative imputer 
+##################################
+cancer_rate_imputed_numeric_array = iterative_imputer.fit_transform(cancer_rate_cleaned_numeric)
+```
+
+
+```python
+##################################
+# Transforming the imputed data
+# from an array to a dataframe
+##################################
+cancer_rate_imputed_numeric = pd.DataFrame(cancer_rate_imputed_numeric_array, 
+                                           columns = cancer_rate_cleaned_numeric.columns)
+```
+
+
+```python
+##################################
+# Taking a snapshot of the imputed dataset
+##################################
+cancer_rate_imputed_numeric.head()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CANRAT</th>
+      <th>GDPPER</th>
+      <th>URBPOP</th>
+      <th>POPGRO</th>
+      <th>LIFEXP</th>
+      <th>TUBINC</th>
+      <th>DTHCMD</th>
+      <th>AGRLND</th>
+      <th>GHGEMI</th>
+      <th>METEMI</th>
+      <th>FORARE</th>
+      <th>CO2EMI</th>
+      <th>PM2EXP</th>
+      <th>POPDEN</th>
+      <th>GDPCAP</th>
+      <th>EPISCO</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>452.4</td>
+      <td>98380.63601</td>
+      <td>86.241</td>
+      <td>1.235701</td>
+      <td>83.200000</td>
+      <td>7.2</td>
+      <td>4.941054</td>
+      <td>46.252480</td>
+      <td>5.719031e+05</td>
+      <td>131484.763200</td>
+      <td>17.421315</td>
+      <td>14.772658</td>
+      <td>24.893584</td>
+      <td>3.335312</td>
+      <td>51722.06900</td>
+      <td>60.1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>422.9</td>
+      <td>77541.76438</td>
+      <td>86.699</td>
+      <td>2.204789</td>
+      <td>82.256098</td>
+      <td>7.2</td>
+      <td>4.354730</td>
+      <td>38.562911</td>
+      <td>8.015803e+04</td>
+      <td>32241.937000</td>
+      <td>37.570126</td>
+      <td>6.160799</td>
+      <td>59.475540</td>
+      <td>19.331586</td>
+      <td>41760.59478</td>
+      <td>56.7</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>372.8</td>
+      <td>198405.87500</td>
+      <td>63.653</td>
+      <td>1.029111</td>
+      <td>82.556098</td>
+      <td>5.3</td>
+      <td>5.684596</td>
+      <td>65.495718</td>
+      <td>5.949773e+04</td>
+      <td>15252.824630</td>
+      <td>11.351720</td>
+      <td>6.768228</td>
+      <td>0.274092</td>
+      <td>72.367281</td>
+      <td>85420.19086</td>
+      <td>57.4</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>362.2</td>
+      <td>130941.63690</td>
+      <td>82.664</td>
+      <td>0.964348</td>
+      <td>76.980488</td>
+      <td>2.3</td>
+      <td>5.302060</td>
+      <td>44.363367</td>
+      <td>5.505181e+06</td>
+      <td>748241.402900</td>
+      <td>33.866926</td>
+      <td>13.032828</td>
+      <td>3.343170</td>
+      <td>36.240985</td>
+      <td>63528.63430</td>
+      <td>51.1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>351.1</td>
+      <td>113300.60110</td>
+      <td>88.116</td>
+      <td>0.291641</td>
+      <td>81.602439</td>
+      <td>4.1</td>
+      <td>6.826140</td>
+      <td>65.499675</td>
+      <td>4.113555e+04</td>
+      <td>7778.773921</td>
+      <td>15.711000</td>
+      <td>4.691237</td>
+      <td>56.914456</td>
+      <td>145.785100</td>
+      <td>60915.42440</td>
+      <td>77.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+##################################
+# Formulating the cleaned dataset
+# with categorical columns only
+##################################
+cancer_rate_cleaned_categorical = cancer_rate_cleaned.select_dtypes(include='object')
+```
+
+
+```python
+##################################
+# Imputing the missing data
+# for categorical columns with
+# the most frequent category
+##################################
+cancer_rate_cleaned_categorical['HDICAT'].fillna(cancer_rate_cleaned_categorical['HDICAT'].mode()[0], inplace=True)
+cancer_rate_imputed_categorical = cancer_rate_cleaned_categorical.reset_index(drop=True)
+```
+
+
+```python
+##################################
+# Formulating the imputed dataset
+##################################
+cancer_rate_imputed = pd.concat([cancer_rate_imputed_numeric,cancer_rate_imputed_categorical], axis=1, join='inner')  
+```
+
+
+```python
+##################################
+# Gathering the data types for each column
+##################################
+data_type_list = list(cancer_rate_imputed.dtypes)
+```
+
+
+```python
+##################################
+# Gathering the variable names for each column
+##################################
+variable_name_list = list(cancer_rate_imputed.columns)
+```
+
+
+```python
+##################################
+# Gathering the number of observations for each column
+##################################
+row_count_list = list([len(cancer_rate_imputed)] * len(cancer_rate_imputed.columns))
+```
+
+
+```python
+##################################
+# Gathering the number of missing data for each column
+##################################
+null_count_list = list(cancer_rate_imputed.isna().sum(axis=0))
+```
+
+
+```python
+##################################
+# Gathering the number of non-missing data for each column
+##################################
+non_null_count_list = list(cancer_rate_imputed.count())
+```
+
+
+```python
+##################################
+# Gathering the missing data percentage for each column
+##################################
+fill_rate_list = map(truediv, non_null_count_list, row_count_list)
+```
+
+
+```python
+##################################
+# Formulating the summary
+# for all imputed columns
+##################################
+imputed_column_quality_summary = pd.DataFrame(zip(variable_name_list,
+                                                  data_type_list,
+                                                  row_count_list,
+                                                  non_null_count_list,
+                                                  null_count_list,
+                                                  fill_rate_list), 
+                                        columns=['Column.Name',
+                                                 'Column.Type',
+                                                 'Row.Count',
+                                                 'Non.Null.Count',
+                                                 'Null.Count',                                                 
+                                                 'Fill.Rate'])
+display(imputed_column_quality_summary)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Column.Name</th>
+      <th>Column.Type</th>
+      <th>Row.Count</th>
+      <th>Non.Null.Count</th>
+      <th>Null.Count</th>
+      <th>Fill.Rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>CANRAT</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>GDPPER</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>URBPOP</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>POPGRO</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LIFEXP</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>TUBINC</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>DTHCMD</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>AGRLND</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>GHGEMI</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>METEMI</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>FORARE</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>CO2EMI</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>PM2EXP</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>POPDEN</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>GDPCAP</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>EPISCO</td>
+      <td>float64</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>COUNTRY</td>
+      <td>object</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>HDICAT</td>
+      <td>object</td>
+      <td>163</td>
+      <td>163</td>
+      <td>0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+### 1.4.3 Outlier Detection <a class="anchor" id="1.4.3"></a>
+
+1. High number of outliers observed for 5 numeric variables with Outlier.Ratio>0.10 and marginal to high Skewness.
+    * <span style="color: #FF0000">PM2EXP</span>: Outlier.Count = 37, Outlier.Ratio = 0.226, Skewness=-3.061
+    * <span style="color: #FF0000">GHGEMI</span>: Outlier.Count = 27, Outlier.Ratio = 0.165, Skewness=+9.299
+    * <span style="color: #FF0000">GDPCAP</span>: Outlier.Count = 22, Outlier.Ratio = 0.134, Skewness=+2.311
+    * <span style="color: #FF0000">POPDEN</span>: Outlier.Count = 20, Outlier.Ratio = 0.122, Skewness=+9.972
+    * <span style="color: #FF0000">METEMI</span>: Outlier.Count = 20, Outlier.Ratio = 0.122, Skewness=+5.688
+1. Minimal number of outliers observed for 5 numeric variables with Outlier.Ratio<0.10 and normal Skewness.
+    * <span style="color: #FF0000">TUBINC</span>: Outlier.Count = 12, Outlier.Ratio = 0.073, Skewness=+1.747
+    * <span style="color: #FF0000">CO2EMI</span>: Outlier.Count = 11, Outlier.Ratio = 0.067, Skewness=+2.693
+    * <span style="color: #FF0000">GDPPER</span>: Outlier.Count = 3, Outlier.Ratio = 0.018, Skewness=+1.554
+    * <span style="color: #FF0000">EPISCO</span>: Outlier.Count = 3, Outlier.Ratio = 0.018, Skewness=+0.635
+    * <span style="color: #FF0000">CANRAT</span>: Outlier.Count = 2, Outlier.Ratio = 0.012, Skewness=+0.910
+
+
+```python
+##################################
+# Formulating the imputed dataset
+# with numeric columns only
+##################################
+cancer_rate_imputed_numeric = cancer_rate_imputed.select_dtypes(include='number')
+```
+
+
+```python
+##################################
+# Gathering the variable names for each numeric column
+##################################
+numeric_variable_name_list = list(cancer_rate_imputed_numeric.columns)
+```
+
+
+```python
+##################################
+# Gathering the skewness value for each numeric column
+##################################
+numeric_skewness_list = cancer_rate_imputed_numeric.skew()
+```
+
+
+```python
+##################################
+# Computing the interquartile range
+# for all columns
+##################################
+cancer_rate_imputed_numeric_q1 = cancer_rate_imputed_numeric.quantile(0.25)
+cancer_rate_imputed_numeric_q3 = cancer_rate_imputed_numeric.quantile(0.75)
+cancer_rate_imputed_numeric_iqr = cancer_rate_imputed_numeric_q3 - cancer_rate_imputed_numeric_q1
+```
+
+
+```python
+##################################
+# Gathering the outlier count for each numeric column
+# based on the interquartile range criterion
+##################################
+numeric_outlier_count_list = ((cancer_rate_imputed_numeric < (cancer_rate_imputed_numeric_q1 - 1.5 * cancer_rate_imputed_numeric_iqr)) | (cancer_rate_imputed_numeric > (cancer_rate_imputed_numeric_q3 + 1.5 * cancer_rate_imputed_numeric_iqr))).sum()
+```
+
+
+```python
+##################################
+# Gathering the number of observations for each column
+##################################
+numeric_row_count_list = list([len(cancer_rate_imputed_numeric)] * len(cancer_rate_imputed_numeric.columns))
+```
+
+
+```python
+##################################
+# Gathering the unique to count ratio for each categorical column
+##################################
+numeric_outlier_ratio_list = map(truediv, numeric_outlier_count_list, numeric_row_count_list)
+```
+
+
+```python
+numeric_column_outlier_summary = pd.DataFrame(zip(numeric_variable_name_list,
+                                                  numeric_skewness_list,
+                                                  numeric_outlier_count_list,
+                                                  numeric_row_count_list,
+                                                  numeric_outlier_ratio_list), 
+                                        columns=['Numeric.Column.Name',
+                                                 'Skewness',
+                                                 'Outlier.Count',
+                                                 'Row.Count',
+                                                 'Outlier.Ratio'])
+display(numeric_column_outlier_summary)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Numeric.Column.Name</th>
+      <th>Skewness</th>
+      <th>Outlier.Count</th>
+      <th>Row.Count</th>
+      <th>Outlier.Ratio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>CANRAT</td>
+      <td>0.910128</td>
+      <td>2</td>
+      <td>163</td>
+      <td>0.012270</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>GDPPER</td>
+      <td>1.554434</td>
+      <td>3</td>
+      <td>163</td>
+      <td>0.018405</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>URBPOP</td>
+      <td>-0.212327</td>
+      <td>0</td>
+      <td>163</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>POPGRO</td>
+      <td>-0.181666</td>
+      <td>0</td>
+      <td>163</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>LIFEXP</td>
+      <td>-0.329704</td>
+      <td>0</td>
+      <td>163</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>TUBINC</td>
+      <td>1.747962</td>
+      <td>12</td>
+      <td>163</td>
+      <td>0.073620</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>DTHCMD</td>
+      <td>0.930709</td>
+      <td>0</td>
+      <td>163</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>AGRLND</td>
+      <td>0.035315</td>
+      <td>0</td>
+      <td>163</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>GHGEMI</td>
+      <td>9.299960</td>
+      <td>27</td>
+      <td>163</td>
+      <td>0.165644</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>METEMI</td>
+      <td>5.688689</td>
+      <td>20</td>
+      <td>163</td>
+      <td>0.122699</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>FORARE</td>
+      <td>0.556183</td>
+      <td>0</td>
+      <td>163</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>CO2EMI</td>
+      <td>2.693585</td>
+      <td>11</td>
+      <td>163</td>
+      <td>0.067485</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>PM2EXP</td>
+      <td>-3.061617</td>
+      <td>37</td>
+      <td>163</td>
+      <td>0.226994</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>POPDEN</td>
+      <td>9.972806</td>
+      <td>20</td>
+      <td>163</td>
+      <td>0.122699</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>GDPCAP</td>
+      <td>2.311079</td>
+      <td>22</td>
+      <td>163</td>
+      <td>0.134969</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>EPISCO</td>
+      <td>0.635994</td>
+      <td>3</td>
+      <td>163</td>
+      <td>0.018405</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 
 ### 1.4.4 Collinearity <a class="anchor" id="1.4.4"></a>
 Details
 
-### 1.4.5 Linear Dependencies <a class="anchor" id="1.4.5"></a>
+### 1.4.5 Centering and Scaling <a class="anchor" id="1.4.5"></a>
 Details
 
-### 1.4.6 Centering and Scaling <a class="anchor" id="1.4.6"></a>
+### 1.4.6 Shape Transformation <a class="anchor" id="1.4.6"></a>
 Details
 
-### 1.4.7 Shape Transformation <a class="anchor" id="1.4.7"></a>
+### 1.4.7 Dummy Variables <a class="anchor" id="1.4.7"></a>
 Details
 
-### 1.4.8 Dummy Variables <a class="anchor" id="1.4.8"></a>
-Details
-
-### 1.4.9 Preprocessed Data Description <a class="anchor" id="1.4.9"></a>
+### 1.4.8 Preprocessed Data Description <a class="anchor" id="1.4.8"></a>
 Details
 
 ## 1.5. Data Exploration <a class="anchor" id="1.5"></a>
