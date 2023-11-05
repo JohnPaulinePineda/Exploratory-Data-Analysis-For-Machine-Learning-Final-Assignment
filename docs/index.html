@@ -14643,7 +14643,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="1.-Table-of-Contents-">1. Table of Contents <a class="anchor" id="TOC" /><a class="anchor-link" href="#1.-Table-of-Contents-">&#182;</a></h1><p>This project explores the various methods in assessing <strong>Data Quality</strong>, implementing <strong>Data Preprocessing</strong> and conducting <strong>Data Exploration</strong> for prediction problems with numeric responses using various helpful packages in <mark style="background-color: #CCECFF">**Python**</mark>. A non-exhaustive list of methods to detect missing data, extreme outlying points, near-zero variance, multicollinearity, linear dependencies and skewed distributions were evaluated. Remedial procedures on addressing data quality issues including missing data imputation, centering and scaling transformation, shape transformation and outlier treatment were similarly considered, as applicable. All results were consolidated in a <a href="#Summary"><span style="color: #FF0000">**Summary**</span></a> presented at the end of the document.</p>
+<h1 id="1.-Table-of-Contents-">1. Table of Contents <a class="anchor" id="TOC" /><a class="anchor-link" href="#1.-Table-of-Contents-">&#182;</a></h1><p>This project explores the various methods in assessing <strong>Data Quality</strong>, implementing <strong>Data Preprocessing</strong> and conducting <strong>Data Exploration</strong> for prediction problems with numeric responses using various helpful packages in <mark style="background-color: #CCECFF"><b>Python</b></mark>. A non-exhaustive list of methods to detect missing data, extreme outlying points, near-zero variance, multicollinearity, linear dependencies and skewed distributions were evaluated. Remedial procedures on addressing data quality issues including missing data imputation, centering and scaling transformation, shape transformation and outlier treatment were similarly considered, as applicable. All results were consolidated in a <a href="#Summary"><span style="color: #FF0000"><b>Summary</b></span></a> presented at the end of the document.</p>
 <p><a href="http://appliedpredictivemodeling.com/">Data quality assessment</a> involves profiling and assessing the data to understand its suitability for machine learning tasks. The quality of training data has a huge impact on the efficiency, accuracy and complexity of machine learning tasks. Data remains susceptible to errors or irregularities that may be introduced during collection, aggregation or annotation stage. Issues such as incorrect labels, synonymous categories in a categorical variable or heterogeneity in columns, among others, which might go undetected by standard pre-processing modules in these frameworks can lead to sub-optimal model performance, inaccurate analysis and unreliable decisions.</p>
 <p><a href="http://appliedpredictivemodeling.com/">Data preprocessing</a> involves changing the raw feature vectors into a representation that is more suitable for the downstream modelling and estimation processes, including data cleaning, integration, reduction and transformation. Data cleaning aims to identify and correct errors in the dataset that may negatively impact a predictive model such as removing outliers, replacing missing values, smoothing noisy data, and correcting inconsistent data. Data integration addresses potential issues with redundant and inconsistent data obtained from multiple sources through approaches such as detection of tuple duplication and data conflict. The purpose of data reduction is to have a condensed representation of the data set that is smaller in volume, while maintaining the integrity of the original data set. Data transformation converts the data into the most appropriate form for data modeling.</p>
 <p><a href="http://appliedpredictivemodeling.com/">Data exploration</a> involves analyzing and investigating data sets to summarize their main characteristics, often employing data visualization methods. It helps determine how best to manipulate data sources to discover patterns, spot anomalies, test a hypothesis, or check assumptions. This process is primarily used to see what data can reveal beyond the formal modeling or hypothesis testing task and provides a better understanding of data set variables and the relationships between them.</p>
@@ -14658,7 +14658,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="1.1.-Data-Background-">1.1. Data Background <a class="anchor" id="1.1" /><a class="anchor-link" href="#1.1.-Data-Background-">&#182;</a></h2><p>Dataset used for the analysis was separately gathered and consolidated from various sources including:</p>
+<h2 id="1.1.-Data-Background-">1.1. Data Background <a class="anchor" id="1.1" /><a class="anchor-link" href="#1.1.-Data-Background-">&#182;</a></h2><p>Datasets used for the analysis were separately gathered and consolidated from various sources including:</p>
 <ol>
 <li>Cancer Rates from <a href="https://worldpopulationreview.com/country-rankings/cancer-rates-by-country">World Population Review</a></li>
 <li>Social Protection and Labor Indicator from <a href="https://data.worldbank.org/topic/social-protection-and-labor?view=chart">World Bank</a></li>
@@ -14678,30 +14678,30 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <p>This study hypothesized that various global development indicators and indices influence cancer rates across countries.</p>
 <p>The target variable for the study is:</p>
 <ul>
-<li><strong>CANRAT</strong> - Age-standardized cancer rates, per 100K population (2022)</li>
+<li><span style="color: #FF0000">CANRAT</span> - Age-standardized cancer rates, per 100K population (2022)</li>
 </ul>
 <p>The predictor variables for the study are:</p>
 <ul>
-<li><strong>GDPPER</strong> - GDP per person employed, current US Dollars (2020)</li>
-<li><strong>URBPOP</strong> - Urban population, % of total population (2020)</li>
-<li><strong>PATRES</strong> - Patent applications by residents, total count (2020)</li>
-<li><strong>RNDGDP</strong> - Research and development expenditure, % of GDP (2020)</li>
-<li><strong>POPGRO</strong> - Population growth, annual % (2020)</li>
-<li><strong>LIFEXP</strong> - Life expectancy at birth, total in years (2020)</li>
-<li><strong>TUBINC</strong> - Incidence of tuberculosis, per 100K population (2020)</li>
-<li><strong>DTHCMD</strong> - Cause of death by communicable diseases and maternal, prenatal and nutrition conditions,  % of total (2019)</li>
-<li><strong>AGRLND</strong> - Agricultural land,  % of land area (2020)</li>
-<li><strong>GHGEMI</strong> - Total greenhouse gas emissions, kt of CO2 equivalent (2020)</li>
-<li><strong>RELOUT</strong> - Renewable electricity output, % of total electricity output (2015)</li>
-<li><strong>METEMI</strong> - Methane emissions, kt of CO2 equivalent (2020)</li>
-<li><strong>FORARE</strong> - Forest area, % of land area (2020)</li>
-<li><strong>CO2EMI</strong> - CO2 emissions, metric tons per capita (2020)</li>
-<li><strong>PM2EXP</strong> - PM2.5 air pollution, population exposed to levels exceeding WHO guideline value,  % of total (2017)</li>
-<li><strong>POPDEN</strong> - Population density, people per sq. km of land area (2020)</li>
-<li><strong>GDPCAP</strong> - GDP per capita, current US Dollars (2020)</li>
-<li><strong>ENRTER</strong> - Tertiary school enrollment, % gross (2020)</li>
-<li><strong>HDICAT</strong> - Human development index, ordered category (2020)</li>
-<li><strong>EPISCO</strong> - Environment performance index , score (2022)</li>
+<li><span style="color: #FF0000">GDPPER</span> - GDP per person employed, current US Dollars (2020)</li>
+<li><span style="color: #FF0000">URBPOP</span> - Urban population, % of total population (2020)</li>
+<li><span style="color: #FF0000">PATRES</span> - Patent applications by residents, total count (2020)</li>
+<li><span style="color: #FF0000">RNDGDP</span> - Research and development expenditure, % of GDP (2020)</li>
+<li><span style="color: #FF0000">POPGRO</span> - Population growth, annual % (2020)</li>
+<li><span style="color: #FF0000">LIFEXP</span> - Life expectancy at birth, total in years (2020)</li>
+<li><span style="color: #FF0000">TUBINC</span> - Incidence of tuberculosis, per 100K population (2020)</li>
+<li><span style="color: #FF0000">DTHCMD</span> - Cause of death by communicable diseases and maternal, prenatal and nutrition conditions,  % of total (2019)</li>
+<li><span style="color: #FF0000">AGRLND</span> - Agricultural land,  % of land area (2020)</li>
+<li><span style="color: #FF0000">GHGEMI</span> - Total greenhouse gas emissions, kt of CO2 equivalent (2020)</li>
+<li><span style="color: #FF0000">RELOUT</span> - Renewable electricity output, % of total electricity output (2015)</li>
+<li><span style="color: #FF0000">METEMI</span> - Methane emissions, kt of CO2 equivalent (2020)</li>
+<li><span style="color: #FF0000">FORARE</span> - Forest area, % of land area (2020)</li>
+<li><span style="color: #FF0000">CO2EMI</span> - CO2 emissions, metric tons per capita (2020)</li>
+<li><span style="color: #FF0000">PM2EXP</span> - PM2.5 air pollution, population exposed to levels exceeding WHO guideline value,  % of total (2017)</li>
+<li><span style="color: #FF0000">POPDEN</span> - Population density, people per sq. km of land area (2020)</li>
+<li><span style="color: #FF0000">GDPCAP</span> - GDP per capita, current US Dollars (2020)</li>
+<li><span style="color: #FF0000">ENRTER</span> - Tertiary school enrollment, % gross (2020)</li>
+<li><span style="color: #FF0000">HDICAT</span> - Human development index, ordered category (2020)</li>
+<li><span style="color: #FF0000">EPISCO</span> - Environment performance index , score (2022)</li>
 </ul>
 
 </div>
@@ -14730,37 +14730,37 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <li><strong>177 rows</strong> (observations)</li>
 <li><strong>22 columns</strong> (variables)<ul>
 <li><strong>1/22 metadata</strong> (categorical)<ul>
-<li><strong>COUNTRY</strong></li>
+<li><span style="color: #FF0000">COUNTRY</span></li>
 </ul>
 </li>
 <li><strong>1/22 target</strong> (numeric)<ul>
-<li><strong>CANRAT</strong></li>
+<li><span style="color: #FF0000">CANRAT</span></li>
 </ul>
 </li>
 <li><strong>19/22 predictor</strong> (numeric)<ul>
-<li><strong>GDPPER</strong></li>
-<li><strong>URBPOP</strong></li>
-<li><strong>PATRES</strong></li>
-<li><strong>RNDGDP</strong></li>
-<li><strong>POPGRO</strong></li>
-<li><strong>LIFEXP</strong></li>
-<li><strong>TUBINC</strong></li>
-<li><strong>DTHCMD</strong></li>
-<li><strong>AGRLND</strong></li>
-<li><strong>GHGEMI</strong></li>
-<li><strong>RELOUT</strong></li>
-<li><strong>METEMI</strong></li>
-<li><strong>FORARE</strong></li>
-<li><strong>CO2EMI</strong></li>
-<li><strong>PM2EXP</strong></li>
-<li><strong>POPDEN</strong></li>
-<li><strong>GDPCAP</strong></li>
-<li><strong>ENRTER</strong></li>
-<li><strong>EPISCO</strong><ul>
+<li><span style="color: #FF0000">GDPPER</span></li>
+<li><span style="color: #FF0000">URBPOP</span></li>
+<li><span style="color: #FF0000">PATRES</span></li>
+<li><span style="color: #FF0000">RNDGDP</span></li>
+<li><span style="color: #FF0000">POPGRO</span></li>
+<li><span style="color: #FF0000">LIFEXP</span></li>
+<li><span style="color: #FF0000">TUBINC</span></li>
+<li><span style="color: #FF0000">DTHCMD</span></li>
+<li><span style="color: #FF0000">AGRLND</span></li>
+<li><span style="color: #FF0000">GHGEMI</span></li>
+<li><span style="color: #FF0000">RELOUT</span></li>
+<li><span style="color: #FF0000">METEMI</span></li>
+<li><span style="color: #FF0000">FORARE</span></li>
+<li><span style="color: #FF0000">CO2EMI</span></li>
+<li><span style="color: #FF0000">PM2EXP</span></li>
+<li><span style="color: #FF0000">POPDEN</span></li>
+<li><span style="color: #FF0000">GDPCAP</span></li>
+<li><span style="color: #FF0000">ENRTER</span></li>
+<li><span style="color: #FF0000">EPISCO</span><ul>
 <li><strong>1/22 predictor</strong> (categorical)</li>
 </ul>
 </li>
-<li><strong>HDICAT</strong></li>
+<li><span style="color: #FF0000">HDICAT</span></li>
 </ul>
 </li>
 </ul>
@@ -14824,7 +14824,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
 <span class="c1"># Performing a general exploration of the dataset</span>
 <span class="c1">##################################</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'Dataset Dimensions: '</span><span class="p">,</span> <span class="n">cancer_rate</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Dataset Dimensions: '</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">cancer_rate</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14846,9 +14847,23 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Dataset Dimensions:  (177, 22)
+<pre>Dataset Dimensions: 
 </pre>
 </div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
+<pre>(177, 22)</pre>
+</div>
+
 </div>
 
 </div>
@@ -15553,7 +15568,45 @@ dtype: object</pre>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="1.3.-Data-Quality-Assessment-">1.3. Data Quality Assessment <a class="anchor" id="1.3" /><a class="anchor-link" href="#1.3.-Data-Quality-Assessment-">&#182;</a></h2><p>Details</p>
+<h2 id="1.3.-Data-Quality-Assessment-">1.3. Data Quality Assessment <a class="anchor" id="1.3" /><a class="anchor-link" href="#1.3.-Data-Quality-Assessment-">&#182;</a></h2><p>Data quality findings based on assessment are as follows:</p>
+<ul>
+<li>Missing observations noted for 20 variables with Null.Count&gt;0 and Fill.Rate&lt;1.0.<ul>
+<li><span style="color: #FF0000">RNDGDP</span>: Null_Count = 103, Fill_Rate = 0.418</li>
+<li><span style="color: #FF0000">PATRES</span>: Null_Count = 69, Fill_Rate = 0.610</li>
+<li><span style="color: #FF0000">ENRTER</span>: Null_Count = 61, Fill_Rate = 0.655</li>
+<li><span style="color: #FF0000">RELOUT</span>: Null_Count = 24, Fill_Rate = 0.864</li>
+<li><span style="color: #FF0000">GDPPER</span>: Null_Count = 12, Fill_Rate = 0.932</li>
+<li><span style="color: #FF0000">EPISCO</span>: Null_Count = 12, Fill_Rate = 0.932</li>
+<li><span style="color: #FF0000">HDICAT</span>: Null_Count = 10, Fill_Rate = 0.943</li>
+<li><span style="color: #FF0000">PM2EXP</span>: Null_Count = 10, Fill_Rate = 0.943</li>
+<li><span style="color: #FF0000">DTHCMD</span>: Null_Count = 7, Fill_Rate = 0.960</li>
+<li><span style="color: #FF0000">METEMI</span>: Null_Count = 7, Fill_Rate = 0.960</li>
+<li><span style="color: #FF0000">CO2EMI</span>: Null_Count = 7, Fill_Rate = 0.960</li>
+<li><span style="color: #FF0000">GDPCAP</span>: Null_Count = 7, Fill_Rate = 0.960</li>
+<li><span style="color: #FF0000">GHGEMI</span>: Null_Count = 7, Fill_Rate = 0.960</li>
+<li><span style="color: #FF0000">FORARE</span>: Null_Count = 4, Fill_Rate = 0.977</li>
+<li><span style="color: #FF0000">TUBINC</span>: Null_Count = 3, Fill_Rate = 0.983</li>
+<li><span style="color: #FF0000">AGRLND</span>: Null_Count = 3, Fill_Rate = 0.983</li>
+<li><span style="color: #FF0000">POPGRO</span>: Null_Count = 3, Fill_Rate = 0.983</li>
+<li><span style="color: #FF0000">POPDEN</span>: Null_Count = 3, Fill_Rate = 0.983</li>
+<li><span style="color: #FF0000">URBPOP</span>: Null_Count = 3, Fill_Rate = 0.983</li>
+<li><span style="color: #FF0000">LIFEXP</span>: Null_Count = 3, Fill_Rate = 0.983</li>
+</ul>
+</li>
+<li>Low variance observed for 1 variable with First.Second.Mode.Ratio&gt;5.<ul>
+<li><span style="color: #FF0000">PM2EXP</span>: First.Second.Mode.Ratio = 53.000</li>
+</ul>
+</li>
+<li>No low variance observed for any variable with Unique.Count.Ratio&gt;10.</li>
+<li>High skewness observed for 5 variables with Skewness&gt;3 or Skewness&lt;(-3).<ul>
+<li><span style="color: #FF0000">POPDEN</span>: Skewness = +10.267</li>
+<li><span style="color: #FF0000">GHGEMI</span>: Skewness = +9.496</li>
+<li><span style="color: #FF0000">PATRES</span>: Skewness = +9.284</li>
+<li><span style="color: #FF0000">METEMI</span>: Skewness = +5.801</li>
+<li><span style="color: #FF0000">PM2EXP</span>: Skewness = -3.141</li>
+</ul>
+</li>
+</ul>
 
 </div>
 </div>
@@ -15626,7 +15679,7 @@ dtype: object</pre>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
 <span class="c1"># Gathering the number of missing data for each column</span>
 <span class="c1">##################################</span>
-<span class="n">null_count_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cancer_rate</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="n">null_count_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cancer_rate</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
 </pre></div>
 
      </div>
@@ -15684,7 +15737,7 @@ dtype: object</pre>
 <span class="c1"># Formulating the summary</span>
 <span class="c1"># for all columns</span>
 <span class="c1">##################################</span>
-<span class="n">all_data_quality_summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">variable_name_list</span><span class="p">,</span>
+<span class="n">all_column_quality_summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">variable_name_list</span><span class="p">,</span>
                                             <span class="n">data_type_list</span><span class="p">,</span>
                                             <span class="n">row_count_list</span><span class="p">,</span>
                                             <span class="n">non_null_count_list</span><span class="p">,</span>
@@ -15696,7 +15749,7 @@ dtype: object</pre>
                                                  <span class="s1">'Non.Null.Count'</span><span class="p">,</span>
                                                  <span class="s1">'Null.Count'</span><span class="p">,</span>                                                 
                                                  <span class="s1">'Fill.Rate'</span><span class="p">])</span>
-<span class="n">display</span><span class="p">(</span><span class="n">all_data_quality_summary</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">all_column_quality_summary</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -15955,12 +16008,310 @@ dtype: object</pre>
 
 </div>
 
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
+<span class="c1"># Counting the number of columns</span>
+<span class="c1"># with Fill.Rate &lt; 1.00</span>
+<span class="c1">##################################</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">all_column_quality_summary</span><span class="p">[(</span><span class="n">all_column_quality_summary</span><span class="p">[</span><span class="s1">'Fill.Rate'</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">)])</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[15]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>20</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
+<span class="c1"># Identifying the columns</span>
+<span class="c1"># with Fill.Rate &lt; 1.00</span>
+<span class="c1">##################################</span>
+<span class="n">display</span><span class="p">(</span><span class="n">all_column_quality_summary</span><span class="p">[(</span><span class="n">all_column_quality_summary</span><span class="p">[</span><span class="s1">'Fill.Rate'</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">)]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">'Fill.Rate'</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Column.Name</th>
+      <th>Column.Type</th>
+      <th>Row.Count</th>
+      <th>Non.Null.Count</th>
+      <th>Null.Count</th>
+      <th>Fill.Rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5</th>
+      <td>RNDGDP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>74</td>
+      <td>103</td>
+      <td>0.418079</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>PATRES</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>108</td>
+      <td>69</td>
+      <td>0.610169</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>ENRTER</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>116</td>
+      <td>61</td>
+      <td>0.655367</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>RELOUT</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>153</td>
+      <td>24</td>
+      <td>0.864407</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>GDPPER</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>165</td>
+      <td>12</td>
+      <td>0.932203</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>EPISCO</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>165</td>
+      <td>12</td>
+      <td>0.932203</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>HDICAT</td>
+      <td>object</td>
+      <td>177</td>
+      <td>167</td>
+      <td>10</td>
+      <td>0.943503</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>PM2EXP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>167</td>
+      <td>10</td>
+      <td>0.943503</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>DTHCMD</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>METEMI</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>CO2EMI</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>GDPCAP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>GHGEMI</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>FORARE</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>173</td>
+      <td>4</td>
+      <td>0.977401</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>TUBINC</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>AGRLND</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>POPGRO</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>POPDEN</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>URBPOP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>LIFEXP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -15980,7 +16331,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -15999,7 +16350,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[17]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16018,7 +16369,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16037,7 +16388,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16056,7 +16407,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[20]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16075,7 +16426,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[21]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[23]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16094,7 +16445,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[22]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[24]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16113,7 +16464,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[23]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[25]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16132,7 +16483,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[24]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[26]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16151,7 +16502,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[25]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[27]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16170,7 +16521,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[26]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[28]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16189,7 +16540,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[27]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[29]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16208,7 +16559,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[28]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[30]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16227,7 +16578,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[29]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[31]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16246,7 +16597,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[30]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[32]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16265,10 +16616,10 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[31]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[33]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numeric_data_quality_summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">numeric_variable_name_list</span><span class="p">,</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numeric_column_quality_summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">numeric_variable_name_list</span><span class="p">,</span>
                                                 <span class="n">numeric_minimum_list</span><span class="p">,</span>
                                                 <span class="n">numeric_mean_list</span><span class="p">,</span>
                                                 <span class="n">numeric_median_list</span><span class="p">,</span>
@@ -16298,7 +16649,7 @@ dtype: object</pre>
                                                  <span class="s1">'Unique.Count.Ratio'</span><span class="p">,</span>
                                                  <span class="s1">'Skewness'</span><span class="p">,</span>
                                                  <span class="s1">'Kurtosis'</span><span class="p">])</span>
-<span class="n">display</span><span class="p">(</span><span class="n">numeric_data_quality_summary</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">numeric_column_quality_summary</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -16728,12 +17079,419 @@ dtype: object</pre>
 
 </div>
 
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[34]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
+<span class="c1"># Counting the number of numeric columns</span>
+<span class="c1"># with First.Second.Mode.Ratio &gt; 5.00</span>
+<span class="c1">##################################</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">numeric_column_quality_summary</span><span class="p">[(</span><span class="n">numeric_column_quality_summary</span><span class="p">[</span><span class="s1">'First.Second.Mode.Ratio'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">5</span><span class="p">)])</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[34]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>1</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[35]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
+<span class="c1"># Identifying the numeric columns</span>
+<span class="c1"># with First.Second.Mode.Ratio &gt; 5.00</span>
+<span class="c1">##################################</span>
+<span class="n">display</span><span class="p">(</span><span class="n">numeric_column_quality_summary</span><span class="p">[(</span><span class="n">numeric_column_quality_summary</span><span class="p">[</span><span class="s1">'First.Second.Mode.Ratio'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">5</span><span class="p">)]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">'First.Second.Mode.Ratio'</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Numeric.Column.Name</th>
+      <th>Minimum</th>
+      <th>Mean</th>
+      <th>Median</th>
+      <th>Maximum</th>
+      <th>First.Mode</th>
+      <th>Second.Mode</th>
+      <th>First.Mode.Count</th>
+      <th>Second.Mode.Count</th>
+      <th>First.Second.Mode.Ratio</th>
+      <th>Unique.Count</th>
+      <th>Row.Count</th>
+      <th>Unique.Count.Ratio</th>
+      <th>Skewness</th>
+      <th>Kurtosis</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>15</th>
+      <td>PM2EXP</td>
+      <td>0.274092</td>
+      <td>91.940595</td>
+      <td>100.0</td>
+      <td>100.0</td>
+      <td>100.0</td>
+      <td>100.0</td>
+      <td>106</td>
+      <td>2</td>
+      <td>53.0</td>
+      <td>61</td>
+      <td>177</td>
+      <td>0.344633</td>
+      <td>-3.141557</td>
+      <td>9.032386</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[36]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
+<span class="c1"># Counting the number of numeric columns</span>
+<span class="c1"># with Unique.Count.Ratio &gt; 10.00</span>
+<span class="c1">##################################</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">numeric_column_quality_summary</span><span class="p">[(</span><span class="n">numeric_column_quality_summary</span><span class="p">[</span><span class="s1">'Unique.Count.Ratio'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">10</span><span class="p">)])</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[36]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>0</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[37]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
+<span class="c1"># Counting the number of numeric columns</span>
+<span class="c1"># with Skewness &gt; 3.00 or Skewness &lt; -3.00</span>
+<span class="c1">##################################</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">numeric_column_quality_summary</span><span class="p">[(</span><span class="n">numeric_column_quality_summary</span><span class="p">[</span><span class="s1">'Skewness'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">numeric_column_quality_summary</span><span class="p">[</span><span class="s1">'Skewness'</span><span class="p">]</span><span class="o">&lt;</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">))])</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[37]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>5</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[38]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
+<span class="c1"># Identifying the numeric columns</span>
+<span class="c1"># with Skewness &gt; 3.00 or Skewness &lt; -3.00</span>
+<span class="c1">##################################</span>
+<span class="n">display</span><span class="p">(</span><span class="n">numeric_column_quality_summary</span><span class="p">[(</span><span class="n">numeric_column_quality_summary</span><span class="p">[</span><span class="s1">'Skewness'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">numeric_column_quality_summary</span><span class="p">[</span><span class="s1">'Skewness'</span><span class="p">]</span><span class="o">&lt;</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">))]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">'Skewness'</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Numeric.Column.Name</th>
+      <th>Minimum</th>
+      <th>Mean</th>
+      <th>Median</th>
+      <th>Maximum</th>
+      <th>First.Mode</th>
+      <th>Second.Mode</th>
+      <th>First.Mode.Count</th>
+      <th>Second.Mode.Count</th>
+      <th>First.Second.Mode.Ratio</th>
+      <th>Unique.Count</th>
+      <th>Row.Count</th>
+      <th>Unique.Count.Ratio</th>
+      <th>Skewness</th>
+      <th>Kurtosis</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>16</th>
+      <td>POPDEN</td>
+      <td>2.115134</td>
+      <td>200.886765</td>
+      <td>77.983133</td>
+      <td>7.918951e+03</td>
+      <td>3.335312</td>
+      <td>13.300785</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>174</td>
+      <td>177</td>
+      <td>0.983051</td>
+      <td>10.267750</td>
+      <td>119.995256</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>GHGEMI</td>
+      <td>179.725150</td>
+      <td>259582.709895</td>
+      <td>41009.275980</td>
+      <td>1.294287e+07</td>
+      <td>571903.119900</td>
+      <td>3000.932259</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>170</td>
+      <td>177</td>
+      <td>0.960452</td>
+      <td>9.496120</td>
+      <td>101.637308</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>PATRES</td>
+      <td>1.000000</td>
+      <td>20607.388889</td>
+      <td>244.500000</td>
+      <td>1.344817e+06</td>
+      <td>6.000000</td>
+      <td>2.000000</td>
+      <td>4</td>
+      <td>3</td>
+      <td>1.333333</td>
+      <td>97</td>
+      <td>177</td>
+      <td>0.548023</td>
+      <td>9.284436</td>
+      <td>91.187178</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>METEMI</td>
+      <td>11.596147</td>
+      <td>47876.133575</td>
+      <td>11118.976025</td>
+      <td>1.186285e+06</td>
+      <td>131484.763200</td>
+      <td>1326.034028</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>170</td>
+      <td>177</td>
+      <td>0.960452</td>
+      <td>5.801014</td>
+      <td>38.661386</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>PM2EXP</td>
+      <td>0.274092</td>
+      <td>91.940595</td>
+      <td>100.000000</td>
+      <td>1.000000e+02</td>
+      <td>100.000000</td>
+      <td>100.000000</td>
+      <td>106</td>
+      <td>2</td>
+      <td>53.000000</td>
+      <td>61</td>
+      <td>177</td>
+      <td>0.344633</td>
+      <td>-3.141557</td>
+      <td>9.032386</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[32]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[39]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16753,7 +17511,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[33]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[40]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16772,7 +17530,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[34]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[41]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16791,7 +17549,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[35]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[42]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16810,7 +17568,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[36]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[43]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16829,7 +17587,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[37]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[44]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16848,7 +17606,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[38]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[45]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16867,7 +17625,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[39]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[46]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16886,7 +17644,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[40]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[47]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16905,7 +17663,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[41]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[48]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
@@ -16924,10 +17682,10 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[42]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[49]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">categorical_data_quality_summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">categorical_variable_name_list</span><span class="p">,</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">categorical_column_quality_summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">categorical_variable_name_list</span><span class="p">,</span>
                                                     <span class="n">categorical_first_mode_list</span><span class="p">,</span>
                                                     <span class="n">categorical_second_mode_list</span><span class="p">,</span>
                                                     <span class="n">categorical_first_mode_count_list</span><span class="p">,</span>
@@ -16945,7 +17703,7 @@ dtype: object</pre>
                                                  <span class="s1">'Unique.Count'</span><span class="p">,</span>
                                                  <span class="s1">'Row.Count'</span><span class="p">,</span>
                                                  <span class="s1">'Unique.Count.Ratio'</span><span class="p">])</span>
-<span class="n">display</span><span class="p">(</span><span class="n">categorical_data_quality_summary</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">categorical_column_quality_summary</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -17025,6 +17783,96 @@ dtype: object</pre>
   </tbody>
 </table>
 </div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[50]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
+<span class="c1"># Counting the number of categorical columns</span>
+<span class="c1"># with First.Second.Mode.Ratio &gt; 5.00</span>
+<span class="c1">##################################</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">categorical_column_quality_summary</span><span class="p">[(</span><span class="n">categorical_column_quality_summary</span><span class="p">[</span><span class="s1">'First.Second.Mode.Ratio'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">5</span><span class="p">)])</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[50]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>0</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[51]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
+<span class="c1"># Counting the number of categorical columns</span>
+<span class="c1"># with Unique.Count.Ratio &gt; 10.00</span>
+<span class="c1">##################################</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">categorical_column_quality_summary</span><span class="p">[(</span><span class="n">categorical_column_quality_summary</span><span class="p">[</span><span class="s1">'Unique.Count.Ratio'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">10</span><span class="p">)])</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[51]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>0</pre>
 </div>
 
 </div>
@@ -17220,7 +18068,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[43]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[52]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>

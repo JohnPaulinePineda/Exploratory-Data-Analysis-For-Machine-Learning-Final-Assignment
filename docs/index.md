@@ -27,7 +27,7 @@
 
 # 1. Table of Contents <a class="anchor" id="TOC"></a>
 
-This project explores the various methods in assessing **Data Quality**, implementing **Data Preprocessing** and conducting **Data Exploration** for prediction problems with numeric responses using various helpful packages in <mark style="background-color: #CCECFF">**Python**</mark>. A non-exhaustive list of methods to detect missing data, extreme outlying points, near-zero variance, multicollinearity, linear dependencies and skewed distributions were evaluated. Remedial procedures on addressing data quality issues including missing data imputation, centering and scaling transformation, shape transformation and outlier treatment were similarly considered, as applicable. All results were consolidated in a [<span style="color: #FF0000">**Summary**</span>](#Summary) presented at the end of the document.
+This project explores the various methods in assessing **Data Quality**, implementing **Data Preprocessing** and conducting **Data Exploration** for prediction problems with numeric responses using various helpful packages in <mark style="background-color: #CCECFF"><b>Python</b></mark>. A non-exhaustive list of methods to detect missing data, extreme outlying points, near-zero variance, multicollinearity, linear dependencies and skewed distributions were evaluated. Remedial procedures on addressing data quality issues including missing data imputation, centering and scaling transformation, shape transformation and outlier treatment were similarly considered, as applicable. All results were consolidated in a [<span style="color: #FF0000"><b>Summary</b></span>](#Summary) presented at the end of the document.
 
 [Data quality assessment](http://appliedpredictivemodeling.com/) involves profiling and assessing the data to understand its suitability for machine learning tasks. The quality of training data has a huge impact on the efficiency, accuracy and complexity of machine learning tasks. Data remains susceptible to errors or irregularities that may be introduced during collection, aggregation or annotation stage. Issues such as incorrect labels, synonymous categories in a categorical variable or heterogeneity in columns, among others, which might go undetected by standard pre-processing modules in these frameworks can lead to sub-optimal model performance, inaccurate analysis and unreliable decisions.
 
@@ -37,7 +37,7 @@ This project explores the various methods in assessing **Data Quality**, impleme
 
 ## 1.1. Data Background <a class="anchor" id="1.1"></a>
 
-Dataset used for the analysis was separately gathered and consolidated from various sources including: 
+Datasets used for the analysis were separately gathered and consolidated from various sources including: 
 1. Cancer Rates from [World Population Review](https://worldpopulationreview.com/country-rankings/cancer-rates-by-country)
 2. Social Protection and Labor Indicator from [World Bank](https://data.worldbank.org/topic/social-protection-and-labor?view=chart)
 3. Education Indicator from [World Bank](https://data.worldbank.org/topic/education?view=chart)
@@ -56,29 +56,29 @@ Dataset used for the analysis was separately gathered and consolidated from vari
 This study hypothesized that various global development indicators and indices influence cancer rates across countries.
 
 The target variable for the study is:
-* **CANRAT** - Age-standardized cancer rates, per 100K population (2022)
+* <span style="color: #FF0000">CANRAT</span> - Age-standardized cancer rates, per 100K population (2022)
 
 The predictor variables for the study are:
-* **GDPPER** - GDP per person employed, current US Dollars (2020)
-* **URBPOP** - Urban population, % of total population (2020)
-* **PATRES** - Patent applications by residents, total count (2020)
-* **RNDGDP** - Research and development expenditure, % of GDP (2020)
-* **POPGRO** - Population growth, annual % (2020)
-* **LIFEXP** - Life expectancy at birth, total in years (2020)
-* **TUBINC** - Incidence of tuberculosis, per 100K population (2020)
-* **DTHCMD** - Cause of death by communicable diseases and maternal, prenatal and nutrition conditions,  % of total (2019)
-* **AGRLND** - Agricultural land,  % of land area (2020)
-* **GHGEMI** - Total greenhouse gas emissions, kt of CO2 equivalent (2020)
-* **RELOUT** - Renewable electricity output, % of total electricity output (2015)
-* **METEMI** - Methane emissions, kt of CO2 equivalent (2020)
-* **FORARE** - Forest area, % of land area (2020)
-* **CO2EMI** - CO2 emissions, metric tons per capita (2020)
-* **PM2EXP** - PM2.5 air pollution, population exposed to levels exceeding WHO guideline value,  % of total (2017)
-* **POPDEN** - Population density, people per sq. km of land area (2020)
-* **GDPCAP** - GDP per capita, current US Dollars (2020)
-* **ENRTER** - Tertiary school enrollment, % gross (2020)
-* **HDICAT** - Human development index, ordered category (2020)
-* **EPISCO** - Environment performance index , score (2022)
+* <span style="color: #FF0000">GDPPER</span> - GDP per person employed, current US Dollars (2020)
+* <span style="color: #FF0000">URBPOP</span> - Urban population, % of total population (2020)
+* <span style="color: #FF0000">PATRES</span> - Patent applications by residents, total count (2020)
+* <span style="color: #FF0000">RNDGDP</span> - Research and development expenditure, % of GDP (2020)
+* <span style="color: #FF0000">POPGRO</span> - Population growth, annual % (2020)
+* <span style="color: #FF0000">LIFEXP</span> - Life expectancy at birth, total in years (2020)
+* <span style="color: #FF0000">TUBINC</span> - Incidence of tuberculosis, per 100K population (2020)
+* <span style="color: #FF0000">DTHCMD</span> - Cause of death by communicable diseases and maternal, prenatal and nutrition conditions,  % of total (2019)
+* <span style="color: #FF0000">AGRLND</span> - Agricultural land,  % of land area (2020)
+* <span style="color: #FF0000">GHGEMI</span> - Total greenhouse gas emissions, kt of CO2 equivalent (2020)
+* <span style="color: #FF0000">RELOUT</span> - Renewable electricity output, % of total electricity output (2015)
+* <span style="color: #FF0000">METEMI</span> - Methane emissions, kt of CO2 equivalent (2020)
+* <span style="color: #FF0000">FORARE</span> - Forest area, % of land area (2020)
+* <span style="color: #FF0000">CO2EMI</span> - CO2 emissions, metric tons per capita (2020)
+* <span style="color: #FF0000">PM2EXP</span> - PM2.5 air pollution, population exposed to levels exceeding WHO guideline value,  % of total (2017)
+* <span style="color: #FF0000">POPDEN</span> - Population density, people per sq. km of land area (2020)
+* <span style="color: #FF0000">GDPCAP</span> - GDP per capita, current US Dollars (2020)
+* <span style="color: #FF0000">ENRTER</span> - Tertiary school enrollment, % gross (2020)
+* <span style="color: #FF0000">HDICAT</span> - Human development index, ordered category (2020)
+* <span style="color: #FF0000">EPISCO</span> - Environment performance index , score (2022)
 
 
 ## 1.2. Data Description <a class="anchor" id="1.2"></a>
@@ -87,31 +87,31 @@ The dataset is comprised of:
 * **177 rows** (observations)
 * **22 columns** (variables)
     * **1/22 metadata** (categorical)
-        * **COUNTRY**
+        * <span style="color: #FF0000">COUNTRY</span>
     * **1/22 target** (numeric)
-         * **CANRAT**
+         * <span style="color: #FF0000">CANRAT</span>
     * **19/22 predictor** (numeric)
-         * **GDPPER**
-         * **URBPOP**
-         * **PATRES**
-         * **RNDGDP**
-         * **POPGRO**
-         * **LIFEXP**
-         * **TUBINC**
-         * **DTHCMD**
-         * **AGRLND**
-         * **GHGEMI**
-         * **RELOUT**
-         * **METEMI**
-         * **FORARE**
-         * **CO2EMI**
-         * **PM2EXP**
-         * **POPDEN**
-         * **GDPCAP**
-         * **ENRTER**
-         * **EPISCO**
+         * <span style="color: #FF0000">GDPPER</span>
+         * <span style="color: #FF0000">URBPOP</span>
+         * <span style="color: #FF0000">PATRES</span>
+         * <span style="color: #FF0000">RNDGDP</span>
+         * <span style="color: #FF0000">POPGRO</span>
+         * <span style="color: #FF0000">LIFEXP</span>
+         * <span style="color: #FF0000">TUBINC</span>
+         * <span style="color: #FF0000">DTHCMD</span>
+         * <span style="color: #FF0000">AGRLND</span>
+         * <span style="color: #FF0000">GHGEMI</span>
+         * <span style="color: #FF0000">RELOUT</span>
+         * <span style="color: #FF0000">METEMI</span>
+         * <span style="color: #FF0000">FORARE</span>
+         * <span style="color: #FF0000">CO2EMI</span>
+         * <span style="color: #FF0000">PM2EXP</span>
+         * <span style="color: #FF0000">POPDEN</span>
+         * <span style="color: #FF0000">GDPCAP</span>
+         * <span style="color: #FF0000">ENRTER</span>
+         * <span style="color: #FF0000">EPISCO</span>
      * **1/22 predictor** (categorical)
-         * **HDICAT**
+         * <span style="color: #FF0000">HDICAT</span>
 
 
 ```python
@@ -139,11 +139,16 @@ cancer_rate = pd.read_csv('CancerRates.csv')
 ##################################
 # Performing a general exploration of the dataset
 ##################################
-print('Dataset Dimensions: ', cancer_rate.shape)
+print('Dataset Dimensions: ')
+display(cancer_rate.shape)
 ```
 
-    Dataset Dimensions:  (177, 22)
+    Dataset Dimensions: 
     
+
+
+    (177, 22)
+
 
 
 ```python
@@ -688,7 +693,38 @@ display(cancer_rate.describe(include='object').transpose())
 
 
 ## 1.3. Data Quality Assessment <a class="anchor" id="1.3"></a>
-Details
+
+Data quality findings based on assessment are as follows:
+* Missing observations noted for 20 variables with Null.Count>0 and Fill.Rate<1.0.
+    * <span style="color: #FF0000">RNDGDP</span>: Null_Count = 103, Fill_Rate = 0.418
+    * <span style="color: #FF0000">PATRES</span>: Null_Count = 69, Fill_Rate = 0.610
+    * <span style="color: #FF0000">ENRTER</span>: Null_Count = 61, Fill_Rate = 0.655
+    * <span style="color: #FF0000">RELOUT</span>: Null_Count = 24, Fill_Rate = 0.864
+    * <span style="color: #FF0000">GDPPER</span>: Null_Count = 12, Fill_Rate = 0.932
+    * <span style="color: #FF0000">EPISCO</span>: Null_Count = 12, Fill_Rate = 0.932
+    * <span style="color: #FF0000">HDICAT</span>: Null_Count = 10, Fill_Rate = 0.943
+    * <span style="color: #FF0000">PM2EXP</span>: Null_Count = 10, Fill_Rate = 0.943
+    * <span style="color: #FF0000">DTHCMD</span>: Null_Count = 7, Fill_Rate = 0.960
+    * <span style="color: #FF0000">METEMI</span>: Null_Count = 7, Fill_Rate = 0.960
+    * <span style="color: #FF0000">CO2EMI</span>: Null_Count = 7, Fill_Rate = 0.960
+    * <span style="color: #FF0000">GDPCAP</span>: Null_Count = 7, Fill_Rate = 0.960
+    * <span style="color: #FF0000">GHGEMI</span>: Null_Count = 7, Fill_Rate = 0.960
+    * <span style="color: #FF0000">FORARE</span>: Null_Count = 4, Fill_Rate = 0.977
+    * <span style="color: #FF0000">TUBINC</span>: Null_Count = 3, Fill_Rate = 0.983
+    * <span style="color: #FF0000">AGRLND</span>: Null_Count = 3, Fill_Rate = 0.983
+    * <span style="color: #FF0000">POPGRO</span>: Null_Count = 3, Fill_Rate = 0.983
+    * <span style="color: #FF0000">POPDEN</span>: Null_Count = 3, Fill_Rate = 0.983
+    * <span style="color: #FF0000">URBPOP</span>: Null_Count = 3, Fill_Rate = 0.983
+    * <span style="color: #FF0000">LIFEXP</span>: Null_Count = 3, Fill_Rate = 0.983
+* Low variance observed for 1 variable with First.Second.Mode.Ratio>5.
+    * <span style="color: #FF0000">PM2EXP</span>: First.Second.Mode.Ratio = 53.000
+* No low variance observed for any variable with Unique.Count.Ratio>10.
+* High skewness observed for 5 variables with Skewness>3 or Skewness<(-3).
+    * <span style="color: #FF0000">POPDEN</span>: Skewness = +10.267
+    * <span style="color: #FF0000">GHGEMI</span>: Skewness = +9.496
+    * <span style="color: #FF0000">PATRES</span>: Skewness = +9.284
+    * <span style="color: #FF0000">METEMI</span>: Skewness = +5.801
+    * <span style="color: #FF0000">PM2EXP</span>: Skewness = -3.141
 
 
 ```python
@@ -719,7 +755,7 @@ row_count_list = list([len(cancer_rate)] * len(cancer_rate.columns))
 ##################################
 # Gathering the number of missing data for each column
 ##################################
-null_count_list = list(cancer_rate.isna().sum())
+null_count_list = list(cancer_rate.isna().sum(axis=0))
 ```
 
 
@@ -744,7 +780,7 @@ fill_rate_list = map(truediv, non_null_count_list, row_count_list)
 # Formulating the summary
 # for all columns
 ##################################
-all_data_quality_summary = pd.DataFrame(zip(variable_name_list,
+all_column_quality_summary = pd.DataFrame(zip(variable_name_list,
                                             data_type_list,
                                             row_count_list,
                                             non_null_count_list,
@@ -756,7 +792,7 @@ all_data_quality_summary = pd.DataFrame(zip(variable_name_list,
                                                  'Non.Null.Count',
                                                  'Null.Count',                                                 
                                                  'Fill.Rate'])
-display(all_data_quality_summary)
+display(all_column_quality_summary)
 ```
 
 
@@ -993,6 +1029,244 @@ display(all_data_quality_summary)
 
 ```python
 ##################################
+# Counting the number of columns
+# with Fill.Rate < 1.00
+##################################
+len(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)])
+```
+
+
+
+
+    20
+
+
+
+
+```python
+##################################
+# Identifying the columns
+# with Fill.Rate < 1.00
+##################################
+display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].sort_values(by=['Fill.Rate'], ascending=True))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Column.Name</th>
+      <th>Column.Type</th>
+      <th>Row.Count</th>
+      <th>Non.Null.Count</th>
+      <th>Null.Count</th>
+      <th>Fill.Rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5</th>
+      <td>RNDGDP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>74</td>
+      <td>103</td>
+      <td>0.418079</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>PATRES</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>108</td>
+      <td>69</td>
+      <td>0.610169</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>ENRTER</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>116</td>
+      <td>61</td>
+      <td>0.655367</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>RELOUT</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>153</td>
+      <td>24</td>
+      <td>0.864407</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>GDPPER</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>165</td>
+      <td>12</td>
+      <td>0.932203</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>EPISCO</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>165</td>
+      <td>12</td>
+      <td>0.932203</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>HDICAT</td>
+      <td>object</td>
+      <td>177</td>
+      <td>167</td>
+      <td>10</td>
+      <td>0.943503</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>PM2EXP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>167</td>
+      <td>10</td>
+      <td>0.943503</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>DTHCMD</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>METEMI</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>CO2EMI</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>GDPCAP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>GHGEMI</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>FORARE</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>173</td>
+      <td>4</td>
+      <td>0.977401</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>TUBINC</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>AGRLND</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>POPGRO</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>POPDEN</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>URBPOP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>LIFEXP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+##################################
 # Formulating the dataset
 # with numeric columns only
 ##################################
@@ -1121,7 +1395,7 @@ numeric_kurtosis_list = cancer_rate_numeric.kurtosis()
 
 
 ```python
-numeric_data_quality_summary = pd.DataFrame(zip(numeric_variable_name_list,
+numeric_column_quality_summary = pd.DataFrame(zip(numeric_variable_name_list,
                                                 numeric_minimum_list,
                                                 numeric_mean_list,
                                                 numeric_median_list,
@@ -1151,7 +1425,7 @@ numeric_data_quality_summary = pd.DataFrame(zip(numeric_variable_name_list,
                                                  'Unique.Count.Ratio',
                                                  'Skewness',
                                                  'Kurtosis'])
-display(numeric_data_quality_summary)
+display(numeric_column_quality_summary)
 ```
 
 
@@ -1559,6 +1833,264 @@ display(numeric_data_quality_summary)
 
 ```python
 ##################################
+# Counting the number of numeric columns
+# with First.Second.Mode.Ratio > 5.00
+##################################
+len(numeric_column_quality_summary[(numeric_column_quality_summary['First.Second.Mode.Ratio']>5)])
+```
+
+
+
+
+    1
+
+
+
+
+```python
+##################################
+# Identifying the numeric columns
+# with First.Second.Mode.Ratio > 5.00
+##################################
+display(numeric_column_quality_summary[(numeric_column_quality_summary['First.Second.Mode.Ratio']>5)].sort_values(by=['First.Second.Mode.Ratio'], ascending=False))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Numeric.Column.Name</th>
+      <th>Minimum</th>
+      <th>Mean</th>
+      <th>Median</th>
+      <th>Maximum</th>
+      <th>First.Mode</th>
+      <th>Second.Mode</th>
+      <th>First.Mode.Count</th>
+      <th>Second.Mode.Count</th>
+      <th>First.Second.Mode.Ratio</th>
+      <th>Unique.Count</th>
+      <th>Row.Count</th>
+      <th>Unique.Count.Ratio</th>
+      <th>Skewness</th>
+      <th>Kurtosis</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>15</th>
+      <td>PM2EXP</td>
+      <td>0.274092</td>
+      <td>91.940595</td>
+      <td>100.0</td>
+      <td>100.0</td>
+      <td>100.0</td>
+      <td>100.0</td>
+      <td>106</td>
+      <td>2</td>
+      <td>53.0</td>
+      <td>61</td>
+      <td>177</td>
+      <td>0.344633</td>
+      <td>-3.141557</td>
+      <td>9.032386</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+##################################
+# Counting the number of numeric columns
+# with Unique.Count.Ratio > 10.00
+##################################
+len(numeric_column_quality_summary[(numeric_column_quality_summary['Unique.Count.Ratio']>10)])
+```
+
+
+
+
+    0
+
+
+
+
+```python
+##################################
+# Counting the number of numeric columns
+# with Skewness > 3.00 or Skewness < -3.00
+##################################
+len(numeric_column_quality_summary[(numeric_column_quality_summary['Skewness']>3) | (numeric_column_quality_summary['Skewness']<(-3))])
+```
+
+
+
+
+    5
+
+
+
+
+```python
+##################################
+# Identifying the numeric columns
+# with Skewness > 3.00 or Skewness < -3.00
+##################################
+display(numeric_column_quality_summary[(numeric_column_quality_summary['Skewness']>3) | (numeric_column_quality_summary['Skewness']<(-3))].sort_values(by=['Skewness'], ascending=False))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Numeric.Column.Name</th>
+      <th>Minimum</th>
+      <th>Mean</th>
+      <th>Median</th>
+      <th>Maximum</th>
+      <th>First.Mode</th>
+      <th>Second.Mode</th>
+      <th>First.Mode.Count</th>
+      <th>Second.Mode.Count</th>
+      <th>First.Second.Mode.Ratio</th>
+      <th>Unique.Count</th>
+      <th>Row.Count</th>
+      <th>Unique.Count.Ratio</th>
+      <th>Skewness</th>
+      <th>Kurtosis</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>16</th>
+      <td>POPDEN</td>
+      <td>2.115134</td>
+      <td>200.886765</td>
+      <td>77.983133</td>
+      <td>7.918951e+03</td>
+      <td>3.335312</td>
+      <td>13.300785</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>174</td>
+      <td>177</td>
+      <td>0.983051</td>
+      <td>10.267750</td>
+      <td>119.995256</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>GHGEMI</td>
+      <td>179.725150</td>
+      <td>259582.709895</td>
+      <td>41009.275980</td>
+      <td>1.294287e+07</td>
+      <td>571903.119900</td>
+      <td>3000.932259</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>170</td>
+      <td>177</td>
+      <td>0.960452</td>
+      <td>9.496120</td>
+      <td>101.637308</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>PATRES</td>
+      <td>1.000000</td>
+      <td>20607.388889</td>
+      <td>244.500000</td>
+      <td>1.344817e+06</td>
+      <td>6.000000</td>
+      <td>2.000000</td>
+      <td>4</td>
+      <td>3</td>
+      <td>1.333333</td>
+      <td>97</td>
+      <td>177</td>
+      <td>0.548023</td>
+      <td>9.284436</td>
+      <td>91.187178</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>METEMI</td>
+      <td>11.596147</td>
+      <td>47876.133575</td>
+      <td>11118.976025</td>
+      <td>1.186285e+06</td>
+      <td>131484.763200</td>
+      <td>1326.034028</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.000000</td>
+      <td>170</td>
+      <td>177</td>
+      <td>0.960452</td>
+      <td>5.801014</td>
+      <td>38.661386</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>PM2EXP</td>
+      <td>0.274092</td>
+      <td>91.940595</td>
+      <td>100.000000</td>
+      <td>1.000000e+02</td>
+      <td>100.000000</td>
+      <td>100.000000</td>
+      <td>106</td>
+      <td>2</td>
+      <td>53.000000</td>
+      <td>61</td>
+      <td>177</td>
+      <td>0.344633</td>
+      <td>-3.141557</td>
+      <td>9.032386</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+##################################
 # Formulating the dataset
 # with categorical columns only
 ##################################
@@ -1639,7 +2171,7 @@ categorical_unique_count_ratio_list = map(truediv, categorical_unique_count_list
 
 
 ```python
-categorical_data_quality_summary = pd.DataFrame(zip(categorical_variable_name_list,
+categorical_column_quality_summary = pd.DataFrame(zip(categorical_variable_name_list,
                                                     categorical_first_mode_list,
                                                     categorical_second_mode_list,
                                                     categorical_first_mode_count_list,
@@ -1657,7 +2189,7 @@ categorical_data_quality_summary = pd.DataFrame(zip(categorical_variable_name_li
                                                  'Unique.Count',
                                                  'Row.Count',
                                                  'Unique.Count.Ratio'])
-display(categorical_data_quality_summary)
+display(categorical_column_quality_summary)
 ```
 
 
@@ -1718,6 +2250,38 @@ display(categorical_data_quality_summary)
   </tbody>
 </table>
 </div>
+
+
+
+```python
+##################################
+# Counting the number of categorical columns
+# with First.Second.Mode.Ratio > 5.00
+##################################
+len(categorical_column_quality_summary[(categorical_column_quality_summary['First.Second.Mode.Ratio']>5)])
+```
+
+
+
+
+    0
+
+
+
+
+```python
+##################################
+# Counting the number of categorical columns
+# with Unique.Count.Ratio > 10.00
+##################################
+len(categorical_column_quality_summary[(categorical_column_quality_summary['Unique.Count.Ratio']>10)])
+```
+
+
+
+
+    0
+
 
 
 ## 1.4. Data Preprocessing <a class="anchor" id="1.4"></a>
