@@ -83,34 +83,34 @@ The predictor variables for the study are:
 ## 1.2. Data Description <a class="anchor" id="1.2"></a>
 
 1. The dataset is comprised of:
-* **177 rows** (observations)
-* **22 columns** (variables)
-    * **1/22 metadata** (categorical)
-        * <span style="color: #FF0000">COUNTRY</span>
-    * **1/22 target** (numeric)
-         * <span style="color: #FF0000">CANRAT</span>
-    * **19/22 predictor** (numeric)
-         * <span style="color: #FF0000">GDPPER</span>
-         * <span style="color: #FF0000">URBPOP</span>
-         * <span style="color: #FF0000">PATRES</span>
-         * <span style="color: #FF0000">RNDGDP</span>
-         * <span style="color: #FF0000">POPGRO</span>
-         * <span style="color: #FF0000">LIFEXP</span>
-         * <span style="color: #FF0000">TUBINC</span>
-         * <span style="color: #FF0000">DTHCMD</span>
-         * <span style="color: #FF0000">AGRLND</span>
-         * <span style="color: #FF0000">GHGEMI</span>
-         * <span style="color: #FF0000">RELOUT</span>
-         * <span style="color: #FF0000">METEMI</span>
-         * <span style="color: #FF0000">FORARE</span>
-         * <span style="color: #FF0000">CO2EMI</span>
-         * <span style="color: #FF0000">PM2EXP</span>
-         * <span style="color: #FF0000">POPDEN</span>
-         * <span style="color: #FF0000">GDPCAP</span>
-         * <span style="color: #FF0000">ENRTER</span>
-         * <span style="color: #FF0000">EPISCO</span>
-    * **1/22 predictor** (categorical)
-         * <span style="color: #FF0000">HDICAT</span>
+    * **177 rows** (observations)
+    * **22 columns** (variables)
+        * **1/22 metadata** (categorical)
+            * <span style="color: #FF0000">COUNTRY</span>
+        * **1/22 target** (numeric)
+             * <span style="color: #FF0000">CANRAT</span>
+        * **19/22 predictor** (numeric)
+             * <span style="color: #FF0000">GDPPER</span>
+             * <span style="color: #FF0000">URBPOP</span>
+             * <span style="color: #FF0000">PATRES</span>
+             * <span style="color: #FF0000">RNDGDP</span>
+             * <span style="color: #FF0000">POPGRO</span>
+             * <span style="color: #FF0000">LIFEXP</span>
+             * <span style="color: #FF0000">TUBINC</span>
+             * <span style="color: #FF0000">DTHCMD</span>
+             * <span style="color: #FF0000">AGRLND</span>
+             * <span style="color: #FF0000">GHGEMI</span>
+             * <span style="color: #FF0000">RELOUT</span>
+             * <span style="color: #FF0000">METEMI</span>
+             * <span style="color: #FF0000">FORARE</span>
+             * <span style="color: #FF0000">CO2EMI</span>
+             * <span style="color: #FF0000">PM2EXP</span>
+             * <span style="color: #FF0000">POPDEN</span>
+             * <span style="color: #FF0000">GDPCAP</span>
+             * <span style="color: #FF0000">ENRTER</span>
+             * <span style="color: #FF0000">EPISCO</span>
+        * **1/22 predictor** (categorical)
+             * <span style="color: #FF0000">HDICAT</span>
 
 
 ```python
@@ -3719,6 +3719,10 @@ numeric_outlier_ratio_list = map(truediv, numeric_outlier_count_list, numeric_ro
 
 
 ```python
+##################################
+# Formulating the outlier summary
+# for all numeric columns
+##################################
 numeric_column_outlier_summary = pd.DataFrame(zip(numeric_variable_name_list,
                                                   numeric_skewness_list,
                                                   numeric_outlier_count_list,
@@ -3890,6 +3894,113 @@ display(numeric_column_outlier_summary)
   </tbody>
 </table>
 </div>
+
+
+
+```python
+##################################
+# Formulating the individual boxplots
+# for all numeric columns
+##################################
+for column in cancer_rate_imputed_numeric:
+        plt.figure(figsize=(17,1))
+        sns.boxplot(data=cancer_rate_imputed_numeric, x=column)
+```
+
+
+    
+![png](output_106_0.png)
+    
+
+
+
+    
+![png](output_106_1.png)
+    
+
+
+
+    
+![png](output_106_2.png)
+    
+
+
+
+    
+![png](output_106_3.png)
+    
+
+
+
+    
+![png](output_106_4.png)
+    
+
+
+
+    
+![png](output_106_5.png)
+    
+
+
+
+    
+![png](output_106_6.png)
+    
+
+
+
+    
+![png](output_106_7.png)
+    
+
+
+
+    
+![png](output_106_8.png)
+    
+
+
+
+    
+![png](output_106_9.png)
+    
+
+
+
+    
+![png](output_106_10.png)
+    
+
+
+
+    
+![png](output_106_11.png)
+    
+
+
+
+    
+![png](output_106_12.png)
+    
+
+
+
+    
+![png](output_106_13.png)
+    
+
+
+
+    
+![png](output_106_14.png)
+    
+
+
+
+    
+![png](output_106_15.png)
+    
 
 
 ### 1.4.4 Collinearity <a class="anchor" id="1.4.4"></a>
