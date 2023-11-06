@@ -122,12 +122,14 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.colors
+import itertools
 %matplotlib inline
 
 from operator import add,mul,truediv
 from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer
 from sklearn.linear_model import LinearRegression
+from scipy import stats
 ```
 
 
@@ -3649,7 +3651,7 @@ display(imputed_column_quality_summary)
     * <span style="color: #FF0000">GDPCAP</span>: Outlier.Count = 22, Outlier.Ratio = 0.134, Skewness=+2.311
     * <span style="color: #FF0000">POPDEN</span>: Outlier.Count = 20, Outlier.Ratio = 0.122, Skewness=+9.972
     * <span style="color: #FF0000">METEMI</span>: Outlier.Count = 20, Outlier.Ratio = 0.122, Skewness=+5.688
-1. Minimal number of outliers observed for 5 numeric variables with Outlier.Ratio<0.10 and normal Skewness.
+2. Minimal number of outliers observed for 5 numeric variables with Outlier.Ratio<0.10 and normal Skewness.
     * <span style="color: #FF0000">TUBINC</span>: Outlier.Count = 12, Outlier.Ratio = 0.073, Skewness=+1.747
     * <span style="color: #FF0000">CO2EMI</span>: Outlier.Count = 11, Outlier.Ratio = 0.067, Skewness=+2.693
     * <span style="color: #FF0000">GDPPER</span>: Outlier.Count = 3, Outlier.Ratio = 0.018, Skewness=+1.554
@@ -4004,7 +4006,298 @@ for column in cancer_rate_imputed_numeric:
 
 
 ### 1.4.4 Collinearity <a class="anchor" id="1.4.4"></a>
-Details
+
+1. Majority of the numeric variables reported moderate to high correlation which were statistically significant.
+2. Among pairwise combinations of numeric variables, high Pearson.Correlation.Coefficient values were noted for:
+    * <span style="color: #FF0000">GDPPER</span> and <span style="color: #FF0000">GDPCAP</span>: Pearson.Correlation.Coefficient = +0.921
+    * <span style="color: #FF0000">GHGEMI</span> and <span style="color: #FF0000">METEMI</span>: Pearson.Correlation.Coefficient = +0.905
+3. Among the highly correlated pairs, variables with the lowest correlation against the target variable were removed.
+    * <span style="color: #FF0000">GDPPER</span>: Pearson.Correlation.Coefficient = +0.690
+    * <span style="color: #FF0000">METEMI</span>: Pearson.Correlation.Coefficient = +0.062
+4. The cleaned dataset is comprised of:
+    * **163 rows** (observations)
+    * **16 columns** (variables)
+        * **1/16 metadata** (categorical)
+            * <span style="color: #FF0000">COUNTRY</span>
+        * **1/16 target** (numeric)
+             * <span style="color: #FF0000">CANRAT</span>
+        * **13/16 predictor** (numeric)
+             * <span style="color: #FF0000">URBPOP</span>
+             * <span style="color: #FF0000">POPGRO</span>
+             * <span style="color: #FF0000">LIFEXP</span>
+             * <span style="color: #FF0000">TUBINC</span>
+             * <span style="color: #FF0000">DTHCMD</span>
+             * <span style="color: #FF0000">AGRLND</span>
+             * <span style="color: #FF0000">GHGEMI</span>
+             * <span style="color: #FF0000">FORARE</span>
+             * <span style="color: #FF0000">CO2EMI</span>
+             * <span style="color: #FF0000">PM2EXP</span>
+             * <span style="color: #FF0000">POPDEN</span>
+             * <span style="color: #FF0000">GDPCAP</span>
+             * <span style="color: #FF0000">EPISCO</span>
+        * **1/16 predictor** (categorical)
+             * <span style="color: #FF0000">HDICAT</span>
+
+
+```python
+##################################
+# Formulating a function 
+# to plot the correlation matrix
+# for all pairwise combinations
+# of numeric columns
+##################################
+def plot_correlation_matrix(corr, mask=None):
+    f, ax = plt.subplots(figsize=(11, 9))
+    sns.heatmap(corr, 
+                ax=ax,
+                mask=mask,
+                annot=True, 
+                vmin=-1, 
+                vmax=1, 
+                center=0,
+                cmap='coolwarm', 
+                linewidths=1, 
+                linecolor='gray', 
+                cbar_kws={'orientation': 'horizontal'})  
+```
+
+
+```python
+##################################
+# Computing the correlation coefficients
+# and correlation p-values
+# among pairs of numeric columns
+##################################
+cancer_rate_imputed_numeric_correlation_pairs = {}
+cancer_rate_imputed_numeric_columns = cancer_rate_imputed_numeric.columns.tolist()
+for numeric_column_a, numeric_column_b in itertools.combinations(cancer_rate_imputed_numeric_columns, 2):
+    cancer_rate_imputed_numeric_correlation_pairs[numeric_column_a + '_' + numeric_column_b] = stats.pearsonr(
+        cancer_rate_imputed_numeric.loc[:, numeric_column_a], 
+        cancer_rate_imputed_numeric.loc[:, numeric_column_b])
+```
+
+
+```python
+##################################
+# Formulating the pairwise correlation summary
+# for all numeric columns
+##################################
+cancer_rate_imputed_numeric_summary = cancer_rate_imputed_numeric.from_dict(cancer_rate_imputed_numeric_correlation_pairs, orient='index')
+cancer_rate_imputed_numeric_summary.columns = ['Pearson.Correlation.Coefficient', 'Correlation.PValue']
+display(cancer_rate_imputed_numeric_summary.sort_values(by=['Pearson.Correlation.Coefficient'], ascending=False).head(20))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Pearson.Correlation.Coefficient</th>
+      <th>Correlation.PValue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>GDPPER_GDPCAP</th>
+      <td>0.921009</td>
+      <td>8.173822e-68</td>
+    </tr>
+    <tr>
+      <th>GHGEMI_METEMI</th>
+      <td>0.905121</td>
+      <td>1.087643e-61</td>
+    </tr>
+    <tr>
+      <th>POPGRO_DTHCMD</th>
+      <td>0.759470</td>
+      <td>7.124695e-32</td>
+    </tr>
+    <tr>
+      <th>GDPPER_LIFEXP</th>
+      <td>0.755792</td>
+      <td>2.052275e-31</td>
+    </tr>
+    <tr>
+      <th>CANRAT_EPISCO</th>
+      <td>0.712599</td>
+      <td>1.445594e-26</td>
+    </tr>
+    <tr>
+      <th>CANRAT_GDPCAP</th>
+      <td>0.696991</td>
+      <td>4.991271e-25</td>
+    </tr>
+    <tr>
+      <th>GDPCAP_EPISCO</th>
+      <td>0.696707</td>
+      <td>5.312642e-25</td>
+    </tr>
+    <tr>
+      <th>CANRAT_LIFEXP</th>
+      <td>0.692318</td>
+      <td>1.379448e-24</td>
+    </tr>
+    <tr>
+      <th>CANRAT_GDPPER</th>
+      <td>0.686787</td>
+      <td>4.483016e-24</td>
+    </tr>
+    <tr>
+      <th>LIFEXP_GDPCAP</th>
+      <td>0.683834</td>
+      <td>8.321371e-24</td>
+    </tr>
+    <tr>
+      <th>GDPPER_EPISCO</th>
+      <td>0.680814</td>
+      <td>1.554608e-23</td>
+    </tr>
+    <tr>
+      <th>GDPPER_URBPOP</th>
+      <td>0.666399</td>
+      <td>2.778872e-22</td>
+    </tr>
+    <tr>
+      <th>GDPPER_CO2EMI</th>
+      <td>0.654956</td>
+      <td>2.451320e-21</td>
+    </tr>
+    <tr>
+      <th>TUBINC_DTHCMD</th>
+      <td>0.643615</td>
+      <td>1.936081e-20</td>
+    </tr>
+    <tr>
+      <th>URBPOP_LIFEXP</th>
+      <td>0.623997</td>
+      <td>5.669778e-19</td>
+    </tr>
+    <tr>
+      <th>LIFEXP_EPISCO</th>
+      <td>0.620271</td>
+      <td>1.048393e-18</td>
+    </tr>
+    <tr>
+      <th>URBPOP_GDPCAP</th>
+      <td>0.559181</td>
+      <td>8.624533e-15</td>
+    </tr>
+    <tr>
+      <th>CO2EMI_GDPCAP</th>
+      <td>0.550221</td>
+      <td>2.782997e-14</td>
+    </tr>
+    <tr>
+      <th>URBPOP_CO2EMI</th>
+      <td>0.550046</td>
+      <td>2.846393e-14</td>
+    </tr>
+    <tr>
+      <th>LIFEXP_CO2EMI</th>
+      <td>0.531305</td>
+      <td>2.951829e-13</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+##################################
+# Plotting the correlation matrix
+# for all pairwise combinations
+# of numeric columns
+##################################
+cancer_rate_imputed_numeric_correlation = cancer_rate_imputed_numeric.corr()
+mask = np.triu(cancer_rate_imputed_numeric_correlation)
+plot_correlation_matrix(cancer_rate_imputed_numeric_correlation,mask)
+plt.show()
+```
+
+
+    
+![png](output_111_0.png)
+    
+
+
+
+```python
+##################################
+# Formulating a function 
+# to plot the correlation matrix
+# for all pairwise combinations
+# of numeric columns
+# with significant p-values only
+##################################
+def correlation_significance(df=None):
+    p_matrix = np.zeros(shape=(df.shape[1],df.shape[1]))
+    for col in df.columns:
+        for col2 in df.drop(col,axis=1).columns:
+            _ , p = stats.pearsonr(df[col],df[col2])
+            p_matrix[df.columns.to_list().index(col),df.columns.to_list().index(col2)] = p
+    return p_matrix
+```
+
+
+```python
+##################################
+# Plotting the correlation matrix
+# for all pairwise combinations
+# of numeric columns
+# with significant p-values only
+##################################
+cancer_rate_imputed_numeric_correlation_p_values = correlation_significance(cancer_rate_imputed_numeric)                     
+mask = np.invert(np.tril(cancer_rate_imputed_numeric_correlation_p_values<0.05)) 
+plot_correlation_matrix(cancer_rate_imputed_numeric_correlation,mask)  
+```
+
+
+    
+![png](output_113_0.png)
+    
+
+
+
+```python
+##################################
+# Filtering out one among the 
+# highly correlated variable pairs with
+# lesser Pearson.Correlation.Coefficient
+# when compared to the target variable
+##################################
+cancer_rate_imputed_numeric.drop(['GDPPER','METEMI'], inplace=True, axis=1)
+```
+
+
+```python
+##################################
+# Performing a general exploration of the filtered dataset
+##################################
+print('Dataset Dimensions: ')
+display(cancer_rate_imputed_numeric.shape)
+```
+
+    Dataset Dimensions: 
+    
+
+
+    (163, 14)
+
 
 ### 1.4.5 Centering and Scaling <a class="anchor" id="1.4.5"></a>
 Details
