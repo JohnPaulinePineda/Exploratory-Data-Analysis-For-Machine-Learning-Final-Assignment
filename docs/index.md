@@ -14,11 +14,13 @@
         * [1.4.2 Missing Data Imputation](#1.4.2)
         * [1.4.3 Outlier Treatment](#1.4.3)
         * [1.4.4 Collinearity](#1.4.4)
-        * [1.4.5 Centering and Scaling](#1.4.5)
-        * [1.4.6 Shape Transformation](#1.4.6)
-        * [1.4.7 Dummy Variables](#1.4.7)
+        * [1.4.5 Shape Transformation](#1.4.5)
+        * [1.4.6 Centering and Scaling](#1.4.6)
+        * [1.4.7 Data Encoding](#1.4.7)
         * [1.4.8 Preprocessed Data Description](#1.4.8)
     * [1.5 Data Exploration](#1.5)
+        * [1.5.1 Exploratory Data Analysis](#1.5.1)
+        * [1.5.2 Feature Selection](#1.5.1)
 * [**2. Summary**](#Summary)   
 * [**3. References**](#References)
 
@@ -129,6 +131,7 @@ from operator import add,mul,truediv
 from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer
 from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PowerTransformer
 from scipy import stats
 ```
 
@@ -4299,19 +4302,193 @@ display(cancer_rate_imputed_numeric.shape)
     (163, 14)
 
 
-### 1.4.5 Centering and Scaling <a class="anchor" id="1.4.5"></a>
+### 1.4.5 Shape Transformation <a class="anchor" id="1.4.5"></a>
+
+1. A Yeo-Johnson transformation was applied to all numeric variables to improve distributional shape.
+2. All variables achieved symmetrical distributions with minimal outliers after transformation except for:
+    * <span style="color: #FF0000">PM2EXP</span> 
+4. The transformed dataset is comprised of:
+    * **163 rows** (observations)
+    * **15 columns** (variables)
+        * **1/15 metadata** (categorical)
+            * <span style="color: #FF0000">COUNTRY</span>
+        * **1/15 target** (numeric)
+             * <span style="color: #FF0000">CANRAT</span>
+        * **13/15 predictor** (numeric)
+             * <span style="color: #FF0000">URBPOP</span>
+             * <span style="color: #FF0000">POPGRO</span>
+             * <span style="color: #FF0000">LIFEXP</span>
+             * <span style="color: #FF0000">TUBINC</span>
+             * <span style="color: #FF0000">DTHCMD</span>
+             * <span style="color: #FF0000">AGRLND</span>
+             * <span style="color: #FF0000">GHGEMI</span>
+             * <span style="color: #FF0000">FORARE</span>
+             * <span style="color: #FF0000">CO2EMI</span>
+             * <span style="color: #FF0000">POPDEN</span>
+             * <span style="color: #FF0000">GDPCAP</span>
+             * <span style="color: #FF0000">EPISCO</span>
+        * **1/15 predictor** (categorical)
+             * <span style="color: #FF0000">HDICAT</span>
+
+
+```python
+##################################
+# Conducting a Yeo-Johnson Transformation
+# to address the distributional
+# shape of the variables
+##################################
+yeo_johnson_transformer = PowerTransformer(method='yeo-johnson',
+                                          standardize=False)
+cancer_rate_imputed_numeric_array = yeo_johnson_transformer.fit_transform(cancer_rate_imputed_numeric)
+```
+
+
+```python
+##################################
+# Formulating a new dataset object
+# for the transformed data
+##################################
+cancer_rate_transformed_numeric = pd.DataFrame(cancer_rate_imputed_numeric_array,
+                                               columns=cancer_rate_imputed_numeric.columns)
+```
+
+
+```python
+##################################
+# Formulating the individual boxplots
+# for all transformed numeric columns
+##################################
+for column in cancer_rate_transformed_numeric:
+        plt.figure(figsize=(17,1))
+        sns.boxplot(data=cancer_rate_transformed_numeric, x=column)
+```
+
+
+    
+![png](output_119_0.png)
+    
+
+
+
+    
+![png](output_119_1.png)
+    
+
+
+
+    
+![png](output_119_2.png)
+    
+
+
+
+    
+![png](output_119_3.png)
+    
+
+
+
+    
+![png](output_119_4.png)
+    
+
+
+
+    
+![png](output_119_5.png)
+    
+
+
+
+    
+![png](output_119_6.png)
+    
+
+
+
+    
+![png](output_119_7.png)
+    
+
+
+
+    
+![png](output_119_8.png)
+    
+
+
+
+    
+![png](output_119_9.png)
+    
+
+
+
+    
+![png](output_119_10.png)
+    
+
+
+
+    
+![png](output_119_11.png)
+    
+
+
+
+    
+![png](output_119_12.png)
+    
+
+
+
+    
+![png](output_119_13.png)
+    
+
+
+
+```python
+##################################
+# Filtering out the column
+# which remained skewed even
+# after applying shape transformation
+##################################
+cancer_rate_transformed_numeric.drop(['PM2EXP'], inplace=True, axis=1)
+```
+
+
+```python
+##################################
+# Performing a general exploration of the filtered dataset
+##################################
+print('Dataset Dimensions: ')
+display(cancer_rate_transformed_numeric.shape)
+```
+
+    Dataset Dimensions: 
+    
+
+
+    (163, 13)
+
+
+### 1.4.6 Centering and Scaling <a class="anchor" id="1.4.6"></a>
 Details
 
-### 1.4.6 Shape Transformation <a class="anchor" id="1.4.6"></a>
-Details
-
-### 1.4.7 Dummy Variables <a class="anchor" id="1.4.7"></a>
+### 1.4.7 Data Encoding <a class="anchor" id="1.4.7"></a>
 Details
 
 ### 1.4.8 Preprocessed Data Description <a class="anchor" id="1.4.8"></a>
 Details
 
 ## 1.5. Data Exploration <a class="anchor" id="1.5"></a>
+Details
+
+### 1.5.1 Exploratory Data Analysis <a class="anchor" id="1.5.1"></a>
+Details
+
+### 1.5.2 Feature Selection <a class="anchor" id="1.5.2"></a>
 Details
 
 # 2. Summary <a class="anchor" id="Summary"></a>
