@@ -87,7 +87,7 @@ The predictor variables for the study are:
 1. The dataset is comprised of:
     * **177 rows** (observations)
     * **22 columns** (variables)
-        * **1/22 metadata** (categorical)
+        * **1/22 metadata** (object)
             * <span style="color: #FF0000">COUNTRY</span>
         * **1/22 target** (numeric)
              * <span style="color: #FF0000">CANRAT</span>
@@ -124,6 +124,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.colors
+import plotly.express as px
 import itertools
 %matplotlib inline
 
@@ -132,6 +133,7 @@ from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PowerTransformer
+from sklearn.preprocessing import StandardScaler
 from scipy import stats
 ```
 
@@ -376,6 +378,15 @@ cancer_rate.head()
 </div>
 
 
+
+
+```python
+##################################
+# Setting the levels of the categorical variables
+##################################
+cancer_rate['HDICAT'] = cancer_rate['HDICAT'].astype('category')
+cancer_rate['HDICAT'] = cancer_rate['HDICAT'].cat.set_categories(['L', 'M', 'H', 'VH'], ordered=True)
+```
 
 
 ```python
@@ -647,13 +658,13 @@ display(cancer_rate.describe(include='number').transpose())
 
 ```python
 ##################################
-# Performing a general exploration of the categorical variable
+# Performing a general exploration of the object variable
 ##################################
-print('Categorical Variable Summary:')
+print('Object Variable Summary:')
 display(cancer_rate.describe(include='object').transpose())
 ```
 
-    Categorical Variable Summary:
+    Object Variable Summary:
     
 
 
@@ -689,6 +700,49 @@ display(cancer_rate.describe(include='object').transpose())
       <td>Australia</td>
       <td>1</td>
     </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+##################################
+# Performing a general exploration of the categorical variable
+##################################
+print('Categorical Variable Summary:')
+display(cancer_rate.describe(include='category').transpose())
+```
+
+    Categorical Variable Summary:
+    
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>unique</th>
+      <th>top</th>
+      <th>freq</th>
+    </tr>
+  </thead>
+  <tbody>
     <tr>
       <th>HDICAT</th>
       <td>167</td>
@@ -1046,7 +1100,7 @@ display(all_column_quality_summary)
     <tr>
       <th>20</th>
       <td>HDICAT</td>
-      <td>object</td>
+      <td>category</td>
       <td>177</td>
       <td>167</td>
       <td>10</td>
@@ -1176,7 +1230,7 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
     <tr>
       <th>20</th>
       <td>HDICAT</td>
-      <td>object</td>
+      <td>category</td>
       <td>177</td>
       <td>167</td>
       <td>10</td>
@@ -2478,15 +2532,199 @@ display(numeric_column_quality_summary[(numeric_column_quality_summary['Skewness
 ```python
 ##################################
 # Formulating the dataset
-# with categorical columns only
+# with object column only
 ##################################
-cancer_rate_categorical = cancer_rate.select_dtypes(include='object')
+cancer_rate_object = cancer_rate.select_dtypes(include='object')
 ```
 
 
 ```python
 ##################################
-# Gathering the variable names for each categorical column
+# Gathering the variable names for the object column
+##################################
+object_variable_name_list = cancer_rate_object.columns
+```
+
+
+```python
+##################################
+# Gathering the first mode values for the object column
+##################################
+object_first_mode_list = [cancer_rate[x].value_counts().index.tolist()[0] for x in cancer_rate_object]
+```
+
+
+```python
+##################################
+# Gathering the second mode values for each object column
+##################################
+object_second_mode_list = [cancer_rate[x].value_counts().index.tolist()[1] for x in cancer_rate_object]
+```
+
+
+```python
+##################################
+# Gathering the count of first mode values for each object column
+##################################
+object_first_mode_count_list = [cancer_rate_object[x].isin([cancer_rate[x].value_counts(dropna=True).index.tolist()[0]]).sum() for x in cancer_rate_object]
+```
+
+
+```python
+##################################
+# Gathering the count of second mode values for each object column
+##################################
+object_second_mode_count_list = [cancer_rate_object[x].isin([cancer_rate[x].value_counts(dropna=True).index.tolist()[1]]).sum() for x in cancer_rate_object]
+```
+
+
+```python
+##################################
+# Gathering the first mode to second mode ratio for each object column
+##################################
+object_first_second_mode_ratio_list = map(truediv, object_first_mode_count_list, object_second_mode_count_list)
+```
+
+
+```python
+##################################
+# Gathering the count of unique values for each object column
+##################################
+object_unique_count_list = cancer_rate_object.nunique(dropna=True)
+```
+
+
+```python
+##################################
+# Gathering the number of observations for each object column
+##################################
+object_row_count_list = list([len(cancer_rate_object)] * len(cancer_rate_object.columns))
+```
+
+
+```python
+##################################
+# Gathering the unique to count ratio for each object column
+##################################
+object_unique_count_ratio_list = map(truediv, object_unique_count_list, object_row_count_list)
+```
+
+
+```python
+object_column_quality_summary = pd.DataFrame(zip(object_variable_name_list,
+                                                 object_first_mode_list,
+                                                 object_second_mode_list,
+                                                 object_first_mode_count_list,
+                                                 object_second_mode_count_list,
+                                                 object_first_second_mode_ratio_list,
+                                                 object_unique_count_list,
+                                                 object_row_count_list,
+                                                 object_unique_count_ratio_list), 
+                                        columns=['Object.Column.Name',
+                                                 'First.Mode',
+                                                 'Second.Mode',
+                                                 'First.Mode.Count',
+                                                 'Second.Mode.Count',
+                                                 'First.Second.Mode.Ratio',
+                                                 'Unique.Count',
+                                                 'Row.Count',
+                                                 'Unique.Count.Ratio'])
+display(object_column_quality_summary)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Object.Column.Name</th>
+      <th>First.Mode</th>
+      <th>Second.Mode</th>
+      <th>First.Mode.Count</th>
+      <th>Second.Mode.Count</th>
+      <th>First.Second.Mode.Ratio</th>
+      <th>Unique.Count</th>
+      <th>Row.Count</th>
+      <th>Unique.Count.Ratio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>COUNTRY</td>
+      <td>Australia</td>
+      <td>Mauritius</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1.0</td>
+      <td>177</td>
+      <td>177</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+##################################
+# Counting the number of object columns
+# with First.Second.Mode.Ratio > 5.00
+##################################
+len(object_column_quality_summary[(object_column_quality_summary['First.Second.Mode.Ratio']>5)])
+```
+
+
+
+
+    0
+
+
+
+
+```python
+##################################
+# Counting the number of object columns
+# with Unique.Count.Ratio > 10.00
+##################################
+len(object_column_quality_summary[(object_column_quality_summary['Unique.Count.Ratio']>10)])
+```
+
+
+
+
+    0
+
+
+
+
+```python
+##################################
+# Formulating the dataset
+# with categorical columns only
+##################################
+cancer_rate_categorical = cancer_rate.select_dtypes(include='category')
+```
+
+
+```python
+##################################
+# Gathering the variable names for the categorical column
 ##################################
 categorical_variable_name_list = cancer_rate_categorical.columns
 ```
@@ -2611,18 +2849,6 @@ display(categorical_column_quality_summary)
   <tbody>
     <tr>
       <th>0</th>
-      <td>COUNTRY</td>
-      <td>Australia</td>
-      <td>Mauritius</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1.000000</td>
-      <td>177</td>
-      <td>177</td>
-      <td>1.000000</td>
-    </tr>
-    <tr>
-      <th>1</th>
       <td>HDICAT</td>
       <td>VH</td>
       <td>H</td>
@@ -2700,7 +2926,7 @@ len(categorical_column_quality_summary[(categorical_column_quality_summary['Uniq
 3. The cleaned dataset is comprised of:
     * **163 rows** (observations)
     * **18 columns** (variables)
-        * **1/18 metadata** (categorical)
+        * **1/18 metadata** (object)
             * <span style="color: #FF0000">COUNTRY</span>
         * **1/18 target** (numeric)
              * <span style="color: #FF0000">CANRAT</span>
@@ -2984,7 +3210,7 @@ display(cleaned_column_quality_summary)
     <tr>
       <th>16</th>
       <td>HDICAT</td>
-      <td>object</td>
+      <td>category</td>
       <td>163</td>
       <td>162</td>
       <td>1</td>
@@ -3001,6 +3227,15 @@ display(cleaned_column_quality_summary)
 </table>
 </div>
 
+
+
+```python
+##################################
+# Formulating the cleaned dataset
+# with categorical columns only
+##################################
+cancer_rate_cleaned_categorical = cancer_rate_cleaned.select_dtypes(include='object')
+```
 
 
 ```python
@@ -3360,7 +3595,7 @@ cancer_rate_imputed_numeric.head()
 # Formulating the cleaned dataset
 # with categorical columns only
 ##################################
-cancer_rate_cleaned_categorical = cancer_rate_cleaned.select_dtypes(include='object')
+cancer_rate_cleaned_categorical = cancer_rate_cleaned.select_dtypes(include='category')
 ```
 
 
@@ -3625,17 +3860,8 @@ display(imputed_column_quality_summary)
     </tr>
     <tr>
       <th>16</th>
-      <td>COUNTRY</td>
-      <td>object</td>
-      <td>163</td>
-      <td>163</td>
-      <td>0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>17</th>
       <td>HDICAT</td>
-      <td>object</td>
+      <td>category</td>
       <td>163</td>
       <td>163</td>
       <td>0</td>
@@ -3914,97 +4140,97 @@ for column in cancer_rate_imputed_numeric:
 
 
     
-![png](output_106_0.png)
+![png](output_122_0.png)
     
 
 
 
     
-![png](output_106_1.png)
+![png](output_122_1.png)
     
 
 
 
     
-![png](output_106_2.png)
+![png](output_122_2.png)
     
 
 
 
     
-![png](output_106_3.png)
+![png](output_122_3.png)
     
 
 
 
     
-![png](output_106_4.png)
+![png](output_122_4.png)
     
 
 
 
     
-![png](output_106_5.png)
+![png](output_122_5.png)
     
 
 
 
     
-![png](output_106_6.png)
+![png](output_122_6.png)
     
 
 
 
     
-![png](output_106_7.png)
+![png](output_122_7.png)
     
 
 
 
     
-![png](output_106_8.png)
+![png](output_122_8.png)
     
 
 
 
     
-![png](output_106_9.png)
+![png](output_122_9.png)
     
 
 
 
     
-![png](output_106_10.png)
+![png](output_122_10.png)
     
 
 
 
     
-![png](output_106_11.png)
+![png](output_122_11.png)
     
 
 
 
     
-![png](output_106_12.png)
+![png](output_122_12.png)
     
 
 
 
     
-![png](output_106_13.png)
+![png](output_122_13.png)
     
 
 
 
     
-![png](output_106_14.png)
+![png](output_122_14.png)
     
 
 
 
     
-![png](output_106_15.png)
+![png](output_122_15.png)
     
 
 
@@ -4020,7 +4246,7 @@ for column in cancer_rate_imputed_numeric:
 4. The cleaned dataset is comprised of:
     * **163 rows** (observations)
     * **16 columns** (variables)
-        * **1/16 metadata** (categorical)
+        * **1/16 metadata** (object)
             * <span style="color: #FF0000">COUNTRY</span>
         * **1/16 target** (numeric)
              * <span style="color: #FF0000">CANRAT</span>
@@ -4234,7 +4460,7 @@ plt.show()
 
 
     
-![png](output_111_0.png)
+![png](output_127_0.png)
     
 
 
@@ -4271,7 +4497,7 @@ plot_correlation_matrix(cancer_rate_imputed_numeric_correlation,mask)
 
 
     
-![png](output_113_0.png)
+![png](output_129_0.png)
     
 
 
@@ -4305,16 +4531,17 @@ display(cancer_rate_imputed_numeric.shape)
 ### 1.4.5 Shape Transformation <a class="anchor" id="1.4.5"></a>
 
 1. A Yeo-Johnson transformation was applied to all numeric variables to improve distributional shape.
-2. All variables achieved symmetrical distributions with minimal outliers after transformation except for:
+2. Most variables achieved symmetrical distributions with minimal outliers after transformation.
+3. One variable which remained skewed even after applying shape transformation was removed.
     * <span style="color: #FF0000">PM2EXP</span> 
 4. The transformed dataset is comprised of:
     * **163 rows** (observations)
     * **15 columns** (variables)
-        * **1/15 metadata** (categorical)
+        * **1/15 metadata** (object)
             * <span style="color: #FF0000">COUNTRY</span>
         * **1/15 target** (numeric)
              * <span style="color: #FF0000">CANRAT</span>
-        * **13/15 predictor** (numeric)
+        * **12/15 predictor** (numeric)
              * <span style="color: #FF0000">URBPOP</span>
              * <span style="color: #FF0000">POPGRO</span>
              * <span style="color: #FF0000">LIFEXP</span>
@@ -4365,85 +4592,85 @@ for column in cancer_rate_transformed_numeric:
 
 
     
-![png](output_119_0.png)
+![png](output_135_0.png)
     
 
 
 
     
-![png](output_119_1.png)
+![png](output_135_1.png)
     
 
 
 
     
-![png](output_119_2.png)
+![png](output_135_2.png)
     
 
 
 
     
-![png](output_119_3.png)
+![png](output_135_3.png)
     
 
 
 
     
-![png](output_119_4.png)
+![png](output_135_4.png)
     
 
 
 
     
-![png](output_119_5.png)
+![png](output_135_5.png)
     
 
 
 
     
-![png](output_119_6.png)
+![png](output_135_6.png)
     
 
 
 
     
-![png](output_119_7.png)
+![png](output_135_7.png)
     
 
 
 
     
-![png](output_119_8.png)
+![png](output_135_8.png)
     
 
 
 
     
-![png](output_119_9.png)
+![png](output_135_9.png)
     
 
 
 
     
-![png](output_119_10.png)
+![png](output_135_10.png)
     
 
 
 
     
-![png](output_119_11.png)
+![png](output_135_11.png)
     
 
 
 
     
-![png](output_119_12.png)
+![png](output_135_12.png)
     
 
 
 
     
-![png](output_119_13.png)
+![png](output_135_13.png)
     
 
 
@@ -4474,19 +4701,329 @@ display(cancer_rate_transformed_numeric.shape)
 
 
 ### 1.4.6 Centering and Scaling <a class="anchor" id="1.4.6"></a>
-Details
+
+1. All numeric variables were transformed using the standardization method to achieve a comparable scale between values.
+4. The scaled dataset is comprised of:
+    * **163 rows** (observations)
+    * **15 columns** (variables)
+        * **1/15 metadata** (object)
+            * <span style="color: #FF0000">COUNTRY</span>
+        * **1/15 target** (numeric)
+             * <span style="color: #FF0000">CANRAT</span>
+        * **12/15 predictor** (numeric)
+             * <span style="color: #FF0000">URBPOP</span>
+             * <span style="color: #FF0000">POPGRO</span>
+             * <span style="color: #FF0000">LIFEXP</span>
+             * <span style="color: #FF0000">TUBINC</span>
+             * <span style="color: #FF0000">DTHCMD</span>
+             * <span style="color: #FF0000">AGRLND</span>
+             * <span style="color: #FF0000">GHGEMI</span>
+             * <span style="color: #FF0000">FORARE</span>
+             * <span style="color: #FF0000">CO2EMI</span>
+             * <span style="color: #FF0000">POPDEN</span>
+             * <span style="color: #FF0000">GDPCAP</span>
+             * <span style="color: #FF0000">EPISCO</span>
+        * **1/15 predictor** (categorical)
+             * <span style="color: #FF0000">HDICAT</span>
+
+
+```python
+##################################
+# Conducting standardization
+# to transform the values of the 
+# variables into comparable scale
+##################################
+standardization_scaler = StandardScaler()
+cancer_rate_transformed_numeric_array = standardization_scaler.fit_transform(cancer_rate_transformed_numeric)
+```
+
+
+```python
+##################################
+# Formulating a new dataset object
+# for the scaled data
+##################################
+cancer_rate_scaled_numeric = pd.DataFrame(cancer_rate_transformed_numeric_array,
+                                          columns=cancer_rate_transformed_numeric.columns)
+```
+
+
+```python
+##################################
+# Formulating the individual boxplots
+# for all transformed numeric columns
+##################################
+for column in cancer_rate_scaled_numeric:
+        plt.figure(figsize=(17,1))
+        sns.boxplot(data=cancer_rate_scaled_numeric, x=column)
+```
+
+
+    
+![png](output_141_0.png)
+    
+
+
+
+    
+![png](output_141_1.png)
+    
+
+
+
+    
+![png](output_141_2.png)
+    
+
+
+
+    
+![png](output_141_3.png)
+    
+
+
+
+    
+![png](output_141_4.png)
+    
+
+
+
+    
+![png](output_141_5.png)
+    
+
+
+
+    
+![png](output_141_6.png)
+    
+
+
+
+    
+![png](output_141_7.png)
+    
+
+
+
+    
+![png](output_141_8.png)
+    
+
+
+
+    
+![png](output_141_9.png)
+    
+
+
+
+    
+![png](output_141_10.png)
+    
+
+
+
+    
+![png](output_141_11.png)
+    
+
+
+
+    
+![png](output_141_12.png)
+    
+
 
 ### 1.4.7 Data Encoding <a class="anchor" id="1.4.7"></a>
-Details
+
+1. One-hot encoding was applied to the <span style="color: #FF0000">HDICAP_VH</span> variable resulting to 4 additional columns in the dataset:
+    * <span style="color: #FF0000">HDICAP_L</span>
+    * <span style="color: #FF0000">HDICAP_M</span>
+    * <span style="color: #FF0000">HDICAP_H</span>
+    * <span style="color: #FF0000">HDICAP_VH</span>
+
+
+```python
+##################################
+# Formulating the categorical column
+# for encoding transformation
+##################################
+cancer_rate_categorical_encoded = pd.DataFrame(cancer_rate_cleaned_categorical.loc[:, 'HDICAT'].to_list(),
+                                               columns=['HDICAT'])
+```
+
+
+```python
+##################################
+# Applying a one-hot encoding transformation
+# for the categorical column
+##################################
+cancer_rate_categorical_encoded = pd.get_dummies(cancer_rate_categorical_encoded, columns=['HDICAT'])
+```
 
 ### 1.4.8 Preprocessed Data Description <a class="anchor" id="1.4.8"></a>
-Details
+
+1. The preprocessed dataset is comprised of:
+    * **163 rows** (observations)
+    * **18 columns** (variables)
+        * **1/18 metadata** (object)
+            * <span style="color: #FF0000">COUNTRY</span>
+        * **1/18 target** (numeric)
+             * <span style="color: #FF0000">CANRAT</span>
+        * **12/18 predictor** (numeric)
+             * <span style="color: #FF0000">URBPOP</span>
+             * <span style="color: #FF0000">POPGRO</span>
+             * <span style="color: #FF0000">LIFEXP</span>
+             * <span style="color: #FF0000">TUBINC</span>
+             * <span style="color: #FF0000">DTHCMD</span>
+             * <span style="color: #FF0000">AGRLND</span>
+             * <span style="color: #FF0000">GHGEMI</span>
+             * <span style="color: #FF0000">FORARE</span>
+             * <span style="color: #FF0000">CO2EMI</span>
+             * <span style="color: #FF0000">POPDEN</span>
+             * <span style="color: #FF0000">GDPCAP</span>
+             * <span style="color: #FF0000">EPISCO</span>
+        * **4/18 predictor** (categorical)
+             * <span style="color: #FF0000">HDICAT_L</span>
+             * <span style="color: #FF0000">HDICAT_M</span>
+             * <span style="color: #FF0000">HDICAT_H</span>
+             * <span style="color: #FF0000">HDICAT_VH</span>
+
+
+```python
+##################################
+# Consolidating both numeric columns
+# and encoded categorical columns
+##################################
+# cancer_rate_preprocessed = cancer_rate_scaled_numeric 
+# cancer_rate_preprocessed["HDICAT"] = cancer_rate_cleaned_categorical.loc[:, 'HDICAT'].to_list()
+cancer_rate_preprocessed = pd.concat([cancer_rate_scaled_numeric,cancer_rate_categorical_encoded], axis=1, join='inner')  
+```
+
+
+```python
+##################################
+# Performing a general exploration of the consolidated dataset
+##################################
+print('Dataset Dimensions: ')
+display(cancer_rate_preprocessed.shape)
+```
+
+    Dataset Dimensions: 
+    
+
+
+    (163, 17)
+
 
 ## 1.5. Data Exploration <a class="anchor" id="1.5"></a>
-Details
 
 ### 1.5.1 Exploratory Data Analysis <a class="anchor" id="1.5.1"></a>
-Details
+
+1. Bivariate analysis identified individual predictors with generally linear relationship with the target variable.
+2. Increasing values for the following predictors correspond to higher <span style="color: #FF0000">CANRAT</span> measurements: 
+    * <span style="color: #FF0000">URBPOP</span>
+    * <span style="color: #FF0000">LIFEXP</span>    
+    * <span style="color: #FF0000">CO2EMI</span>    
+    * <span style="color: #FF0000">GDPCAP</span>    
+    * <span style="color: #FF0000">EPISCO</span>    
+    * <span style="color: #FF0000">HDICAP_VH</span>
+3. Decreasing values for the following predictors correspond to higher <span style="color: #FF0000">CANRAT</span> measurements: 
+    * <span style="color: #FF0000">POPGRO</span>
+    * <span style="color: #FF0000">TUBINC</span>    
+    * <span style="color: #FF0000">DTHCMD</span> 
+    * <span style="color: #FF0000">HDICAP_L</span>
+    * <span style="color: #FF0000">HDICAP_M</span>
+4. Values for the following predictors did not affect <span style="color: #FF0000">CANRAT</span> measurements: 
+    * <span style="color: #FF0000">AGRLND</span>
+    * <span style="color: #FF0000">GHGEMI</span>    
+    * <span style="color: #FF0000">FORARE</span> 
+    * <span style="color: #FF0000">POPDEN</span> 
+    * <span style="color: #FF0000">HDICAP_H</span>
+
+
+```python
+##################################
+# Segregating the target
+# and predictor variable lists
+##################################
+cancer_rate_preprocessed_target = ['CANRAT']
+cancer_rate_preprocessed_predictors = cancer_rate_preprocessed.drop('CANRAT', axis=1).columns
+cancer_rate_preprocessed_predictors
+```
+
+
+
+
+    Index(['URBPOP', 'POPGRO', 'LIFEXP', 'TUBINC', 'DTHCMD', 'AGRLND', 'GHGEMI',
+           'FORARE', 'CO2EMI', 'POPDEN', 'GDPCAP', 'EPISCO', 'HDICAT_H',
+           'HDICAT_L', 'HDICAT_M', 'HDICAT_VH'],
+          dtype='object')
+
+
+
+
+```python
+##################################
+# Segregating the target
+# and predictor variable names
+##################################
+y_variable = 'CANRAT'
+x_variables = cancer_rate_preprocessed_predictors
+```
+
+
+```python
+##################################
+# Defining the number of 
+# rows and columns for the subplots
+##################################
+num_rows = 8
+num_cols = 2
+```
+
+
+```python
+##################################
+# Formulating the subplot structure
+##################################
+fig, axes = plt.subplots(num_rows, num_cols, figsize=(15, 40))
+
+##################################
+# Flattening the multi-row and
+# multi-column axes
+##################################
+axes = axes.ravel()
+
+##################################
+# Formulating the individual scatterplots
+# for all scaled numeric columns
+##################################
+for i, x_var in enumerate(x_variables):
+    ax = axes[i]
+    ax.scatter(cancer_rate_preprocessed[x_var],cancer_rate_preprocessed[y_variable])
+    ax.set_title(f'{y_variable} Versus {x_var}')
+    ax.set_xlabel(x_var)
+    ax.set_ylabel(y_variable)
+
+##################################
+# Adjusting the subplot layout
+##################################
+plt.tight_layout()
+
+##################################
+# Presenting the subplots
+##################################
+plt.show()
+```
+
+
+    
+![png](output_153_0.png)
+    
+
 
 ### 1.5.2 Feature Selection <a class="anchor" id="1.5.2"></a>
 Details
