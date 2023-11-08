@@ -14624,7 +14624,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </li>
 <li><a href="#1.5">1.5 Data Exploration</a><ul>
 <li><a href="#1.5.1">1.5.1 Exploratory Data Analysis</a></li>
-<li><a href="#1.5.1">1.5.2 Feature Selection</a></li>
+<li><a href="#1.5.2">1.5.2 Hypothesis Testing</a></li>
 </ul>
 </li>
 </ul>
@@ -22525,8 +22525,6 @@ class="
 <span class="c1"># Consolidating both numeric columns</span>
 <span class="c1"># and encoded categorical columns</span>
 <span class="c1">##################################</span>
-<span class="c1"># cancer_rate_preprocessed = cancer_rate_scaled_numeric </span>
-<span class="c1"># cancer_rate_preprocessed["HDICAT"] = cancer_rate_cleaned_categorical.loc[:, 'HDICAT'].to_list()</span>
 <span class="n">cancer_rate_preprocessed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">cancer_rate_scaled_numeric</span><span class="p">,</span><span class="n">cancer_rate_categorical_encoded</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">'inner'</span><span class="p">)</span>  
 </pre></div>
 
@@ -22611,7 +22609,7 @@ class="
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="1.5.1-Exploratory-Data-Analysis-">1.5.1 Exploratory Data Analysis <a class="anchor" id="1.5.1" /><a class="anchor-link" href="#1.5.1-Exploratory-Data-Analysis-">&#182;</a></h3><ol>
-<li>Bivariate analysis identified individual predictors with generally linear relationship with the target variable.</li>
+<li>Bivariate analysis identified individual predictors with generally linear relationship to the target variable based on visual inspection.</li>
 <li>Increasing values for the following predictors correspond to higher <span style="color: #FF0000">CANRAT</span> measurements: <ul>
 <li><span style="color: #FF0000">URBPOP</span></li>
 <li><span style="color: #FF0000">LIFEXP</span>    </li>
@@ -22757,11 +22755,11 @@ class="
 <span class="c1"># Formulating the individual scatterplots</span>
 <span class="c1"># for all scaled numeric columns</span>
 <span class="c1">##################################</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x_var</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x_variables</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x_variable</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x_variables</span><span class="p">):</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">cancer_rate_preprocessed</span><span class="p">[</span><span class="n">x_var</span><span class="p">],</span><span class="n">cancer_rate_preprocessed</span><span class="p">[</span><span class="n">y_variable</span><span class="p">])</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">y_variable</span><span class="si">}</span><span class="s1"> Versus </span><span class="si">{</span><span class="n">x_var</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">x_var</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">cancer_rate_preprocessed</span><span class="p">[</span><span class="n">x_variable</span><span class="p">],</span><span class="n">cancer_rate_preprocessed</span><span class="p">[</span><span class="n">y_variable</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">y_variable</span><span class="si">}</span><span class="s1"> Versus </span><span class="si">{</span><span class="n">x_variable</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">x_variable</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">y_variable</span><span class="p">)</span>
 
 <span class="c1">##################################</span>
@@ -22815,11 +22813,329 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="1.5.2-Feature-Selection-">1.5.2 Feature Selection <a class="anchor" id="1.5.2" /><a class="anchor-link" href="#1.5.2-Feature-Selection-">&#182;</a></h3><p>Details</p>
+<h3 id="1.5.2-Hypothesis-Testing-">1.5.2 Hypothesis Testing <a class="anchor" id="1.5.2" /><a class="anchor-link" href="#1.5.2-Hypothesis-Testing-">&#182;</a></h3><ol>
+<li>The relationship between the numeric predictors to the <span style="color: #FF0000">CANRAT</span> target variable was statistically evaluated using the following hypotheses:<ul>
+<li><strong>Null</strong>: Pearson correlation coefficient is equal to zero </li>
+<li><strong>Alternative</strong>: Pearson correlation coefficient is not equal to zero    </li>
+</ul>
+</li>
+<li>There is sufficient evidence to conclude of a statistically significant linear relationship between the <span style="color: #FF0000">CANRAT</span> target variable and 10 of the 12 numeric predictors given their high Pearson correlation coefficient values with reported low p-values less than the significance level of 0.05.<ul>
+<li><span style="color: #FF0000">GDPCAP</span>: Pearson.Correlation.Coefficient=+0.735, Correlation.PValue=0.000</li>
+<li><span style="color: #FF0000">LIFEXP</span>: Pearson.Correlation.Coefficient=+0.702, Correlation.PValue=0.000   </li>
+<li><span style="color: #FF0000">DTHCMD</span>: Pearson.Correlation.Coefficient=-0.687, Correlation.PValue=0.000 </li>
+<li><span style="color: #FF0000">EPISCO</span>: Pearson.Correlation.Coefficient=+0.648, Correlation.PValue=0.000 </li>
+<li><span style="color: #FF0000">TUBINC</span>: Pearson.Correlation.Coefficient=+0.628, Correlation.PValue=0.000 </li>
+<li><span style="color: #FF0000">CO2EMI</span>: Pearson.Correlation.Coefficient=+0.585, Correlation.PValue=0.000  </li>
+<li><span style="color: #FF0000">POPGRO</span>: Pearson.Correlation.Coefficient=-0.498, Correlation.PValue=0.000</li>
+<li><span style="color: #FF0000">URBPOP</span>: Pearson.Correlation.Coefficient=+0.479, Correlation.PValue=0.000   </li>
+<li><span style="color: #FF0000">GHGEMI</span>: Pearson.Correlation.Coefficient=+0.232, Correlation.PValue=0.028</li>
+<li><span style="color: #FF0000">FORARE</span>: Pearson.Correlation.Coefficient=+0.165, Correlation.PValue=0.035</li>
+</ul>
+</li>
+<li>The relationship between the categorical predictors to the <span style="color: #FF0000">CANRAT</span> target variable was statistically evaluated using the following hypotheses:<ul>
+<li><strong>Null</strong>: Difference in the means between groups 0 and 1 is equal to zero </li>
+<li><strong>Alternative</strong>: Difference in the means between groups 0 and 1 is not equal to zero    </li>
+</ul>
+</li>
+<li>There is sufficient evidence to conclude of a statistically significant difference between the means of <span style="color: #FF0000">CANRAT</span> measuremens obtained from groups 0 and 1 in 3 of the 4 categorical predictors given their high t-test statistic values with reported low p-values less than the significance level of 0.05.<ul>
+<li><span style="color: #FF0000">HDICAT_VH</span>: T.Test.Statistic=-10.605, T.Test.PValue=0.000</li>
+<li><span style="color: #FF0000">HDICAT_L</span>: T.Test.Statistic=+6.559, T.Test.PValue=0.000   </li>
+<li><span style="color: #FF0000">HDICAT_M</span>: T.Test.Statistic=+5.104, T.Test.PValue=0.000 </li>
+</ul>
+</li>
+</ol>
 
 </div>
 </div>
 </div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[136]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
+<span class="c1"># Computing the correlation coefficients</span>
+<span class="c1"># and correlation p-values</span>
+<span class="c1"># between the target variable</span>
+<span class="c1"># and numeric predictor columns</span>
+<span class="c1">##################################</span>
+<span class="n">cancer_rate_preprocessed_numeric_correlation_target</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">cancer_rate_preprocessed_numeric</span> <span class="o">=</span> <span class="n">cancer_rate_preprocessed</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">'HDICAT_L'</span><span class="p">,</span><span class="s1">'HDICAT_M'</span><span class="p">,</span><span class="s1">'HDICAT_H'</span><span class="p">,</span><span class="s1">'HDICAT_VH'</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cancer_rate_preprocessed_numeric_columns</span> <span class="o">=</span> <span class="n">cancer_rate_preprocessed_numeric</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">numeric_column</span> <span class="ow">in</span> <span class="n">cancer_rate_preprocessed_numeric_columns</span><span class="p">:</span>
+    <span class="n">cancer_rate_preprocessed_numeric_correlation_target</span><span class="p">[</span><span class="s1">'CANRAT_'</span> <span class="o">+</span> <span class="n">numeric_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span>
+        <span class="n">cancer_rate_preprocessed_numeric</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">'CANRAT'</span><span class="p">],</span> 
+        <span class="n">cancer_rate_preprocessed_numeric</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">numeric_column</span><span class="p">])</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[137]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
+<span class="c1"># Formulating the pairwise correlation summary</span>
+<span class="c1"># between the target variable</span>
+<span class="c1"># and numeric predictor columns</span>
+<span class="c1">##################################</span>
+<span class="n">cancer_rate_preprocessed_numeric_summary</span> <span class="o">=</span> <span class="n">cancer_rate_preprocessed_numeric</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">cancer_rate_preprocessed_numeric_correlation_target</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">'index'</span><span class="p">)</span>
+<span class="n">cancer_rate_preprocessed_numeric_summary</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Pearson.Correlation.Coefficient'</span><span class="p">,</span> <span class="s1">'Correlation.PValue'</span><span class="p">]</span>
+<span class="n">display</span><span class="p">(</span><span class="n">cancer_rate_preprocessed_numeric_summary</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">'Correlation.PValue'</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">13</span><span class="p">))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Pearson.Correlation.Coefficient</th>
+      <th>Correlation.PValue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>CANRAT_CANRAT</th>
+      <td>1.000000</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>CANRAT_GDPCAP</th>
+      <td>0.735131</td>
+      <td>5.617239e-29</td>
+    </tr>
+    <tr>
+      <th>CANRAT_LIFEXP</th>
+      <td>0.702430</td>
+      <td>1.491302e-25</td>
+    </tr>
+    <tr>
+      <th>CANRAT_DTHCMD</th>
+      <td>-0.687136</td>
+      <td>4.164564e-24</td>
+    </tr>
+    <tr>
+      <th>CANRAT_EPISCO</th>
+      <td>0.648431</td>
+      <td>8.136735e-21</td>
+    </tr>
+    <tr>
+      <th>CANRAT_TUBINC</th>
+      <td>-0.628877</td>
+      <td>2.503346e-19</td>
+    </tr>
+    <tr>
+      <th>CANRAT_CO2EMI</th>
+      <td>0.585452</td>
+      <td>2.251585e-16</td>
+    </tr>
+    <tr>
+      <th>CANRAT_POPGRO</th>
+      <td>-0.498457</td>
+      <td>1.278437e-11</td>
+    </tr>
+    <tr>
+      <th>CANRAT_URBPOP</th>
+      <td>0.479386</td>
+      <td>9.543704e-11</td>
+    </tr>
+    <tr>
+      <th>CANRAT_GHGEMI</th>
+      <td>0.232488</td>
+      <td>2.822914e-03</td>
+    </tr>
+    <tr>
+      <th>CANRAT_FORARE</th>
+      <td>0.165265</td>
+      <td>3.500992e-02</td>
+    </tr>
+    <tr>
+      <th>CANRAT_AGRLND</th>
+      <td>-0.024520</td>
+      <td>7.560347e-01</td>
+    </tr>
+    <tr>
+      <th>CANRAT_POPDEN</th>
+      <td>0.001902</td>
+      <td>9.807807e-01</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[138]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
+<span class="c1"># Computing the t-test </span>
+<span class="c1"># statistic and p-values</span>
+<span class="c1"># between the target variable</span>
+<span class="c1"># and categorical predictor columns</span>
+<span class="c1">##################################</span>
+<span class="n">cancer_rate_preprocessed_categorical_ttest_target</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">cancer_rate_preprocessed_categorical</span> <span class="o">=</span> <span class="n">cancer_rate_preprocessed</span><span class="p">[[</span><span class="s1">'CANRAT'</span><span class="p">,</span><span class="s1">'HDICAT_L'</span><span class="p">,</span><span class="s1">'HDICAT_M'</span><span class="p">,</span><span class="s1">'HDICAT_H'</span><span class="p">,</span><span class="s1">'HDICAT_VH'</span><span class="p">]]</span>
+<span class="n">cancer_rate_preprocessed_categorical_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'HDICAT_L'</span><span class="p">,</span><span class="s1">'HDICAT_M'</span><span class="p">,</span><span class="s1">'HDICAT_H'</span><span class="p">,</span><span class="s1">'HDICAT_VH'</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">categorical_column</span> <span class="ow">in</span> <span class="n">cancer_rate_preprocessed_categorical_columns</span><span class="p">:</span>
+    <span class="n">group_0</span> <span class="o">=</span> <span class="n">cancer_rate_preprocessed_categorical</span><span class="p">[</span><span class="n">cancer_rate_preprocessed_categorical</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">categorical_column</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">group_1</span> <span class="o">=</span> <span class="n">cancer_rate_preprocessed_categorical</span><span class="p">[</span><span class="n">cancer_rate_preprocessed_categorical</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">categorical_column</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">cancer_rate_preprocessed_categorical_ttest_target</span><span class="p">[</span><span class="s1">'CANRAT_'</span> <span class="o">+</span> <span class="n">categorical_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span>
+        <span class="n">group_0</span><span class="p">[</span><span class="s1">'CANRAT'</span><span class="p">],</span> 
+        <span class="n">group_1</span><span class="p">[</span><span class="s1">'CANRAT'</span><span class="p">],</span> 
+        <span class="n">equal_var</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[139]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">##################################</span>
+<span class="c1"># Formulating the pairwise ttest summary</span>
+<span class="c1"># between the target variable</span>
+<span class="c1"># and categorical predictor columns</span>
+<span class="c1">##################################</span>
+<span class="n">cancer_rate_preprocessed_categorical_summary</span> <span class="o">=</span> <span class="n">cancer_rate_preprocessed_categorical</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">cancer_rate_preprocessed_categorical_ttest_target</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">'index'</span><span class="p">)</span>
+<span class="n">cancer_rate_preprocessed_categorical_summary</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'T.Test.Statistic'</span><span class="p">,</span> <span class="s1">'T.Test.PValue'</span><span class="p">]</span>
+<span class="n">display</span><span class="p">(</span><span class="n">cancer_rate_preprocessed_categorical_summary</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">'T.Test.PValue'</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>T.Test.Statistic</th>
+      <th>T.Test.PValue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>CANRAT_HDICAT_VH</th>
+      <td>-10.605706</td>
+      <td>2.909971e-20</td>
+    </tr>
+    <tr>
+      <th>CANRAT_HDICAT_L</th>
+      <td>6.559780</td>
+      <td>7.003957e-10</td>
+    </tr>
+    <tr>
+      <th>CANRAT_HDICAT_M</th>
+      <td>5.104986</td>
+      <td>9.237518e-07</td>
+    </tr>
+    <tr>
+      <th>CANRAT_HDICAT_H</th>
+      <td>-0.635957</td>
+      <td>5.257075e-01</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
@@ -22832,6 +23148,22 @@ class="
 </div>
 </div>
 </div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
@@ -22875,7 +23207,7 @@ class="
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[136]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[140]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>

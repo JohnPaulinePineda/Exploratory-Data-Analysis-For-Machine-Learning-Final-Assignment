@@ -20,7 +20,7 @@
         * [1.4.8 Preprocessed Data Description](#1.4.8)
     * [1.5 Data Exploration](#1.5)
         * [1.5.1 Exploratory Data Analysis](#1.5.1)
-        * [1.5.2 Feature Selection](#1.5.1)
+        * [1.5.2 Hypothesis Testing](#1.5.2)
 * [**2. Summary**](#Summary)   
 * [**3. References**](#References)
 
@@ -4897,8 +4897,6 @@ cancer_rate_categorical_encoded = pd.get_dummies(cancer_rate_categorical_encoded
 # Consolidating both numeric columns
 # and encoded categorical columns
 ##################################
-# cancer_rate_preprocessed = cancer_rate_scaled_numeric 
-# cancer_rate_preprocessed["HDICAT"] = cancer_rate_cleaned_categorical.loc[:, 'HDICAT'].to_list()
 cancer_rate_preprocessed = pd.concat([cancer_rate_scaled_numeric,cancer_rate_categorical_encoded], axis=1, join='inner')  
 ```
 
@@ -4922,7 +4920,7 @@ display(cancer_rate_preprocessed.shape)
 
 ### 1.5.1 Exploratory Data Analysis <a class="anchor" id="1.5.1"></a>
 
-1. Bivariate analysis identified individual predictors with generally linear relationship with the target variable.
+1. Bivariate analysis identified individual predictors with generally linear relationship to the target variable based on visual inspection.
 2. Increasing values for the following predictors correspond to higher <span style="color: #FF0000">CANRAT</span> measurements: 
     * <span style="color: #FF0000">URBPOP</span>
     * <span style="color: #FF0000">LIFEXP</span>    
@@ -5001,11 +4999,11 @@ axes = axes.ravel()
 # Formulating the individual scatterplots
 # for all scaled numeric columns
 ##################################
-for i, x_var in enumerate(x_variables):
+for i, x_variable in enumerate(x_variables):
     ax = axes[i]
-    ax.scatter(cancer_rate_preprocessed[x_var],cancer_rate_preprocessed[y_variable])
-    ax.set_title(f'{y_variable} Versus {x_var}')
-    ax.set_xlabel(x_var)
+    ax.scatter(cancer_rate_preprocessed[x_variable],cancer_rate_preprocessed[y_variable])
+    ax.set_title(f'{y_variable} Versus {x_variable}')
+    ax.set_xlabel(x_variable)
     ax.set_ylabel(y_variable)
 
 ##################################
@@ -5025,11 +5023,241 @@ plt.show()
     
 
 
-### 1.5.2 Feature Selection <a class="anchor" id="1.5.2"></a>
-Details
+### 1.5.2 Hypothesis Testing <a class="anchor" id="1.5.2"></a>
+
+1. The relationship between the numeric predictors to the <span style="color: #FF0000">CANRAT</span> target variable was statistically evaluated using the following hypotheses:
+    * **Null**: Pearson correlation coefficient is equal to zero 
+    * **Alternative**: Pearson correlation coefficient is not equal to zero    
+2. There is sufficient evidence to conclude of a statistically significant linear relationship between the <span style="color: #FF0000">CANRAT</span> target variable and 10 of the 12 numeric predictors given their high Pearson correlation coefficient values with reported low p-values less than the significance level of 0.05.
+    * <span style="color: #FF0000">GDPCAP</span>: Pearson.Correlation.Coefficient=+0.735, Correlation.PValue=0.000
+    * <span style="color: #FF0000">LIFEXP</span>: Pearson.Correlation.Coefficient=+0.702, Correlation.PValue=0.000   
+    * <span style="color: #FF0000">DTHCMD</span>: Pearson.Correlation.Coefficient=-0.687, Correlation.PValue=0.000 
+    * <span style="color: #FF0000">EPISCO</span>: Pearson.Correlation.Coefficient=+0.648, Correlation.PValue=0.000 
+    * <span style="color: #FF0000">TUBINC</span>: Pearson.Correlation.Coefficient=+0.628, Correlation.PValue=0.000 
+    * <span style="color: #FF0000">CO2EMI</span>: Pearson.Correlation.Coefficient=+0.585, Correlation.PValue=0.000  
+    * <span style="color: #FF0000">POPGRO</span>: Pearson.Correlation.Coefficient=-0.498, Correlation.PValue=0.000
+    * <span style="color: #FF0000">URBPOP</span>: Pearson.Correlation.Coefficient=+0.479, Correlation.PValue=0.000   
+    * <span style="color: #FF0000">GHGEMI</span>: Pearson.Correlation.Coefficient=+0.232, Correlation.PValue=0.028
+    * <span style="color: #FF0000">FORARE</span>: Pearson.Correlation.Coefficient=+0.165, Correlation.PValue=0.035
+3. The relationship between the categorical predictors to the <span style="color: #FF0000">CANRAT</span> target variable was statistically evaluated using the following hypotheses:
+    * **Null**: Difference in the means between groups 0 and 1 is equal to zero 
+    * **Alternative**: Difference in the means between groups 0 and 1 is not equal to zero    
+2. There is sufficient evidence to conclude of a statistically significant difference between the means of <span style="color: #FF0000">CANRAT</span> measuremens obtained from groups 0 and 1 in 3 of the 4 categorical predictors given their high t-test statistic values with reported low p-values less than the significance level of 0.05.
+    * <span style="color: #FF0000">HDICAT_VH</span>: T.Test.Statistic=-10.605, T.Test.PValue=0.000
+    * <span style="color: #FF0000">HDICAT_L</span>: T.Test.Statistic=+6.559, T.Test.PValue=0.000   
+    * <span style="color: #FF0000">HDICAT_M</span>: T.Test.Statistic=+5.104, T.Test.PValue=0.000 
+
+
+```python
+##################################
+# Computing the correlation coefficients
+# and correlation p-values
+# between the target variable
+# and numeric predictor columns
+##################################
+cancer_rate_preprocessed_numeric_correlation_target = {}
+cancer_rate_preprocessed_numeric = cancer_rate_preprocessed.drop(['HDICAT_L','HDICAT_M','HDICAT_H','HDICAT_VH'], axis=1)
+cancer_rate_preprocessed_numeric_columns = cancer_rate_preprocessed_numeric.columns.tolist()
+for numeric_column in cancer_rate_preprocessed_numeric_columns:
+    cancer_rate_preprocessed_numeric_correlation_target['CANRAT_' + numeric_column] = stats.pearsonr(
+        cancer_rate_preprocessed_numeric.loc[:, 'CANRAT'], 
+        cancer_rate_preprocessed_numeric.loc[:, numeric_column])
+```
+
+
+```python
+##################################
+# Formulating the pairwise correlation summary
+# between the target variable
+# and numeric predictor columns
+##################################
+cancer_rate_preprocessed_numeric_summary = cancer_rate_preprocessed_numeric.from_dict(cancer_rate_preprocessed_numeric_correlation_target, orient='index')
+cancer_rate_preprocessed_numeric_summary.columns = ['Pearson.Correlation.Coefficient', 'Correlation.PValue']
+display(cancer_rate_preprocessed_numeric_summary.sort_values(by=['Correlation.PValue'], ascending=True).head(13))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Pearson.Correlation.Coefficient</th>
+      <th>Correlation.PValue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>CANRAT_CANRAT</th>
+      <td>1.000000</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>CANRAT_GDPCAP</th>
+      <td>0.735131</td>
+      <td>5.617239e-29</td>
+    </tr>
+    <tr>
+      <th>CANRAT_LIFEXP</th>
+      <td>0.702430</td>
+      <td>1.491302e-25</td>
+    </tr>
+    <tr>
+      <th>CANRAT_DTHCMD</th>
+      <td>-0.687136</td>
+      <td>4.164564e-24</td>
+    </tr>
+    <tr>
+      <th>CANRAT_EPISCO</th>
+      <td>0.648431</td>
+      <td>8.136735e-21</td>
+    </tr>
+    <tr>
+      <th>CANRAT_TUBINC</th>
+      <td>-0.628877</td>
+      <td>2.503346e-19</td>
+    </tr>
+    <tr>
+      <th>CANRAT_CO2EMI</th>
+      <td>0.585452</td>
+      <td>2.251585e-16</td>
+    </tr>
+    <tr>
+      <th>CANRAT_POPGRO</th>
+      <td>-0.498457</td>
+      <td>1.278437e-11</td>
+    </tr>
+    <tr>
+      <th>CANRAT_URBPOP</th>
+      <td>0.479386</td>
+      <td>9.543704e-11</td>
+    </tr>
+    <tr>
+      <th>CANRAT_GHGEMI</th>
+      <td>0.232488</td>
+      <td>2.822914e-03</td>
+    </tr>
+    <tr>
+      <th>CANRAT_FORARE</th>
+      <td>0.165265</td>
+      <td>3.500992e-02</td>
+    </tr>
+    <tr>
+      <th>CANRAT_AGRLND</th>
+      <td>-0.024520</td>
+      <td>7.560347e-01</td>
+    </tr>
+    <tr>
+      <th>CANRAT_POPDEN</th>
+      <td>0.001902</td>
+      <td>9.807807e-01</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+##################################
+# Computing the t-test 
+# statistic and p-values
+# between the target variable
+# and categorical predictor columns
+##################################
+cancer_rate_preprocessed_categorical_ttest_target = {}
+cancer_rate_preprocessed_categorical = cancer_rate_preprocessed[['CANRAT','HDICAT_L','HDICAT_M','HDICAT_H','HDICAT_VH']]
+cancer_rate_preprocessed_categorical_columns = ['HDICAT_L','HDICAT_M','HDICAT_H','HDICAT_VH']
+for categorical_column in cancer_rate_preprocessed_categorical_columns:
+    group_0 = cancer_rate_preprocessed_categorical[cancer_rate_preprocessed_categorical.loc[:,categorical_column]==0]
+    group_1 = cancer_rate_preprocessed_categorical[cancer_rate_preprocessed_categorical.loc[:,categorical_column]==1]
+    cancer_rate_preprocessed_categorical_ttest_target['CANRAT_' + categorical_column] = stats.ttest_ind(
+        group_0['CANRAT'], 
+        group_1['CANRAT'], 
+        equal_var=True)
+```
+
+
+```python
+##################################
+# Formulating the pairwise ttest summary
+# between the target variable
+# and categorical predictor columns
+##################################
+cancer_rate_preprocessed_categorical_summary = cancer_rate_preprocessed_categorical.from_dict(cancer_rate_preprocessed_categorical_ttest_target, orient='index')
+cancer_rate_preprocessed_categorical_summary.columns = ['T.Test.Statistic', 'T.Test.PValue']
+display(cancer_rate_preprocessed_categorical_summary.sort_values(by=['T.Test.PValue'], ascending=True).head(4))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>T.Test.Statistic</th>
+      <th>T.Test.PValue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>CANRAT_HDICAT_VH</th>
+      <td>-10.605706</td>
+      <td>2.909971e-20</td>
+    </tr>
+    <tr>
+      <th>CANRAT_HDICAT_L</th>
+      <td>6.559780</td>
+      <td>7.003957e-10</td>
+    </tr>
+    <tr>
+      <th>CANRAT_HDICAT_M</th>
+      <td>5.104986</td>
+      <td>9.237518e-07</td>
+    </tr>
+    <tr>
+      <th>CANRAT_HDICAT_H</th>
+      <td>-0.635957</td>
+      <td>5.257075e-01</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 
 # 2. Summary <a class="anchor" id="Summary"></a>
 Details
+
+
+```python
+
+```
 
 # 3. References <a class="anchor" id="References"></a>
 * **[Book]** [Data Preparation for Machine Learning: Data Cleaning, Feature Selection, and Data Transforms in Python](https://machinelearningmastery.com/data-preparation-for-machine-learning/) by Jason Brownlee
