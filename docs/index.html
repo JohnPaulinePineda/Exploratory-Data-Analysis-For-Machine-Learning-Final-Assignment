@@ -14593,7 +14593,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <hr>
-<h3>John Pauline Pineda <br> <br> <em>November 10, 2023</em></h3>
+<h3>John Pauline Pineda <br> <br> <em>November 11, 2023</em></h3>
 <hr>
 
 </div>
@@ -14788,8 +14788,6 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">matplotlib.colors</span>
-<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 
@@ -22640,7 +22638,7 @@ class="
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -22654,40 +22652,11 @@ class="
 <span class="c1">##################################</span>
 <span class="n">cancer_rate_preprocessed_target</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'CANRAT'</span><span class="p">]</span>
 <span class="n">cancer_rate_preprocessed_predictors</span> <span class="o">=</span> <span class="n">cancer_rate_preprocessed</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">'CANRAT'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span>
-<span class="n">cancer_rate_preprocessed_predictors</span>
 </pre></div>
 
      </div>
 </div>
 </div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[132]:</div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>Index([&#39;URBPOP&#39;, &#39;POPGRO&#39;, &#39;LIFEXP&#39;, &#39;TUBINC&#39;, &#39;DTHCMD&#39;, &#39;AGRLND&#39;, &#39;GHGEMI&#39;,
-       &#39;FORARE&#39;, &#39;CO2EMI&#39;, &#39;POPDEN&#39;, &#39;GDPCAP&#39;, &#39;EPISCO&#39;, &#39;HDICAT_H&#39;,
-       &#39;HDICAT_L&#39;, &#39;HDICAT_M&#39;, &#39;HDICAT_VH&#39;],
-      dtype=&#39;object&#39;)</pre>
-</div>
-
-</div>
-
-</div>
-
 </div>
 
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -22828,7 +22797,7 @@ class="
 <li><span style="color: #FF0000">CO2EMI</span>: Pearson.Correlation.Coefficient=+0.585, Correlation.PValue=0.000  </li>
 <li><span style="color: #FF0000">POPGRO</span>: Pearson.Correlation.Coefficient=-0.498, Correlation.PValue=0.000</li>
 <li><span style="color: #FF0000">URBPOP</span>: Pearson.Correlation.Coefficient=+0.479, Correlation.PValue=0.000   </li>
-<li><span style="color: #FF0000">GHGEMI</span>: Pearson.Correlation.Coefficient=+0.232, Correlation.PValue=0.028</li>
+<li><span style="color: #FF0000">GHGEMI</span>: Pearson.Correlation.Coefficient=+0.232, Correlation.PValue=0.002</li>
 <li><span style="color: #FF0000">FORARE</span>: Pearson.Correlation.Coefficient=+0.165, Correlation.PValue=0.035</li>
 </ul>
 </li>
@@ -23179,12 +23148,54 @@ class="
 <li><strong>[Book]</strong> <a href="https://www.sciencedirect.com/book/9780123748560/data-mining-practical-machine-learning-tools-and-techniques?via=ihub=">Data Mining: Practical Machine Learning Tools and Techniques</a> by Ian Witten, Eibe Frank, Mark Hall and Christopher Pal </li>
 <li><strong>[Book]</strong> <a href="https://dl.acm.org/doi/book/10.1145/3310205">Data Cleaning</a> by Ihab Ilyas and Xu Chu</li>
 <li><strong>[Book]</strong> <a href="https://www.oreilly.com/library/view/data-wrangling-with/9781491948804/">Data Wrangling with Python</a> by Jacqueline Kazil and Katharine Jarmul</li>
-<li><strong>[Python Library API]</strong> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html">sklearn.datasets.make classification API</a> by Scikit-Learn Team</li>
-<li><strong>[Python Library API]</strong> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html">sklearn.preprocessing.MinMaxScaler API</a> by Scikit-Learn Team</li>
-<li><strong>[Python Library API]</strong> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html">sklearn.model selection.train test split API</a> by Scikit-Learn Team</li>
-<li><strong>[Python Library API]</strong> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html">sklearn.linear model.LogisticRegression API</a> by Scikit-Learn Team</li>
-<li><strong>[Python Library API]</strong> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RepeatedStratifiedKFold.html">sklearn.model selection.RepeatedStratifiedKFold API</a> by Scikit-Learn Team</li>
-<li><strong>[Python Library API]</strong> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_score.html">sklearn.model selection.cross val score API</a> by Scikit-Learn Team</li>
+<li><strong>[Python Library API]</strong> <a href="https://numpy.org/doc/">NumPy</a> by NumPy Team</li>
+<li><strong>[Python Library API]</strong> <a href="https://pandas.pydata.org/docs/">pandas</a> by Pandas Team</li>
+<li><strong>[Python Library API]</strong> <a href="https://seaborn.pydata.org/">seaborn</a> by Seaborn Team</li>
+<li><strong>[Python Library API]</strong> <a href="https://matplotlib.org/3.5.3/api/_as_gen/matplotlib.pyplot.html">matplotlib.pyplot</a> by MatPlotLib Team</li>
+<li><strong>[Python Library API]</strong> <a href="https://docs.python.org/3/library/itertools.html">itertools</a> by Python Team</li>
+<li><strong>[Python Library API]</strong> <a href="https://docs.python.org/3/library/operator.html">operator</a> by Python Team</li>
+<li><strong>[Python Library API]</strong> <a href="https://scikit-learn.org/stable/modules/classes.html#module-sklearn.experimental">sklearn.experimental</a> by Scikit-Learn Team</li>
+<li><strong>[Python Library API]</strong> <a href="https://scikit-learn.org/stable/modules/classes.html#module-sklearn.impute">sklearn.impute</a> by Scikit-Learn Team</li>
+<li><strong>[Python Library API]</strong> <a href="https://scikit-learn.org/stable/modules/classes.html#module-sklearn.linear_model">sklearn.linear_model</a> by Scikit-Learn Team</li>
+<li><strong>[Python Library API]</strong> <a href="https://scikit-learn.org/stable/modules/classes.html#module-sklearn.preprocessing">sklearn.preprocessing</a> by Scikit-Learn Team</li>
+<li><strong>[Python Library API]</strong> <a href="https://docs.scipy.org/doc/scipy/">scipy</a> by SciPy Team</li>
+<li><strong>[Article]</strong> <a href="https://www.analyticsvidhya.com/blog/2022/07/step-by-step-exploratory-data-analysis-eda-using-python/#:~:text=Exploratory%20Data%20Analysis%20(EDA">Step-by-Step Exploratory Data Analysis (EDA) using Python</a>%20with,distributions%20using%20Python%20programming%20language.) by Malamahadevan Mahadevan (Analytics Vidhya)</li>
+<li><strong>[Article]</strong> <a href="https://towardsdatascience.com/exploratory-data-analysis-in-python-a-step-by-step-process-d0dfa6bf94ee">Exploratory Data Analysis in Python — A Step-by-Step Process</a> by Andrea D'Agostino (Towards Data Science)</li>
+<li><strong>[Article]</strong> <a href="https://medium.com/@douglas.rochedo/exploratory-data-analysis-with-python-78b6c1d479cc">Exploratory Data Analysis with Python</a> by Douglas Rocha (Medium)</li>
+<li><strong>[Article]</strong> <a href="https://builtin.com/data-science/EDA-python">4 Ways to Automate Exploratory Data Analysis (EDA) in Python</a> by Abdishakur Hassan (BuiltIn)</li>
+<li><strong>[Article]</strong> <a href="https://www.analyticsvidhya.com">10 Things To Do When Conducting Your Exploratory Data Analysis (EDA)</a> by Alifia Harmadi (Medium)</li>
+<li><strong>[Article]</strong> <a href="https://machinelearningmastery.com/handle-missing-data-python/">How to Handle Missing Data with Python</a> by Jason Brownlee (Machine Learning Mastery)</li>
+<li><strong>[Article]</strong> <a href="https://machinelearningmastery.com/statistical-imputation-for-missing-values-in-machine-learning/">Statistical Imputation for Missing Values in Machine Learning</a> by Jason Brownlee (Machine Learning Mastery)</li>
+<li><strong>[Article]</strong> <a href="https://towardsdatascience.com/imputing-missing-data-with-simple-and-advanced-techniques-f5c7b157fb87">Imputing Missing Data with Simple and Advanced Techniques</a> by Idil Ismiguzel (Towards Data Science)</li>
+<li><strong>[Article]</strong> <a href="https://www.machinelearningplus.com/machine-learning/missing-data-imputation-how-to-handle-missing-values-in-python/">Missing Data Imputation Approaches | How to handle missing values in Python</a> by Selva Prabhakaran (Machine Learning +)</li>
+<li><strong>[Article]</strong> <a href="https://medium.com/analytics-vidhya/a-quick-guide-on-missing-data-imputation-techniques-in-python-2020-5410f3df1c1e">Master The Skills Of Missing Data Imputation Techniques In Python(2022) And Be Successful</a> by Mrinal Walia (Analytics Vidhya)</li>
+<li><strong>[Article]</strong> <a href="https://builtin.com/machine-learning/how-to-preprocess-data-python">How to Preprocess Data in Python</a> by Afroz Chakure (BuiltIn)</li>
+<li><strong>[Article]</strong> <a href="https://www.kdnuggets.com/2020/07/easy-guide-data-preprocessing-python.html">Easy Guide To Data Preprocessing In Python</a> by Ahmad Anis (KDNuggets)</li>
+<li><strong>[Article]</strong> <a href="https://towardsdatascience.com/data-preprocessing-in-python-b52b652e37d5">Data Preprocessing in Python</a> by Tarun Gupta (Towards Data Science)</li>
+<li><strong>[Article]</strong> <a href="https://medium.com/@suneet.bhopal/data-preprocessing-using-python-1bfee9268fb3">Data Preprocessing using Python</a> by Suneet Jain (Medium)</li>
+<li><strong>[Article]</strong> <a href="https://medium.com/@abonia/data-preprocessing-in-python-1f90d95d44f4">Data Preprocessing in Python</a> by Abonia Sojasingarayar (Medium)</li>
+<li><strong>[Article]</strong> <a href="https://medium.datadriveninvestor.com/data-preprocessing-3cd01eefd438">Data Preprocessing in Python</a> by Afroz Chakure (Medium)</li>
+<li><strong>[Article]</strong> <a href="https://www.analyticsvidhya.com/blog/2021/05/detecting-and-treating-outliers-treating-the-odd-one-out/">Detecting and Treating Outliers | Treating the Odd One Out!</a> by Harika Bonthu (Analytics Vidhya)</li>
+<li><strong>[Article]</strong> <a href="https://medium.com/analytics-vidhya/outlier-treatment-9bbe87384d02">Outlier Treatment with Python</a> by Sangita Yemulwar (Analytics Vidhya)</li>
+<li><strong>[Article]</strong> <a href="https://builtin.com/data-science/outlier-detection-python">A Guide to Outlier Detection in Python</a> by Sadrach Pierre (BuiltIn)</li>
+<li><strong>[Article]</strong> <a href="https://careerfoundry.com/en/blog/data-analytics/how-to-find-outliers/">How To Find Outliers in Data Using Python (and How To Handle Them)</a> by Eric Kleppen (Career Foundry)</li>
+<li><strong>[Article]</strong> <a href="https://towardsdatascience.com/statistics-in-python-collinearity-and-multicollinearity-4cc4dcd82b3f">Statistics in Python — Collinearity and Multicollinearity</a> by Wei-Meng Lee (Towards Data Science)</li>
+<li><strong>[Article]</strong> <a href="https://towardsdatascience.com/everything-you-need-to-know-about-multicollinearity-2f21f082d6dc">Understanding Multicollinearity and How to Detect it in Python</a> by Terence Shin (Towards Data Science)</li>
+<li><strong>[Article]</strong> <a href="https://www.yourdatateacher.com/2021/06/28/a-python-library-to-remove-collinearity/">A Python Library to Remove Collinearity</a> by Gianluca Malato (Your Data Teacher)</li>
+<li><strong>[Article]</strong> <a href="https://ai.plainenglish.io/data-transformation-in-pandas-29b2b3c61b34">8 Best Data Transformation in Pandas</a> by Tirendaz AI (Medium)</li>
+<li><strong>[Article]</strong> <a href="https://medium.com/@siddharthverma.er.cse/data-transformation-techniques-with-python-elevate-your-data-game-21fcc7442cc2">Data Transformation Techniques with Python: Elevate Your Data Game!</a> by Siddharth Verma (Medium)</li>
+<li><strong>[Article]</strong> <a href="https://www.kdnuggets.com/2023/07/data-scaling-python.html">Data Scaling with Python</a> by Benjamin Obi Tayo (KDNuggets)</li>
+<li><strong>[Article]</strong> <a href="https://machinelearningmastery.com/standardscaler-and-minmaxscaler-transforms-in-python/">How to Use StandardScaler and MinMaxScaler Transforms in Python</a> by Jason Brownlee (Machine Learning Mastery)</li>
+<li><strong>[Article]</strong> <a href="https://www.analyticsvidhya.com/blog/2020/04/feature-scaling-machine-learning-normalization-standardization/">Feature Engineering: Scaling, Normalization, and Standardization</a> by Aniruddha Bhandari  (Analytics Vidhya)</li>
+<li><strong>[Article]</strong> <a href="https://www.digitalocean.com/community/tutorials/normalize-data-in-python">How to Normalize Data Using scikit-learn in Python</a> by Jayant Verma (Digital Ocean)</li>
+<li><strong>[Article]</strong> <a href="https://www.analyticsvidhya.com/blog/2020/08/types-of-categorical-data-encoding/">What are Categorical Data Encoding Methods | Binary Encoding</a> by Shipra Saxena  (Analytics Vidhya)</li>
+<li><strong>[Article]</strong> <a href="https://pbpython.com/categorical-encoding.html">Guide to Encoding Categorical Values in Python</a> by Chris Moffitt (Practical Business Python)</li>
+<li><strong>[Article]</strong> <a href="https://soumenatta.medium.com/categorical-data-encoding-techniques-in-python-a-complete-guide-a913aae19a22">Categorical Data Encoding Techniques in Python: A Complete Guide</a> by Soumen Atta (Medium)</li>
+<li><strong>[Article]</strong> <a href="https://towardsdatascience.com/categorical-encoding-techniques-93ebd18e1f24">Categorical Feature Encoding Techniques</a> by Tara Boyle (Medium)</li>
+<li><strong>[Article]</strong> <a href="https://machinelearningmastery.com/one-hot-encoding-for-categorical-data/">Ordinal and One-Hot Encodings for Categorical Data</a> by Jason Brownlee (Machine Learning Mastery)</li>
+<li><strong>[Article]</strong> <a href="https://towardsdatascience.com/hypothesis-testing-with-python-step-by-step-hands-on-tutorial-with-practical-examples-e805975ea96e">Hypothesis Testing with Python: Step by Step Hands-On Tutorial with Practical Examples</a> by Ece Işık Polat (Towards Data Science)</li>
+<li><strong>[Article]</strong> <a href="https://machinelearningmastery.com/statistical-hypothesis-tests-in-python-cheat-sheet/">17 Statistical Hypothesis Tests in Python (Cheat Sheet)</a> by Jason Brownlee (Machine Learning Mastery)</li>
+<li><strong>[Article]</strong> <a href="https://medium.com/@gabriel_renno/a-step-by-step-guide-to-hypothesis-testing-in-python-using-scipy-8eb5b696ab07">A Step-by-Step Guide to Hypothesis Testing in Python using Scipy</a> by Gabriel Rennó (Medium)</li>
 </ul>
 
 </div>
