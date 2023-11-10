@@ -50,9 +50,8 @@ Datasets used for the analysis were separately gathered and consolidated from va
 9. Health Indicator from [World Bank](https://data.worldbank.org/topic/health?view=chart)
 10. Science and Technology Indicator from [World Bank](https://data.worldbank.org/topic/science-and-technology?view=chart)
 11. Urban Development Indicator from [World Bank](https://data.worldbank.org/topic/urban-development?view=chart)
-12. Social Protection and Labor Indicator from [World Bank](https://data.worldbank.org/topic/social-protection-and-labor?view=chart)
-13. Human Development Indices from [Human Development Reports](https://hdr.undp.org/data-center/human-development-index#/indicies/HDI)
-14. Environmental Performance Indices from [Yale Center for Environmental Law and Policy](https://epi.yale.edu/epi-results/2022/component/epi)
+12. Human Development Indices from [Human Development Reports](https://hdr.undp.org/data-center/human-development-index#/indicies/HDI)
+13. Environmental Performance Indices from [Yale Center for Environmental Law and Policy](https://epi.yale.edu/epi-results/2022/component/epi)
 
 This study hypothesized that various global development indicators and indices influence cancer rates across countries.
 
@@ -5239,12 +5238,18 @@ display(cancer_rate_preprocessed_categorical_summary.sort_values(by=['T.Test.PVa
 
 
 # 2. Summary <a class="anchor" id="Summary"></a>
-Details
 
+![Summary_Introduction.png](attachment:Summary_Introduction.png)
 
-```python
+![Summary_Methodology.png](attachment:Summary_Methodology.png)
 
-```
+![Summary_DataGathering.png](attachment:Summary_DataGathering.png)
+
+![Summary_DataDescription.png](attachment:Summary_DataDescription.png)
+
+![Summary_DataQualityAssessment.png](attachment:Summary_DataQualityAssessment.png)
+
+![Summary_DataPreprocessing-2.png](attachment:Summary_DataPreprocessing-2.png)
 
 # 3. References <a class="anchor" id="References"></a>
 * **[Book]** [Data Preparation for Machine Learning: Data Cleaning, Feature Selection, and Data Transforms in Python](https://machinelearningmastery.com/data-preparation-for-machine-learning/) by Jason Brownlee
