@@ -5239,6 +5239,8 @@ display(cancer_rate_preprocessed_categorical_summary.sort_values(by=['T.Test.PVa
 
 # 2. Summary <a class="anchor" id="Summary"></a>
 
+A detailed [report](https://github.com/JohnPaulinePineda/Exploratory-Data-Analysis-For-Machine-Learning-Final-Assignment/blob/main/ExploratoryDataAnalysisCapstone_JohnPaulinePineda.pdf) was formulated documenting all the analysis steps and findings.
+
 ![Summary_Introduction.png](attachment:Summary_Introduction.png)
 
 ![Summary_Methodology.png](attachment:Summary_Methodology.png)
@@ -5249,7 +5251,13 @@ display(cancer_rate_preprocessed_categorical_summary.sort_values(by=['T.Test.PVa
 
 ![Summary_DataQualityAssessment.png](attachment:Summary_DataQualityAssessment.png)
 
-![Summary_DataPreprocessing-2.png](attachment:Summary_DataPreprocessing-2.png)
+![Summary_DataPreprocessing.png](attachment:Summary_DataPreprocessing.png)
+
+![Summary_DataExploration.png](attachment:Summary_DataExploration.png)
+
+![Summary_OverallFindingsAndImplications.png](attachment:Summary_OverallFindingsAndImplications.png)
+
+![Summary_OverallConclusion.png](attachment:Summary_OverallConclusion.png)
 
 # 3. References <a class="anchor" id="References"></a>
 * **[Book]** [Data Preparation for Machine Learning: Data Cleaning, Feature Selection, and Data Transforms in Python](https://machinelearningmastery.com/data-preparation-for-machine-learning/) by Jason Brownlee
